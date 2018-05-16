@@ -1,10 +1,15 @@
-# Übung: Cluster-Orchestrierung mit Kubernetes
+# Übung: Cluster-Orchestrierung mit Kubernetes und Package Management mit HELM
 
-Ziel dieser Übung ist es, den Microservice aus Übung 1 mit Kubernetes zu betrieben.
+Ziel dieser Übung ist es, eine Beispielanwendung mit Kubernetes zu betrieben und HELM für das Package Management zu nutzen.
 
 ## Vorbereitung
+* Installation von Docker: Installieren sie den Edge Channel von Docker CE. Folgend die Installationsbeschreibungen für die einzelnen Betriebssysteme:
+  * [Windows](https://docs.docker.com/docker-for-windows/install)
+  * [macOS](https://docs.docker.com/docker-for-mac/install)
+  * [Linux Derivate](https://docs.docker.com/install/linux/docker-ce/ubuntu)
 * Eine lokale Minikube (https://kubernetes.io/docs/getting-started-guides/minikube/) Installation.
 * Lokale Installation von `kubectl` (https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* Installieren sie HELM (Tiller) auf ihrem lokalen Kubernetes Cluster (Minikube) und die HELM Kommandozeile auf ihrem Betriebssystem https://github.com/kubernetes/helm
 * Den lauffähigen Microservice aus [Übung 1](../../01-kommunikation/uebung/)
 
 ## Aufgaben
@@ -52,7 +57,7 @@ $ minikube service nginx
 
 ### 2) Containerization
 
-In diesem Schritt müssen wir den Microservice nun Containerisieren und anschließend in eine Docker
+In diesem Schritt müssen wir den Microservice nun containerisieren und anschließend in eine Docker
 Registry laden. Falls noch nicht erledigt:
 
 * legen sie sich auf https://hub.docker.com einen Account an
@@ -171,6 +176,12 @@ Weitere Infos:
 * https://kubernetes.io/docs/tasks/configure-pod-container/configmap/
 * https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
 
+#### 4) HELM Package Management
+Ziel dieses Übungsteils ist es, die Beispielanwendung als HELM Chart zu deployen.
+ * Arbeiten sie sich in HELM ein: https://helm.sh und Katacoda-Tutorial https://katacoda.com/courses/kubernetes/helm-package-manager
+ * Erzeugen sie ein HELM Chart für die Anwendung
+ * Deployen sie das HELM Chart lokal und prüfen sie die Lauffähigkeit
+
 ### Bonus Aufgaben
 
 #### Rolling Upgrades
@@ -183,8 +194,3 @@ die Image Versions des Containers im Pod neu setzen.
 
 Für den externen Zugriff auf den Service und das Deployment erstellen sie einen Ingress Controller
 der auf den Service zeigt. Siehe https://kubernetes.io/docs/concepts/services-networking/ingress/
-
-#### Help Package Management
-
-Installieren sie in ihrer Minikube Installation den Helm Paket Manager https://github.com/kubernetes/helm
-Installieren sie anschließend das Jenkins Chart.
