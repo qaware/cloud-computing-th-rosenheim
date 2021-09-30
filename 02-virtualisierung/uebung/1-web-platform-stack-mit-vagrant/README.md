@@ -84,6 +84,7 @@ sudo systemctl start php7.4-fpm
 ```
 
 Im nächsten Schritt kopieren sie die folgenden Dateien von Host in das Gast-Betriebssystems und starten Nginx neu.
+Die Dateien müssen Sie evtl. vorher in das Verzeichnis kopieren, in dem das Vagrantfile liegt.
 
 ```bash
 sudo mkdir -p /usr/share/nginx/www
