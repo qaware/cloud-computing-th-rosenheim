@@ -24,7 +24,9 @@ den Spring Boot Initializr. Rufen sie hierfür die folgende URL auf: https://sta
 
 Bei dieser Aufgabe geht es darum, eine einfache REST-Schnittstelle aufzubauen. Wir verwenden hierfür JAX-RS. Ein Getting Started finden sie hier: https://jersey.github.io/documentation/latest/getting-started.html
 
-(1) Entwerfen sie zunächst eine einfache Datenklasse um Bücher zu repräsentieren. Die Klasse soll mindestens die Felder `title`, `isbn` und `author` enthalten. Zusätzlich soll die Klasse beim Deserialisieren unbekannte
+(1) Initiale Anwendungslogik erstellen:
+
+(1.1) Entwerfen sie zunächst eine einfache Datenklasse um Bücher zu repräsentieren. Die Klasse soll mindestens die Felder `title`, `isbn` und `author` enthalten. Zusätzlich soll die Klasse beim Deserialisieren unbekannte
 JSON Felder ignorieren.
 
 ```java
@@ -35,6 +37,53 @@ public class Book {
     private String isbn;
 
     // getter and setter
+}
+```
+
+(1.2) Implementieren sie eine Bücherverwaltung, die einige Beispielbücher anlegt und erlaubt die Bücher abzufragen:
+
+```java
+@Component
+public class Bookshelf {
+
+    private final Set<Book> books = new HashSet<>();
+
+    @PostConstruct
+    public void initialize() {
+        books.add(new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "0345391802"));
+        books.add(new Book("The Martian", "Andy Weir", "0553418025"));
+        books.add(new Book("Guards! Guards!", "Terry Pratchett", "0062225758"));
+        books.add(new Book("Alice in Wonderland", "Lewis Carroll", "3458317422"));
+        books.add(new Book("Life, the Universe and Everything", "Douglas Adams", "0345391829"));
+    }
+
+    public Collection<Book> findByTitle(String title) {
+        if (Objects.isNull(title)) {
+            return books;
+        } else {
+            return books
+                    .stream()
+                    .filter((Book b) -> b.getTitle().equalsIgnoreCase(title))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    public Book findByIsbn(String isbn) {
+        return books
+                .stream()
+                .filter((Book b) -> b.getIsbn().equals(isbn))
+                .findFirst()
+                .orElseThrow(() -> new BookNotFoundException(isbn));
+    }
+}
+```
+
+Zusätzlich muss noch eine Fehlermeldung definiert werden: 
+```java
+public class BookNotFoundException extends RuntimeException {
+    public BookNotFoundException(String isbn) {
+        super("Book with ISBN " + isbn + " not found.");
+    }
 }
 ```
 
@@ -49,7 +98,9 @@ public class BookResource {
 }
 ```
 
-(3) Fügen sie der REST Resource nun entsprechende Methoden zum Abruf von Büchern hinzu. Es soll die Möglichkeit geben alle Bücher per `GET /api/books` abzurufen sowie einzelne Bücher mittels ISBN per `GET /api/books/{isbn}`. Implementieren sie die Business-Logik rudimentär (statische Liste statt DB). Achten sie bei
+(3) REST Interface erstellen:
+
+(3.1) Fügen sie der REST Resource nun entsprechende Methoden zum Abruf von Büchern hinzu. Es soll die Möglichkeit geben alle Bücher per `GET /api/books` abzurufen sowie einzelne Bücher mittels ISBN per `GET /api/books/{isbn}`. Implementieren sie die Business-Logik rudimentär (statische Liste statt DB). Achten sie bei
 der Implementierung auf die Verwendung der korrekten HTTP Verben und Status-Codes, z.B. für den Fall das ein Buch per ISBN nicht gefunden wurde.
 
 ```java
@@ -67,6 +118,17 @@ der Implementierung auf die Verwendung der korrekten HTTP Verben und Status-Code
     }
 ```
 
+(3.2) Erstellen sie einen Exceptionmapper, damit Java-Exceptions in HTTP-Statuscodes umgewandelt werden:
+```java
+@Provider
+public class BookExceptionMapper implements ExceptionMapper<BookNotFoundException> {
+    @Override
+    public Response toResponse(BookNotFoundException e) {
+        return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+    }
+}
+```
+
 (4) Implementieren sie eine JAX-RS `ResourceConfig` und registrieren sie die REST Resource Klasse sowie den Jackson JSON Marshaller.
 
 ```java
@@ -82,8 +144,10 @@ public class BookstoreAPI extends ResourceConfig {
 }
 ```
 
-(5) Kompilieren sie den Microservice und führen sie die Applikation aus: `mvnw install spring-boot:run`. 
+(5) Kompilieren sie den Microservice mit `mvnw install` und führen sie danach die Applikation mit `java -jar ./target/<maven-artifactId>-<maven-version>.jar` aus (alternativ können sie die Anwendung natürlich aus der IDE heraus starten). 
 Die Anwendung und das REST API sollte nun unter der folgenden URL erreichbar sein: `http://localhost:8080/api/books`.
+
+Testen sie manuell die beiden erstellten Endpunkte mit dem Browser. Probieren sie den Fehler aus dem ExceptionMapper zu provozieren.
 
 ### Aufgabe 2: API Dokumentation
 
@@ -137,7 +201,7 @@ public class BookstoreAPI extends ResourceConfig {
     beanConfig.setSchemes(new String[]{"http"});
     beanConfig.setHost("localhost:8080");
     beanConfig.setPrettyPrint(true);
-    beanConfig.setBasePath("/");
+    beanConfig.setBasePath("/api/");
     beanConfig.setResourcePackage("de.qaware.edu.cc.bookservice");
     beanConfig.setScan(true);
 
@@ -155,11 +219,32 @@ public class BookstoreAPI extends ResourceConfig {
 | `@ApiModel` | Entitäts-Klasse      |
 | `@ApiModelProperty` | Setter-Methoden der Entitätsklasse      |
 
-(5) Starten Sie die Anwendung nun neu. Die API-Beschreibung durch Swagger sollte nun unter der URL http://localhost:8080/swagger.json zugänglich sein.
+(5) Starten Sie die Anwendung nun neu. Die API-Beschreibung durch Swagger sollte nun unter der URL http://localhost:8080/api/swagger.json zugänglich sein.
 
 (6) Starten Sie nun die Swagger UI über Docker.
 Folgen sie den Anweisungen unter https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/installation.md#docker
-Öffnen sie die UI und rufen sie die Swagger JSON URL auf. **Hinweis: sie benötigen einen JAX-RS CORS Filter um die Datei lokal aufrufen zu können.**
+Öffnen sie die UI und rufen sie die Swagger JSON URL auf. 
+
+Hinweis: sie benötigen einen JAX-RS CORS Filter um die Datei lokal aufrufen zu können. Dazu erstellen sie die folgende Klasse: 
+```java
+@Provider
+public class CORSFilter implements ContainerResponseFilter {
+    @Override
+    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
+        MultivaluedMap<String, Object> headers = responseContext.getHeaders();
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
+        headers.add("Access-Control-Allow-Credentials", "true");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+    }
+}
+```
+Diese müssen sie in der BookstoreAPI registrieren:
+```java
+    // ...
+        register(CORSFilter.class);
+    // ...
+```
 
 ### Kür: REST-API weiter ausbauen
 Bauen Sie die REST-Schnittstelle weiter aus und fügen sie Logik zum Anlegen, Aktualisieren und Löschen von Büchern hinzu:
