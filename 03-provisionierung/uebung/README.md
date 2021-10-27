@@ -105,6 +105,7 @@ cc-nginx:
 Probieren Sie weitere Docker und Docker Compose Commands aus.
 - Skalieren Sie den nginx auf 3 Instanzen
 - Öffnen Sie eine Shell im laufenden Container
+- Editieren sie die index.html im Container
 - Schauen Sie in die nginx Logs
 - ...
 
@@ -132,10 +133,21 @@ Nutzen Sie auch die folgenden Referenzen:
 
 ### Schritt 1: Image für Managed Nodes bauen
 Erstellen Sie ein Dockerfile für die zu provisionierenden Maschinen / Managed Nodes. 
-Diese sollen Ubuntu in Version 20.10 beinhalten und SSH Verbindungen von außen erlauben:
+Diese sollen Ubuntu in Version 21.10 beinhalten und SSH Verbindungen von außen erlauben:
 - Legen Sie dafür parallel zu dieser Readme eine Datei mit dem Namen "Dockerfile_Managed_Node" an.
-- Übernehmen Sie die Inhalte des hier angegebenen Dockerfiles: 
-https://docs.docker.com/engine/examples/running_ssh_service/
+- Schreiben sie ein Dockerfile, dass die folgenden Shell-Befehle ausführt um den SSH server zu installieren:
+     ```
+  apt-get update && apt-get install -y openssh-server
+  mkdir /var/run/sshd
+  echo 'root:verysecretpassword' | chpasswd
+  sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+  sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
+  echo "export VISIBLE=now" >> /etc/prof
+     ```
+- Mit dem folgenden Befehl wir der ssh Server dann gestartet:
+     ```
+  /usr/sbin/sshd -D
+     ```
 - Ersetzen Sie den Platzhalter 'THEPASSWORDYOUCREATED' durch ein geeignetes Passwort.
 Wir wählen für die Übung das Passwort 'verysecretpassword'.
 
@@ -166,8 +178,8 @@ Erstellen Sie ein Docker Compose File (Datei mit dem Namen "docker-compose.yml" 
      </details>
 - Eine Ansible Control Node startet und dabei:
      - den Service Namen "ansible-node" hat
-     - das fertige Image "willhallonline/ansible:2.9-alpine" nutzt. In diesem ist Ansible in Version 2.9 mit
-     Python3 verfügbar.
+     - das fertige Image "willhallonline/ansible:2.9-alpine-3.13" nutzt. In diesem ist Ansible in Version 2.9 mit
+     Python3 verfügbar. (siehe https://hub.docker.com/r/willhallonline/ansible)
      - ein Memory Limit von 100 MB hat
      - erst gestartet wird, wenn die Managed Node läuft
      
@@ -176,7 +188,7 @@ Erstellen Sie ein Docker Compose File (Datei mit dem Namen "docker-compose.yml" 
      
      ```
   ansible-node:
-    image: "willhallonline/ansible:2.9-alpine"
+    image: "willhallonline/ansible:2.9-alpine-3.13"
     networks:
       - cloudcomputing
     depends_on:
@@ -187,27 +199,7 @@ Erstellen Sie ein Docker Compose File (Datei mit dem Namen "docker-compose.yml" 
 Node und die Ansible Control Node im gleichen Netzwerk laufen. Denken Sie daran, das im Docker Compose File
 für jeden der Services mittels "networks" anzugeben.
 
-### Schritt 3: Strict Host Key Checking deaktivieren
-Deaktivieren Sie Strict Host Key Checking beim ersten Verbindungsaufbau zwischen der Control Node und
-der Managed Node, indem Sie 
-- einen Ordner "ssh" anlegen
-- darin eine Datei mit dem Namen "config" und folgende Inhalt ablegen:
-  ```
-   Host *
-      StrictHostKeyChecking no
-  ```
-- diese Datei über Docker Compose für die Ansible Control Node unter /root/.ssh/config mounten.
-
-     <details>
-     <summary>Wenn Sie nicht weiterkommen, können Sie folgenden Codeblock verwenden:</summary>
-     
-  ```
-     volumes:
-     - "./ssh/config:/root/.ssh/config"
-  ```   
-  </details>
-
-### Schritt 4: Setup testen
+### Schritt 3: Setup testen
 Starten Sie die Managed Node über
 ```
 docker-compose up --build -d
@@ -230,14 +222,14 @@ des Ordners) und Suffix '1' eine SSH Verbindung herstellen. Verifizieren Sie das
 ssh uebung_managed-node_1
 ```
 
-### Schritt 5: Erste Schritte mit Ansible
+### Schritt 4: Erste Schritte mit Ansible
 
 Konfigurieren Sie die Maschinen, die Sie mit Ansible provisionieren wollen, über die Hosts Datei.
 Legen Sie hierzu einen Ordner "ansible" und darin die Datei "hosts" an.
 
 Legen Sie die Group "server_hosts" an, tragen Sie darin die Managed Node ein, und konfigurieren Sie Ansible:
 - Geben Sie python3 als Python Interpreter an
-- Hinterlegen Sie Username und Passwort für die SSH Verbindung
+- Hinterlegen Sie für die SSH-Verbindung Username und Passwort und fügen sie das ssh-Argument '-o StrictHostKeyChecking=no' hinzu
 
      <details>
      <summary>Wenn Sie nicht weiterkommen, können Sie folgenden Codeblock verwenden:</summary>
@@ -250,6 +242,7 @@ Legen Sie die Group "server_hosts" an, tragen Sie darin die Managed Node ein, un
       ansible_python_interpreter=/usr/bin/python3
       ansible_ssh_user=root
       ansible_ssh_pass=verysecretpassword
+      ansible_ssh_common_args='-o StrictHostKeyChecking=no'
       ```
 
     </details>
@@ -307,7 +300,7 @@ Führen Sie das Playbook auf der Ansible Control Node aus:
 ansible-playbook /root/playbooks/install-apache.yml
 ```
 
-### Schritt 7: Aufruf des gestarteten Webservers
+### Schritt 6: Aufruf des gestarteten Webservers
 Finden Sie über 
 
 ```
@@ -320,7 +313,7 @@ Welcher Port leitet Requests an den exponierten Port '80' des Containers weiter?
 Rufen Sie in Ihrem Browser localhost:<port> für den spezifischen Port auf und verifizieren Sie, dass Ihre index.html
 angezeigt wird.
 
-### Schritt 8: Skalieren der Managed Nodes
+### Schritt 7: Skalieren der Managed Nodes
 
 Skalieren Sie die Managed Nodes auf 3. 
 Nutzen Sie hierfür 'docker-compose scale'.
@@ -330,72 +323,3 @@ Provisionierung aus.
 
 ### Troubleshooting
 Stellen Sie sicher, dass Sie über Docker den Zugriff auf die gemounteten Dateien erlauben.
-
-## Übung 3: Packer
-
-### Schritt 1: Packer installieren
-Installieren Sie Packer, indem Sie die Anleitung auf https://learn.hashicorp.com/tutorials/packer/getting-started-install
-befolgen.
-
-### Schritt 2: Packer kennenlernen
-Machen Sie sich mit Packer vertraut, indem Sie sich die Beispiele auf https://learn.hashicorp.com/tutorials/packer/getting-started-build-image?in=packer/getting-started
-anschauen.
-
-Optional: bauen Sie eins der Beispiele lokal mit Packer.
-
-### Schritt 3: Docker Image mit Packer bauen
-Lesen Sie die Doku zum Bauen von Docker Images mit Packer: https://www.packer.io/docs/builders/docker
-
-Legen Sie ein Packer Template an.
-Verwenden Sie den Docker Builder von Packer, um ein Nginx Image mit 
-einer eigenen Welcome Seite zu bauen.
-
-Verwenden Sie als Basisimage "nginx:1.19-alpine".
-
-Exponieren Sie Port 80 im Image und führen Sie das CMD "nginx -g daemon off;"
-zum Start von Nginx aus.
-
-Da wir ein Alpine Image verwenden, in dem per Default ```Bash```
-nicht installiert ist, nutzen Sie das folgende ```run_command```
-von Packer, damit später beim Container-Start ```/bin/sh``` anstelle von
-```/bin/bash``` verwendet wird:
-   
-```"run_command": [ "-d", "-t", "-i", "{{.Image}}", "/bin/sh" ] ```
-
-Nutzen Sie den File Provisioner von Packer, um eine lokal angelegte index.html
-nach /usr/share/nginx/html/ im Image zu kopieren.
-
-Nutzen Sie den Post Processor "docker-tag" von Packer, um dem Image den 
-Namen "packer-nginx" und den Tag "1.0" zu geben.
-
-Führen Sie
-```packer build <Ihr Template>``` aus.
-
-Prüfen Sie über ```docker images```, ob das Docker Image in Ihrer lokalen 
-Registry verfügbar ist.
-
-Starten Sie dann den Container mit ```docker```.
-Mappen Sie dabei den Containerport 80 auf den Host Port 8080.
-
-<details>
-<summary>Hinweis, falls Sie nicht weiterkommen:</summary>
-
-```
-docker run -d -p 8080:80 packer-nginx:1.0
-```
-</details>
-
-Rufen Sie im Browser ```localhost:8080``` auf und verifizieren Sie,
-dass Ihre Welcome Seite angezeigt wird.
-
-### Bonus/Optional 1:
-Verwenden Sie anstelle des Nginx Images ein Alpine oder Centos Image.
-Installieren Sie Nginx per shell Provisioner.
-
-### Bonus/Optional 2: Ansible Provisionierung mit Packer ausführen
-
-Nutzen Sie Ansible zur Provisionierung mit Packer. 
-Verwenden Sie dafür das Playbook aus Übung 2 und führen Sie dieses mit dem
-Ansible Provisioner von Packer aus. 
-
-Nutzen Sie hierzu die Packer Doku und recherchieren Sie Beispiele.
