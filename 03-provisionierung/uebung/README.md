@@ -92,12 +92,14 @@ Legen Sie hierfür  Datei docker-compose.yml an, das einen nginx Instanz startet
 <summary>Wenn Sie nicht weiterkommen, können Sie folgenden Codeblock verwenden:</summary>
 
 ```
-cc-nginx:
-  build:
-    context: .
-    dockerfile: Dockerfile
-  ports:
-    - "8080:80"
+version: '3.8'
+services:
+  cc-nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
 ```
 </details>
 
