@@ -148,8 +148,6 @@ Diese sollen Ubuntu in Version 21.10 beinhalten und SSH Verbindungen von außen 
      ```
   /usr/sbin/sshd -D
      ```
-- Ersetzen Sie den Platzhalter 'THEPASSWORDYOUCREATED' durch ein geeignetes Passwort.
-Wir wählen für die Übung das Passwort 'verysecretpassword'.
 
 #### Bonus/Optional: 
 Erstellen Sie alternativ selbst ein Docker Image, das SSH Verbindungen von außen erlaubt:
