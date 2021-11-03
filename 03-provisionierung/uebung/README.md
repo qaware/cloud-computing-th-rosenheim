@@ -92,12 +92,14 @@ Legen Sie hierfür  Datei docker-compose.yml an, das einen nginx Instanz startet
 <summary>Wenn Sie nicht weiterkommen, können Sie folgenden Codeblock verwenden:</summary>
 
 ```
-cc-nginx:
-  build:
-    context: .
-    dockerfile: Dockerfile
-  ports:
-    - "8080:80"
+version: '3.8'
+services:
+  cc-nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
 ```
 </details>
 
@@ -148,8 +150,6 @@ Diese sollen Ubuntu in Version 21.10 beinhalten und SSH Verbindungen von außen 
      ```
   /usr/sbin/sshd -D
      ```
-- Ersetzen Sie den Platzhalter 'THEPASSWORDYOUCREATED' durch ein geeignetes Passwort.
-Wir wählen für die Übung das Passwort 'verysecretpassword'.
 
 #### Bonus/Optional: 
 Erstellen Sie alternativ selbst ein Docker Image, das SSH Verbindungen von außen erlaubt:
