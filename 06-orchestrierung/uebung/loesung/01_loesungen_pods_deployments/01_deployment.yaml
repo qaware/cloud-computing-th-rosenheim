@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloservice-deployment
+  labels:
+    app: helloservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloservice
+  template:
+    metadata:
+      labels:
+        app: helloservice
+    spec:
+      containers:
+        - name: helloservice-container
+          image: helloservice:1
+          ports:
+            - containerPort: 8000
