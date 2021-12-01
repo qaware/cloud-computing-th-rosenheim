@@ -114,7 +114,7 @@ Ausserdem werden wir eine DynamoDB zum persistieren der Daten benutzen.
 
     {
         "routeKey": "PUT /books",
-        "body": "{\"id\": \"<Name>-01\", \"title\": \"Alice in FaaS-Land\", \"Author\": \"Unknown\"}"
+        "body": "{\\"id\": \"<Name>-01\", \"title\": \"Alice in FaaS-Land\", \"Author\": \"Unknown\"}"
     }
 
 2. Führen sie den Test aus und beobachten das Ergebnis
