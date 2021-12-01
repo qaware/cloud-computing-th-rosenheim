@@ -183,15 +183,10 @@ Inzwischen sollten deutlich mehr daten vorhanden sein.
 
 ## Erweitern der Funktion um ein Delete
 
-1. Fügen sie ihrer Cloud Function den Case `DELETE /books/{id}` hinzu. Löschen in der DynamoDB können sie mit
-
-
-    dynamo.delete({
-        TableName: "cc-2021-lambda-table",
-        Key: {
-            id: event.pathParameters.id
-        }
-    })
+1. Fügen sie ihrer Cloud Function einen CodeBlock für den Case `DELETE /books/{id}` hinzu. Dieser soll das Element mit 
+   der id `id` aus der Datenbank löschen, und im Erfolgsfall die id ausgeben. 
+   Benutzen sie zum Löschen aus der DynamoDB die delete-Methode des AWS.DynamoDB.Documentclient 
+   (siehe https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property)
 
 2. Erstellen sie einen Test, der das Objekt löscht
 
