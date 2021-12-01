@@ -15,7 +15,7 @@ Inhalte:
 8. [Cluster-Orchestrierung](06-orchestrierung)
 9. [Cloud-fähige Softwarearchitekturen](07-cloud-architektur)
 10. [Plattform-as-a-Service](08-paas)
-11. [Serverless](09-serverless)
+11. [Serverless](09-ci-cd_serverless)
 12. [Big Data: Speicherung und Verarbeitung](10-big-data)
 13. [Continous Delivery](11-cd)
 14. [Prüfungsvorbereitung](13-zusammenfassung)
