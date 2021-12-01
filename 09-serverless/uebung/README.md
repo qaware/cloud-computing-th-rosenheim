@@ -8,6 +8,8 @@ mit `<Name>` gekennzeichneten Stellen
 Anmerkung 2: Bitte stellen sie sicher, das sie die AWS Region `eu-west-1` (Irland) benutzen. Die AWS Funktionalität ist  
 anderen Regionen teilweise eingeschränkt.
 
+Anmerkung 3: Ich benutze die Sprache Englisch (US). Diese kann links unten in der AWS-Web-Konsle umgestellt werden. 
+
 ## Aufsetzen einer ersten Cloud-Function
 
 1. Öffnen sie die AWS Lambda Konsole: https://eu-west-1.console.aws.amazon.com/lambda/home?region=eu-west-1#/functions.
