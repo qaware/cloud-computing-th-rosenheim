@@ -10,7 +10,7 @@ Installieren Sie die [Heroku CLI](https://devcenter.heroku.com/articles/heroku-c
 
 ## Aufgabe 3
 
-Deployen Sie den [Neinhorn](https://github.com/zalintyre/neinhorn)-Service von GitHub so auf Heroku, dass Sie danach dessen UI im Browser ansehen können.
+Deployen Sie den [Neinhorn](https://github.com/zalintyre/neinhorn) -Service von GitHub so auf Heroku, dass Sie danach dessen UI im Browser ansehen können.
 
 ## Aufgabe 4
 
