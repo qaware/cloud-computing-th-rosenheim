@@ -1,41 +1,22 @@
 version: "3"
 services:
-  ignite-01:
-    image: apacheignite/ignite:2.11.0
+  ignite:
+    build: "./src/main/ignite"
+    entrypoint:
+      - "/usr/share/apache-ignite/bin/ignite.sh"
+      - "/config/ignite.xml"
     environment:
-      - "CONFIG_URI=/ignite-config.xml"
       - "JVM_OPTS=-Xms1g -Xmx1g"
     ports:
-      - "10800:10800"
-      - "47500-47509"
+      - "8787:8787"
+      - "11211:11211"
+      - "47100:47100"
+      - "47500:47500"
+      - "49112:49112"
+      - "49113:49113"
+      - "49114:49114"
     volumes:
-      - "./src/main/ignite/config.xml:/ignite-config.xml"
-    networks:
-      - ignitenet
-
-  ignite-02:
-    image: apacheignite/ignite:2.11.0
-    environment:
-      - "CONFIG_URI=/ignite-config.xml"
-      - "JVM_OPTS=-Xms1g -Xmx1g"
-    ports:
-      - "10801:10800"
-      - "47500-47509"
-    volumes:
-      - "./src/main/ignite/config.xml:/ignite-config.xml"
-    networks:
-      - ignitenet
-
-  ignite-03:
-    image: apacheignite/ignite:2.11.0
-    environment:
-      - "CONFIG_URI=/ignite-config.xml"
-      - "JVM_OPTS=-Xms1g -Xmx1g"
-    ports:
-      - "10802:10800"
-      - "47500-47509"
-    volumes:
-      - "./src/main/ignite/config.xml:/ignite-config.xml"
+      - "./src/main/ignite/config:/config"
     networks:
       - ignitenet
 
