@@ -6,7 +6,7 @@ services:
       - "/usr/share/apache-ignite/bin/ignite.sh"
       - "/config/ignite.xml"
     environment:
-      - "JVM_OPTS=-Xms1g -Xmx1g"
+      - "JVM_OPTS=-Xms1g -Xmx1g -Djava.net.preferIPv4Stack=true"
     ports:
       - "8787:8787"
       - "11211:11211"
