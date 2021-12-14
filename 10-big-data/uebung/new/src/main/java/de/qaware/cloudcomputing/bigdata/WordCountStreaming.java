@@ -2,6 +2,9 @@ package de.qaware.cloudcomputing.bigdata;
 
 import de.qaware.cloudcomputing.bigdata.ignite.IgniteConfigurationProvider;
 import de.qaware.cloudcomputing.bigdata.util.FileUtil;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.LineIterator;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.IgniteDataStreamer;
@@ -11,8 +14,7 @@ import org.apache.ignite.configuration.IgniteConfiguration;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
+import java.nio.charset.StandardCharsets;
 
 public class WordCountStreaming {
 
@@ -32,24 +34,30 @@ public class WordCountStreaming {
 
         try (IgniteDataStreamer<AffinityUuid, String> streamer = ignite.dataStreamer(streamCache.getName())) {
             while (true) {
-                InputStream in = FileUtil.readFileFromResourcesAsStream(FILENAME);
-
-                try (LineNumberReader rdr = new LineNumberReader(new InputStreamReader(in))) {
-                    for (String line = rdr.readLine(); line != null; line = rdr.readLine()) {
-                        for (String word : line.split(" "))
-                            if (!word.isEmpty())
-                                // Stream words into Ignite.
-                                // By using AffinityUuid we ensure that identical
-                                // words are processed on the same cluster node.
-                                streamer.addData(new AffinityUuid(word), word);
-                    }
-                }
+                processFile(streamer);
             }
         }
+    }
 
+    private static void processFile(IgniteDataStreamer<AffinityUuid, String> streamer) {
+        InputStream inputStream = FileUtil.readFileFromResourcesAsStream(FILENAME);
 
+        LineIterator lineIterator = IOUtils.lineIterator(inputStream, StandardCharsets.UTF_8);
 
+        while (lineIterator.hasNext()) {
+            String line = lineIterator.nextLine();
+            processLine(streamer, line);
+        }
+    }
 
+    private static void processLine(IgniteDataStreamer<AffinityUuid, String> streamer, String line) {
+        for (String word : StringUtils.split(line, " ")) {
+            if (!StringUtils.isEmpty(word))
+                // Stream words into Ignite.
+                // By using AffinityUuid we ensure that identical
+                // words are processed on the same cluster node.
+                streamer.addData(new AffinityUuid(word), word);
+        }
     }
 
 }
