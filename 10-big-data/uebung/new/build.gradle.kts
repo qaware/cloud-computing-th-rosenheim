@@ -23,20 +23,12 @@ repositories {
 dependencies {
     // Apache Ignite
     implementation("org.apache.ignite:ignite-core:2.11.0")
+    implementation("org.apache.ignite:ignite-indexing:2.11.0")
 
     // Apache Commons
     implementation("org.apache.commons:commons-collections4:4.4")
     implementation("commons-io:commons-io:2.11.0")
-}
-
-testing {
-    suites {
-        // Configure the built-in test suite
-        val test by getting(JvmTestSuite::class) {
-            // Use Spock test framework
-            useSpock("2.0-groovy-3.0")
-        }
-    }
+    implementation("org.apache.commons:commons-lang3:3.12.0")
 }
 
 application {
