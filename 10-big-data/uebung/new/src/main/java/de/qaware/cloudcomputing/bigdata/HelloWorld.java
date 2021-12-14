@@ -10,6 +10,11 @@ import org.apache.ignite.lang.IgniteRunnable;
 import org.apache.ignite.resources.IgniteInstanceResource;
 
 public class HelloWorld {
+
+    static {
+        System.getProperties().setProperty("java.net.preferIPv4Stack", "true");
+    }
+
     public static void main(String[] args) throws IgniteException {
         IgniteConfiguration igniteConfiguration = IgniteConfigurationProvider.getIgniteConfiguration();
 
