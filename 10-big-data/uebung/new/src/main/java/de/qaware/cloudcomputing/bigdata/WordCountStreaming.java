@@ -23,6 +23,7 @@ public class WordCountStreaming {
     }
 
     private static final String FILENAME = "ulysses.txt";
+    private static final String SEPARATOR_CHAR = "\\s+";
 
     public static void main(String[] args) throws IOException {
         IgniteConfiguration igniteConfiguration = IgniteConfigurationProvider.getIgniteConfiguration();
@@ -51,7 +52,7 @@ public class WordCountStreaming {
     }
 
     private static void processLine(IgniteDataStreamer<AffinityUuid, String> streamer, String line) {
-        for (String word : StringUtils.split(line, " ")) {
+        for (String word : line.split(SEPARATOR_CHAR)) {
             if (!StringUtils.isEmpty(word))
                 // Stream words into Ignite.
                 // By using AffinityUuid we ensure that identical
