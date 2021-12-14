@@ -2,23 +2,24 @@
 
 __Aktuelle Vorlesung: Technische Hochschule Rosenheim, Wintersemester 2021/2022__
 
+[Organisatorisches](00-einfuehrung/Orga.pdf)
+
 Inhalte:
 
-0. [Organisatorisches](00-einfuehrung/Orga.pdf)
-1. [Einführung Cloud Computing](00-einfuehrung)
-2. [Kommunikation](01-kommunikation)
-3. [Programmiermodelle: Reactive Programming](12-programmiermodelle)
-4. [Virtualisierung](02-virtualisierung)
-5. [Provisionierung](03-provisionierung)
-6. [Infrastructure-as-a-Service](04-iaas)
-7. [Cluster-Scheduling](05-cluster-scheduling)
-8. [Cluster-Orchestrierung](06-orchestrierung)
-9. [Cloud-fähige Softwarearchitekturen](07-cloud-architektur)
-10. [Plattform-as-a-Service](08-paas)
-11. [Big Data: Speicherung und Verarbeitung](09-big-data)
-12. [Continous Delivery](11-cd)
-11. [Serverless](99-ci-cd_serverless)
-14. [Prüfungsvorbereitung](13-zusammenfassung)
+0. [Einführung Cloud Computing](00-einfuehrung)
+1. [Kommunikation](01-kommunikation)
+2. [Virtualisierung](02-virtualisierung)
+3. [Provisionierung](03-provisionierung)
+4. [Infrastructure-as-a-Service](04-iaas)
+5. [Cluster-Scheduling](05-cluster-scheduling)
+6. [Cluster-Orchestrierung](06-orchestrierung)
+7. [Cloud-fähige Softwarearchitekturen](07-cloud-architektur)
+8. [Plattform-as-a-Service](08-paas)
+9. [Big Data: Speicherung und Verarbeitung](09-big-data)
+10. [Continous Delivery](11-cd)
+11. [Programmiermodelle: Reactive Programming](12-programmiermodelle)
+12. [Serverless](99-ci-cd_serverless)
+13. [Prüfungsvorbereitung](13-zusammenfassung)
 
 Für die Übungen notwendige Software:
 
