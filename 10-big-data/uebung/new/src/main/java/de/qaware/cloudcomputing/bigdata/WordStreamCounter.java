@@ -28,7 +28,7 @@ public class WordStreamCounter {
             try (IgniteCache<AffinityUuid, String> streamCache = ignite.getOrCreateCache(cfg)) {
                 // Select top 10 words.
                 SqlFieldsQuery top10Qry = new SqlFieldsQuery(
-                        "select _val, count(_val) as cnt from String group by _val order by cnt desc limit 10",
+                        "select _val, count(_val) as cnt from String where length(_val) > 5 group by _val order by cnt desc limit 10",
                         true /*collocated*/
                 );
 
