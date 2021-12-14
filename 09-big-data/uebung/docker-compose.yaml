@@ -1,7 +1,7 @@
 version: "3"
 services:
   ignite:
-    build: "./src/main/ignite"
+    build: "src/main/ignite"
     entrypoint:
       - "/usr/share/apache-ignite/bin/ignite.sh"
       - "/config/ignite.xml"
