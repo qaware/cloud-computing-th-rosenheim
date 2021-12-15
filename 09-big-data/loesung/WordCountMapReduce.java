@@ -33,8 +33,7 @@ public class WordCountMapReduce {
 
         WordCountSplitAdapter wordCountSplitAdapter = new WordCountSplitAdapter();
 
-        // TODO: Adapter und Daten an das Ignite-Cluster übergeben
-
+        Map<String, Integer> taskResult = ignite.compute().execute(wordCountSplitAdapter, book);
         Map<String, Integer> sortedTaskResult = sortMapByValue(taskResult);
 
         for (Map.Entry<String, Integer> entry : sortedTaskResult.entrySet()) {
