@@ -39,8 +39,11 @@ public class WordCountSplitAdapter extends ComputeTaskSplitAdapter<String, Map<S
             ComputeJobAdapter adapter = new ComputeJobAdapter() {
                 @Override
                 public Object execute() throws IgniteException {
-                    // TODO: Map
-                    // Hier soll eine Map<String, Integer> mit den einzelnen Wörtern herauskommen.
+                    Map<String, Integer> splitMap = new HashMap<>();
+                    for (String word : copy) {
+                        splitMap.merge(word, 1, Integer::sum);
+                    }
+                    return splitMap;
                 }
             };
             jobs.add(adapter);
@@ -56,7 +59,9 @@ public class WordCountSplitAdapter extends ComputeTaskSplitAdapter<String, Map<S
         for (ComputeJobResult result : results) {
             Map<String, Integer> resultMap = result.getData();
 
-            // TODO: Reduce-Funktion
+            for (Map.Entry<String, Integer> entry : resultMap.entrySet()) {
+                counts.merge(entry.getKey(), entry.getValue(), (e1, e2) -> e1 + e2);
+            }
         }
 
         return counts;

@@ -52,8 +52,14 @@ public class WordCountStreaming {
     }
 
     private static void processLine(IgniteDataStreamer<AffinityUuid, String> streamer, String line) {
-        // TODO: Wörter ins Cluster streamen
-        // Hinweis: Nehmen Sie als Key AffinityUuid(word) zu Hilfe.
+        for (String word : line.split(SEPARATOR_CHAR)) {
+            if (!StringUtils.isEmpty(word)) {
+                // Stream words into Ignite.
+                // By using AffinityUuid we ensure that identical
+                // words are processed on the same cluster node.
+                streamer.addData(new AffinityUuid(word), word);
+            }
+        }
     }
 
 }
