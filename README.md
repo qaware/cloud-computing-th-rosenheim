@@ -23,13 +23,12 @@ Inhalte:
 
 Für die Übungen notwendige Software:
 
-* Java-Entwicklungsumgebung der Wahl (Eclipse, IntelliJ, Netbeans).
-* Java Development Kit (JDK) 8. (https://adoptopenjdk.net/)
-* git in der aktuellsten Version: https://git-scm.com/download/win. Optional: github Desktop (https://desktop.github.com).
+* Java-Entwicklungsumgebung der Wahl (Empfehlung: IntelliJ IDEA).
+* Java Development Kit (JDK) 11. (https://www.azul.com/downloads/?package=jdk)
+* git in der aktuellsten Version: https://git-scm.com/. Optional: github Desktop (https://desktop.github.com).
 * Vagrant (inklusive der benötigten VirtualBox Version) in der aktuellsten Version. (https://www.vagrantup.com)
-* Docker for Windows (https://docs.docker.com/docker-for-windows) oder Docker for Mac (https://docs.docker.com/docker-for-mac)
+* Docker (https://www.docker.com/)
 * Minikube (https://github.com/kubernetes/minikube/releases)
-* Minishift (https://github.com/minishift/minishift/releases)
 
 Autoren:
 
