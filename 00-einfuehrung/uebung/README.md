@@ -5,7 +5,7 @@ Ziel der heutigen Übung ist es, die benötigten Softwarekomponenten für die we
 ## Installationen
 
 1. Git ([Installation](https://git-scm.com/downloads))
-1. Ein Java 8 JDK (z.B. [AdoptOpenJDK](https://adoptopenjdk.net/), ob HotSpot oder OpenJ9 spielt keine Rolle)
+1. Ein Java 11 JDK (z.B. [Azul Zulu JDK](https://www.azul.com/downloads/?package=jdk).
 1. Eine Java IDE ihrer Wahl, z.B. [IntelliJ Community Edition](https://www.jetbrains.com/de-de/idea/download/)
 1. Docker ([Windows](https://docs.docker.com/docker-for-windows/install/), [Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/engine/install/))
 
