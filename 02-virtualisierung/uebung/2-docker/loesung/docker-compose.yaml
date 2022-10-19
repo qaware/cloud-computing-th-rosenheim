@@ -1,8 +1,0 @@
-version: "3.9"
-services:
-  webserver:
-    image: "nginx:mainline"
-    ports:
-      - "8080:80"
-    volumes:
-      - "./content:/usr/share/nginx/html"
