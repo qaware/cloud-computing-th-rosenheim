@@ -6,7 +6,7 @@ Prüfen sie dass Docker und Docker Compose auf ihrem Rechner installiert sind.
 
 ### Aufgabe: Docker Compose
 
-In dieser Aufgabe sollen sie den Technologie Stack aus NGINX, PHP und MySQL mittels Docker Compose hochfahren. Verwenden sie hierfür Images von Docker Hub sowie selbst erzeugte Images.
+In dieser Aufgabe sollen sie den Technologie-Stack aus NGINX, PHP und MySQL mittels Docker Compose hochfahren. Verwenden sie hierfür Images von Docker Hub sowie selbst erzeugte Images.
 
 (1) Legen sie ein Docker Compose File an und definieren sie einen MySQL 5.5 Service sowie einen Service für einen Nginx+PHP7 Container.
 
