@@ -62,12 +62,11 @@ In den ersten Schritten haben wir das Image manuell erstellt und mussten außerd
 
 ## Aufgaben Teil 3
 
-Wir wollen jetzt noch unser eigenes HTML von nginx ausliefern lassen. Dazu schieben wir eine HTML-Datei in das Verzeichnis, in dem der NGINX-Webserver solche Artefakte erwartet und nutzen dazu docker-compose und Volumes.
+Wir wollen jetzt noch unser eigenes HTML von nginx ausliefern lassen. Dazu schieben wir eine HTML-Datei in das Verzeichnis, in dem der NGINX-Webserver solche Artefakte erwartet und nutzen dazu Volumes.
 
-Orientieren Sie sich dabei an dem `docker-compose.yaml` in diesem Verzeichnis. Wir verwenden jetzt das offizielle NGINX-Docker-Image. Was müssen Sie noch ändern, damit der NGINX-Webserver die Demo-Webseite aus dem Verzeichnis `content` ausliefern kann?
+Wir verwenden jetzt das offizielle NGINX-Docker-Image (`docker run -p 80:80 nginx:mainline`). 
+Was müssen Sie noch ändern, damit der NGINX-Webserver die Demo-Webseite aus dem Verzeichnis `content` ausliefern kann?
 Tipp: Im Container müssen die Dateien im Verzeichnis `/usr/share/nginx/html` liegen.
-
-Starten Sie den Webserver mit `docker-compose up`. Können Sie die Webseite jetzt in Ihrem Browser sehen? Wenn nein, braucht es vielleicht noch eine Konfiguration im `docker-compose.yaml`?
 
 ## Aufräumen
 
