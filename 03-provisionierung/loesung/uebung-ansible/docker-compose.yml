@@ -12,7 +12,7 @@ services:
       - "80"
     
   ansible-node:
-    image: "willhallonline/ansible:2.9-alpine-3.13"
+    image: "willhallonline/ansible:2.13-alpine-3.12"
     networks:
       - cloudcomputing
     depends_on:
