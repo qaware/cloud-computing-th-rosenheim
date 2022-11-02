@@ -16,9 +16,9 @@ mkdir bin
 cd bin 
 
 
-curl "https://releases.hashicorp.com/terraform/0.13.5/terraform_0.13.5_linux_amd64.zip" -o "terraform_0.13.5_linux_amd64.zip" 
-unzip terraform_0.13.5_linux_amd64.zip
-rm terraform_0.13.5_linux_amd64.zip
+curl "https://releases.hashicorp.com/terraform/1.3.3/terraform_1.3.3_linux_amd64.zip" -o "terraform_1.3.3_linux_amd64.zip"
+unzip terraform_1.3.3_linux_amd64.zip
+rm terraform_1.3.3_linux_amd64.zip
 ./terraform -install-autocomplete
 
 git clone https://github.com/aws/aws-ec2-instance-connect-cli.git 
