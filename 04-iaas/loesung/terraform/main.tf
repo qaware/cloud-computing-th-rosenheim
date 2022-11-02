@@ -1,5 +1,5 @@
 provider aws {
-  version = "3.12.0"
+  version = "< 4.0"
   region  = "us-east-1"
 }
 
