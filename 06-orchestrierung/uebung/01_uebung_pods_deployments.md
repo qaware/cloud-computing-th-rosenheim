@@ -7,7 +7,7 @@ Infos:
 Aufgaben:
 
 1. Starten Sie Docker und minikube (`minikube start`).
-2. Machen Sie sich mit der App `Hello-Service` vertraut.
+2. Machen Sie sich mit der App `Hello-Service` vertraut (siehe [code/hello-service](code/hello-service)).
 3. Bauen Sie das Container-Image gegen Minikube (`build-to-minikube.sh`).
 4. Schreiben Sie ein
   [Kubernetes Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#creating-a-deployment)
