@@ -6,7 +6,7 @@ Aufgaben:
 
 siehe `02_service.yaml`
 
-2. Startet einen temporären Pod und überprüft, dass der Service für den
+2. Startet einen temporären Pod und überprüft, dass der Service erreichbar ist.
 
 ```shell script
 ❯ kubectl run my-shell --rm -i --tty --image byrnedo/alpine-curl --command sh
