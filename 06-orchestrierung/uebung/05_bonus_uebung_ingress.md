@@ -3,6 +3,7 @@
 Infos:
 
 - [Cheat-Sheet](cheat-sheet.md)
+- Hinweis: Damit ingress in Minikube aktivert ist, müssen sie das Addon "ingress" installieren. Siehe den Befehl `minikube addons enable ingress` bzw. [Minikube Ingress](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/). 
 
 Aufgaben:
 
