@@ -2,9 +2,10 @@
 
 Aufgaben:
 
-1. Legt für die App `Hello-Service` einen
+1. Legt für die App `Hello-Service` einen Service an
 
-siehe `02_service.yaml`
+- siehe `02_service.yaml`
+- deployment: `kubectl apply -f 02_service.yaml`
 
 2. Startet einen temporären Pod und überprüft, dass der Service erreichbar ist.
 
