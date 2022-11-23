@@ -1,7 +1,7 @@
 version: '2'
 services:
   consul:
-    image: consul
+    image: consul:1.14.1
     command: consul agent -server -dev -client=0.0.0.0 -ui -bootstrap -log-level warn
     ports:
       - "8400:8400"
