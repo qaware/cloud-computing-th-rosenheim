@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   consul:
     image: consul:1.14.1
@@ -12,9 +12,7 @@ services:
 
   reverse-proxy:
     image: traefik:v2.9
-    command: --providers.consulcatalog.endpoint.address="consul:8500" --providers.docker=false --api.insecure=true
-    #command: --providers.consul.endpoints="consul:8500" --providers.docker=false --api.insecure=true
-    #command: --providers.docker --api.insecure=true
+    command: --providers.consulcatalog.endpoint.address="consul:8500" --api.insecure=true
     ports:
       - 80:80
       - 8080:8080
@@ -22,8 +20,6 @@ services:
       - consul
     links:
       - consul
-    #volumes:
-    #  - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - cloud-architecture
 
@@ -38,14 +34,6 @@ services:
       - cloud-architecture
     environment:
       - SPRING_CLOUD_CONSUL_HOST=consul
-
-  whoami:
-    # A container that exposes an API to show its IP address
-    image: traefik/whoami
-    labels:
-      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
-    networks:
-      - cloud-architecture
 
 networks:
   cloud-architecture:
