@@ -1,0 +1,16 @@
+version: '2'
+services:
+  book-service:
+    build: ./book-service
+    image: book-service:1.1.0
+    ports:
+      - 18080:18080
+    depends_on:
+      - consul
+    networks:
+      - cloud-architecture
+    environment:
+      - SPRING_CLOUD_CONSUL_HOST=consul
+
+networks:
+  cloud-architecture:
