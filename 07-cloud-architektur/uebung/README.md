@@ -33,7 +33,7 @@ Bearbeiten Sie in den Gruppen die folgenden Punkte:
 
 Finden Sie einen Vertreter Ihrer Gruppe, der die Vorstellung übernimmt.
 
-### Aufgabe 2: Raft Konsens Protokoll
+## Aufgabe 2: Raft Konsens Protokoll
 
 Erarbeiten Sie die Funktionsweise vom Raft Protokoll mithilfe folgender
 [Demo](http://thesecretlivesofdata.com/raft/).
@@ -44,7 +44,7 @@ Ziel dieser Übung ist es, erste praktische Erfahrungen mit Traefik und Consul z
 Dabei wird ein einfacher Spring Cloud REST Service zusammen mit Consul
 für Service Discovery und Configuration und Traeffik als Edge Server aufgesetzt.
 
-Orientieren Sie sich an diesem [Tutorial](https://m.mattmclaugh.com/traefik-and-consul-catalog-example-2c33fc1480c0).
+Diese Übung orientiert sich an diesem [Tutorial](https://m.mattmclaugh.com/traefik-and-consul-catalog-example-2c33fc1480c0).
 
 ## Vorbereitung
 
