@@ -5,8 +5,6 @@ services:
     image: book-service:1.1.0
     ports:
       - 18080:18080
-    depends_on:
-      - consul
     networks:
       - cloud-architecture
     environment:

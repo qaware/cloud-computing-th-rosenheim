@@ -55,12 +55,22 @@ Diese Übung orientiert sich an diesem [Tutorial](https://m.mattmclaugh.com/trae
 
 ### Testen sie den vorgefertigten Container
 
-Benutzen Sie das Docker-Compose File in diesem Verzeichnis. Testen Sie, dass der Book-Service ordnungsgemäss gestartet wird.
-Nach dem Start sollten sie den Book-Service z.B. direkt über 
+Zuerst müssen sie den Book-Service im Unterverzeichnis `book-service` bauen. Benutzen Sie dazu den Befehl:
+```shell
+./mvnw package
+```
+
+Nun können Sie den Container mit dem Docker-Compose File in diesem Verzeichnis bauen und starten:
+```shell
+docker-compose up --build
+```
+Testen Sie, dass der Book-Service korrekt gestartet wird.
+Nach dem Start sollten sie den Book-Service direkt auf Port `18080` erreichbar sein. 
+Sie können dies z.B. mit
 ```
 curl http://localhost:18080/api/books
 ```
-erreichbar sein. 
+überprüfen. 
 
 ### Consul Cluster (Single Node) mit Docker Compose
 
@@ -131,8 +141,20 @@ spring.cloud.consul.config.format=properties
 spring.cloud.consul.config.data-key=data
 ```
 
-Falls Sie nicht weiterkommen, verwenden Sie folgenden Abschnitt:
+Im gleichen Verzeichnis müssen sie noch die Datei `application.properties` erweitern:
 ```
+# assign a unique instance ID
+spring.cloud.consul.discovery.instance-id=${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+# required by Docker compose and Consul to run the health check
+# register IP address and heartbeats
+spring.cloud.consul.discovery.prefer-ip-address=true
+spring.cloud.consul.discovery.heartbeat.enabled=true
+```
+
+
+Falls Sie nicht weiterkommen, verwenden Sie folgenden Abschnitt:
+```yaml
  book-service:
     build: ./book-service
     image: book-service:1.1.0
@@ -144,6 +166,14 @@ Falls Sie nicht weiterkommen, verwenden Sie folgenden Abschnitt:
       - cloud-architecture
     environment:
       - SPRING_CLOUD_CONSUL_HOST=consul
+```
+
+Zuletzt müssen sie dafür sorgen, dass der book-service nach Consul gestartet wird. 
+Erweitern sie dazu die book-service docker-compose Konfiguration um den folgenden Block:
+```yaml
+    depends_on:
+      - consul
+
 ```
 
 ### Traefik Edge Service mit Consul Backend
@@ -162,7 +192,7 @@ Interaktion mit Consul.
 <details>
 <summary>Falls Sie nicht weiterkommen, verwenden Sie folgenden Abschnitt:</summary>
 
-```
+```yaml
   reverse-proxy:
     image: traefik
     command: --providers.consulcatalog.endpoint.address="consul:8500" --api.insecure=true
@@ -184,14 +214,7 @@ In der `application.properties` müssen zudem folgende Properties angelegt werde
 in Consul und die Tags für Traefik korrekt zu konfigurieren:
 
 ```
-# assign a unique instance ID
-spring.cloud.consul.discovery.instance-id=${spring.application.name}:${spring.application.instance_id:${random.value}}
-
-# required by Docker compose and Consul to run the health check
-# register IP address and heartbeats
-spring.cloud.consul.discovery.prefer-ip-address=true
-spring.cloud.consul.discovery.heartbeat.enabled=true
-
+# Configuration for traefik
 spring.cloud.consul.discovery.tags=traefik.enable=true,traefik.frontend.rule=PathPrefixStrip:/book-service,traefik.tags=api,traefik.frontend.entrypoint=h
 ```
 
