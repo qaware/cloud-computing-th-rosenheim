@@ -119,7 +119,7 @@ Die folgenden Dependencies müssen der `pom.xml` hinzugefügt werden:
 
 Danach muss unter `src/main/resources` die Datei `bootstrap.properties` angelegt werden:
 
-```
+```properties
 spring.application.name=book-service
 
 # specify Consul host and port
@@ -142,7 +142,7 @@ spring.cloud.consul.config.data-key=data
 ```
 
 Im gleichen Verzeichnis müssen sie noch die Datei `application.properties` erweitern:
-```
+```properties
 # assign a unique instance ID
 spring.cloud.consul.discovery.instance-id=${spring.application.name}:${spring.application.instance_id:${random.value}}
 
@@ -213,14 +213,14 @@ Interaktion mit Consul.
 In der `application.properties` müssen zudem folgende Properties angelegt werden, um die Service-Registrierung
 in Consul und die Tags für Traefik korrekt zu konfigurieren:
 
-```
+```properties
 # Configuration for traefik
 spring.cloud.consul.discovery.tags=traefik.enable=true,traefik.frontend.rule=PathPrefixStrip:/book-service,traefik.tags=api,traefik.frontend.entrypoint=h
 ```
 
 Starten Sie die Services erneut. Wenn alles geklappt hat sollten sie nun den Book-Service in der Traefik-API sehen.
 Sie sollten nun den Book-Service über Traefik aufrufen können, z.B. über:
-```bash
+```shell
 curl -H Host:book-service-uebung http://127.0.0.1/api/books
 ```
 
