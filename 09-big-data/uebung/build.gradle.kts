@@ -34,4 +34,6 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClass.set("de.qaware.cloudcomputing.bigdata.HelloWorld")
+
+    applicationDefaultJvmArgs = listOf("--add-opens", "java.base/java.io=ALL-UNNAMED")
 }
