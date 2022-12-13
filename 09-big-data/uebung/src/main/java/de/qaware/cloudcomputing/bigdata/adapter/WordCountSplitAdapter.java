@@ -41,6 +41,7 @@ public class WordCountSplitAdapter extends ComputeTaskSplitAdapter<String, Map<S
                 public Object execute() throws IgniteException {
                     // TODO: Map
                     // Hier soll eine Map<String, Integer> mit den einzelnen Wörtern herauskommen.
+                    return new Object();
                 }
             };
             jobs.add(adapter);

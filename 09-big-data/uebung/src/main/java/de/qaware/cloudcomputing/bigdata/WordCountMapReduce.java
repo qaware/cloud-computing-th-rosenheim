@@ -9,6 +9,7 @@ import org.apache.ignite.Ignition;
 import org.apache.ignite.configuration.IgniteConfiguration;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,6 +35,7 @@ public class WordCountMapReduce {
         WordCountSplitAdapter wordCountSplitAdapter = new WordCountSplitAdapter();
 
         // TODO: Adapter und Daten an das Ignite-Cluster übergeben
+        Map<String, Integer> taskResult = new HashMap<>();
 
         Map<String, Integer> sortedTaskResult = sortMapByValue(taskResult);
 
