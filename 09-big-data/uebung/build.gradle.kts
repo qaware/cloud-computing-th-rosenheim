@@ -22,8 +22,8 @@ repositories {
 
 dependencies {
     // Apache Ignite
-    implementation("org.apache.ignite:ignite-core:2.11.0")
-    implementation("org.apache.ignite:ignite-indexing:2.11.0")
+    implementation("org.apache.ignite:ignite-core:2.14.0")
+    implementation("org.apache.ignite:ignite-indexing:2.14.0")
 
     // Apache Commons
     implementation("org.apache.commons:commons-collections4:4.4")
