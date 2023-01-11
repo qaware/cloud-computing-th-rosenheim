@@ -1,6 +1,7 @@
 # Observability
 
 Lesen Sie sich die Datei README.md durch, um die Quarkus-Services und die Grafana-Dienste zu starten. 
+Sie finden Grafana anschließend unter folgender URL: http://localhost:3000 (Credentials: `admin:password123`)
 
 ## Übung 1: Logs
 
