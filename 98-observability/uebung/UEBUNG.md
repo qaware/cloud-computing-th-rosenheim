@@ -23,4 +23,6 @@ Prometheus-Konfiguration: https://prometheus.io/docs/prometheus/latest/configura
 
 ## Übung 3: Traces
 
-## Übung 4: APM
+1. In die Services ist bereits OpenTracing integriert. Machen Sie ein paar Aufrufe gegen den laufenden TLE-Service und prüfen Sie die Traces in Grafana. Wie kommen Sie an die Trace-Id?
+2. Informieren Sie sich, wie Sie zusätzliche (Meta-)Daten zu den Traces hinzufügen können und Testen Sie das an einem der Services.
+3. Bonus: Bauen Sie einen zweiten Service (Sie können dazu den TLE-Service klonen). Rufen Sie in dem neuen Service den TLE-Service auf und prüfen Sie den Aufruf in den Traces in Grafana. 
