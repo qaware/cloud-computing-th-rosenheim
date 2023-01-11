@@ -15,7 +15,7 @@ Promtail-Konfiguration: https://grafana.com/docs/loki/latest/clients/promtail/co
 
 ## Übung 2: Metriken
 
-1. Sehen Sie sich die Konfiguration von Prometheus an. Welche Dienste werden von Prometheus abgefragt?
+1. Sehen Sie sich die Konfiguration von Prometheus an. Welche Dienste werden bereits von Prometheus abgefragt?
 2. Quarkus stellt Metriken unter dem Pfad /q/metrics zur Verfügung. Ziehen Sie die Metriken von beiden Services mit Prometheus ab und kontrollieren Sie diese im Explore-Fenster von Grafana.
 3. Mit einem schönen Dashboard lassen sich die Metriken viel besser visualisieren. Importieren Sie [dieses Dashboard von der Grafana-Website](https://grafana.com/grafana/dashboards/14370-jvm-quarkus-micrometer-metrics/) und sehen Sie sich damit die Metriken von Quarkus an.
 4. Bonus: Informieren Sie sich, wie Sie selbst definierte Metriken in eine Quarkus-Anwendung einbauen können. Prometheus wird diese nun automatisch abziehen. Visualisieren Sie die Metrik in Grafana.
@@ -24,6 +24,9 @@ Prometheus-Konfiguration: https://prometheus.io/docs/prometheus/latest/configura
 
 ## Übung 3: Traces
 
-1. In die Services ist bereits OpenTracing integriert. Machen Sie ein paar Aufrufe gegen den laufenden TLE-Service und prüfen Sie die Traces in Grafana. Wie kommen Sie an die Trace-Id?
-2. Informieren Sie sich, wie Sie zusätzliche (Meta-)Daten zu den Traces hinzufügen können und Testen Sie das an einem der Services.
-3. Bonus: Bauen Sie einen zweiten Service (Sie können dazu den TLE-Service klonen). Rufen Sie in dem neuen Service den TLE-Service auf und prüfen Sie den Aufruf in den Traces in Grafana. 
+1. In die Services ist bereits OpenTracing integriert. Sie müssen lediglich die Konfiguration des Tempo-Endpunkts in der application.properties ergänzen. 
+2. Machen Sie ein paar Aufrufe gegen den laufenden TLE-Service und prüfen Sie die Traces in Grafana. Wie kommen Sie an die Trace-Id?
+3. Informieren Sie sich, wie Sie zusätzliche (Meta-)Daten zu den Traces hinzufügen können und Testen Sie das an einem der Services.
+4. Bonus: Bauen Sie einen zweiten Service (Sie können dazu den TLE-Service klonen). Rufen Sie in dem neuen Service den TLE-Service auf und prüfen Sie den Aufruf in den Traces in Grafana. 
+
+Agent-Konfiguration: https://quarkus.io/guides/opentracing
