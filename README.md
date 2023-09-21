@@ -29,11 +29,11 @@ Inhalte:
 Für die Übungen notwendige Software:
 
 * Java-Entwicklungsumgebung der Wahl (Empfehlung: IntelliJ IDEA).
-* Java Development Kit (JDK) 11. (https://www.azul.com/downloads/?package=jdk)
-* git in der aktuellsten Version: https://git-scm.com/. Optional: github Desktop (https://desktop.github.com).
-* Vagrant (inklusive der benötigten VirtualBox Version) in der aktuellsten Version. (https://www.vagrantup.com)
+* Java Development Kit (JDK) 17. (https://www.azul.com/downloads/?package=jdk)
+* git in der aktuellsten Version: https://git-scm.com/. Optional: github Desktop (https://desktop.github.com).
+* Vagrant (inklusive der benötigten VirtualBox-Version) in der aktuellsten Version. (https://www.vagrantup.com)
 * Docker (https://www.docker.com/)
-* Minikube (https://github.com/kubernetes/minikube/releases)
+* Kind (https://kind.sigs.k8s.io/)
 
 Autoren:
 
