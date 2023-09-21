@@ -1,4 +1,4 @@
-![Vorlesung Cloud Computing](https://github.com/qaware/cloudcomputing/blob/master/vl-cc-logo.jpg "Vorlesung Cloud Computing")
+![Vorlesung Cloud Computing](https://github.com/qaware/cloud-computing-th-rosenheim/blob/master/vl-cc-logo.jpg "Vorlesung Cloud Computing")
 
 > [!WARNING]  
 > Wegen seiner Größe wurde dieses Repository am 21.09.2023 auf [Git LFS](https://git-lfs.com/) umgezogen.
