@@ -2,6 +2,7 @@
 
 > [!WARNING]  
 > Wegen seiner Größe wurde dieses Repository am 21.09.2023 auf [Git LFS](https://git-lfs.com/) umgezogen.
+> Dadurch wurde die Git-History neu geschrieben. Falls das Repository schon vorher geklont wurde, muss es neu geklont werden.
 > Zum erfolgreichen Klonen muss Git LFS installiert sein.
 
 __Aktuelle Vorlesung: Technische Hochschule Rosenheim, Wintersemester 2023/2024__
