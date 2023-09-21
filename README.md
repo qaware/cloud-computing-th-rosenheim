@@ -1,6 +1,10 @@
 ![Vorlesung Cloud Computing](https://github.com/qaware/cloudcomputing/blob/master/vl-cc-logo.jpg "Vorlesung Cloud Computing")
 
-__Aktuelle Vorlesung: Technische Hochschule Rosenheim, Wintersemester 2021/2022__
+> [!WARNING]  
+> Wegen seiner Größe wurde dieses Repository am 21.09.2023 auf [Git LFS](https://git-lfs.com/) umgezogen.
+> Zum erfolgreichen Klonen muss Git LFS installiert sein.
+
+__Aktuelle Vorlesung: Technische Hochschule Rosenheim, Wintersemester 2023/2024__
 
 [Organisatorisches](00-einfuehrung/Orga.pdf)
 
