@@ -1,0 +1,21 @@
+# Installing the nginx ingress controller
+k8s_yaml('nginx-ingress-controller.yaml')
+# Labelling the resources for prettier grouping in the UI
+k8s_resource(workload='ingress-nginx-controller', labels=['nginx-ingress-controller'])
+k8s_resource(workload='ingress-nginx-admission-create', labels=['nginx-ingress-controller'])
+k8s_resource(workload='ingress-nginx-admission-patch', labels=['nginx-ingress-controller'])
+
+# Installing the echo dev server components
+k8s_yaml('echo-http-ingress-config.yaml')
+# Labelling the resources for prettier grouping in the UI
+k8s_resource(workload='foo-app', labels=['traffic-test'], resource_deps=['ingress-nginx-controller'])
+k8s_resource(workload='bar-app', labels=['traffic-test'], resource_deps=['ingress-nginx-controller'])
+
+# Makes the dependencies clear. Apparently, one has to wait for the ingress controller to be fully
+# ready before creating any ingresses. Otherwise the system will not reach a stable state.
+k8s_resource(
+    objects=['example-ingress', 'foo-service', 'bar-service'],
+    resource_deps=['foo-app', 'bar-app'],
+    new_name='ingress',
+    labels=['traffic-test']
+)

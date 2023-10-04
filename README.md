@@ -34,6 +34,7 @@ Für die Übungen notwendige Software:
 * Vagrant (inklusive der benötigten VirtualBox-Version) in der aktuellsten Version. (https://www.vagrantup.com)
 * Docker (https://www.docker.com/)
 * Kind (https://kind.sigs.k8s.io/)
+* Tilt (https://tilt.dev)
 
 Autoren:
 
@@ -43,5 +44,6 @@ Autoren:
 * Sonja Wegner (sonja.wegner@qaware.de, [@sonjawegner](https://github.com/sonjawegner))
 * Simon Bäumler (simon.baeumler@qaware.de, [@simonbaeumler](https://github.com/simonbaeumler))
 * Franz Wimmer (franz.wimmer@qaware.de, [@zalintyre](https://github.com/zalintyre))
+* Lukas Buchner (lukas.buchner@qaware.de, [@CryoCodec](https://github.com/CryoCodec))
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Cloud Computing Vorlesung</span> von <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Josef Adersberger</span> und <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">M.-Leander Reimer</span> ist lizenziert unter einer <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 International Lizenz</a>.
