@@ -5,7 +5,7 @@ Ziel der heutigen Übung ist es, die benötigten Softwarekomponenten für die we
 ## Installationen
 
 1. Git ([Installation](https://git-scm.com/downloads))
-2. Ein Java 11 JDK (z.B. [Azul Zulu JDK](https://www.azul.com/downloads/?package=jdk).
+2. Ein Java 17 JDK (z.B. [Azul Zulu JDK](https://www.azul.com/downloads/?package=jdk).
 3. Eine Java IDE ihrer Wahl, z.B. [IntelliJ Community Edition](https://www.jetbrains.com/de-de/idea/download/)
 4. Docker ([Windows](https://docs.docker.com/docker-for-windows/install/), [Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/engine/install/))
 5. Kind (https://kind.sigs.k8s.io/docs/user/quick-start#installation)
