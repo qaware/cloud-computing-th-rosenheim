@@ -14,8 +14,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.parameters>true</maven.compiler.parameters>
 
-    <grpc.version>1.31.1</grpc.version>
-    <protoc.version>3.13.0</protoc.version>
+    <grpc.version>1.58.0</grpc.version>
+    <protoc.version>3.24.0</protoc.version>
   </properties>
 
   <dependencies>
@@ -47,7 +47,7 @@
       <extension>
         <groupId>kr.motd.maven</groupId>
         <artifactId>os-maven-plugin</artifactId>
-        <version>1.6.2</version>
+        <version>1.7.1</version>
       </extension>
     </extensions>
     <plugins>
