@@ -1,0 +1,19 @@
+# Installing the nginx ingress controller
+k8s_yaml('nginx-ingress-controller.yaml')
+# Labelling the resources for prettier grouping in the UI
+k8s_resource(workload='ingress-nginx-controller', labels=['nginx-ingress-controller'])
+k8s_resource(workload='ingress-nginx-admission-create', labels=['nginx-ingress-controller'])
+k8s_resource(workload='ingress-nginx-admission-patch', labels=['nginx-ingress-controller'])
+
+# Load the 'secret' extension
+load('ext://secret', 'secret_create_generic', 'secret_from_dict')
+# Create a secret from a dict
+k8s_yaml(secret_from_dict("troetbot-secrets", inputs={'MASTODON_ACCESS_TOKEN': os.getenv('MASTODON_ACCESS_TOKEN')}))
+
+# Load the 'configmap' extension
+load('ext://configmap', 'configmap_from_dict')
+# Create a configmap from a dict
+k8s_yaml(configmap_from_dict('troetbot-config', inputs={'MASTODON_INSTANCE_HOSTNAME': os.getenv('MASTODON_INSTANCE_HOSTNAME')}))
+
+# Deploy the troetbot
+load_dynamic('../troetbot/Tiltfile')
