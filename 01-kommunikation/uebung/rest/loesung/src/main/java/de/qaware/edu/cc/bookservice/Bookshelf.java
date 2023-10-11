@@ -1,11 +1,11 @@
 package de.qaware.edu.cc.bookservice;
 
+import jakarta.annotation.PostConstruct;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,7 +36,7 @@ public class Bookshelf {
      * @return a collection of books
      */
     public Collection<Book> findByTitle(String title) {
-        if (Objects.isNull(title)) {
+        if (StringUtils.isEmpty(title)) {
             return books;
         } else {
             return books
@@ -49,8 +49,8 @@ public class Bookshelf {
     /**
      * Find book by ISBN.
      *
-     * @param isbn
-     * @return
+     * @param isbn the isbn of the book
+     * @return the book that matched the isbn
      */
     public Book findByIsbn(String isbn) {
         return books
@@ -60,11 +60,10 @@ public class Bookshelf {
                 .orElseThrow(() -> new BookNotFoundException(isbn));
     }
 
-
     /**
      * Delete book by ISBN.
      *
-     * @param isbn
+     * @param isbn isbn of the book
      */
     public void delete(String isbn) {
         books.removeIf(b -> b.getIsbn().equals(isbn));
