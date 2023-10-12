@@ -1,3 +1,6 @@
+load('ext://dotenv', 'dotenv')
+dotenv()
+
 # Installing the nginx ingress controller
 k8s_yaml('nginx-ingress-controller.yaml')
 # Labelling the resources for prettier grouping in the UI

@@ -20,7 +20,7 @@ Die Struktur sollte also wie folgt aussehen:
 
 ## Deployment mit Tilt
 
-Setzen Sie die folgenden Umgebungsvariablen in der Shell in der Sie Tilt ausführen wollen: 
+Setzen Sie die folgenden Umgebungsvariablen im `.env` file:  
 ```shell
 MASTODON_INSTANCE_HOSTNAME= <your_mastodon_instance>
 MASTODON_ACCESS_TOKEN= <your_mastodon_access_token>
