@@ -12,10 +12,10 @@ Ziel dieser Übung ist es mit Vagrant einen einfachen Stack aus NGINX, PHP und M
 
 Bei dieser Aufgabe geht es darum den Technologie-Stack aus NGINX, PHP und MySQL innerhalb einer virtuellen Maschine mit Hilfe von Vagrant hochzufahren.
 
-(1) In einem ersten Schritt legen sie zunächst mit Vagrant eine Ubuntu 20.04 Basis Box an.
+(1) In einem ersten Schritt legen sie zunächst mit Vagrant eine Ubuntu 22.04 Basis Box an.
 
 ```bash
-$ vagrant init ubuntu/focal64
+$ vagrant init ubuntu/jammy64
 ```
 
 Editieren sie das `Vagrantfile` und weisen sie der virtuellen Maschine anschließend 1024 MB Hauptspeicher zu.
@@ -52,7 +52,9 @@ die Index-Seite auf `http://localhost:18080/` aufrufen.
 
 ```bash
 $ vagrant provision
-oder
+
+# oder
+
 $ vagrant reload --provision
 ```
 
@@ -73,8 +75,8 @@ $ vagrant ssh
 $ mysql -u root -p
 ```
 
-(4) In diesem Schritt installieren wir nun PHP5 und konfigurieren den NGINX Server entsprechend. Erweitern sie die
-Provisionierung und installieren sie die Pakete `php5-fpm` und `php5-mysqlnd`.
+(4) In diesem Schritt installieren wir nun PHP und konfigurieren den NGINX Server entsprechend. Erweitern sie die
+Provisionierung und installieren sie die Pakete `php-fpm` und `php-mysqlnd`.
 
 ```bash
 # PHP
