@@ -2,31 +2,9 @@
 
 ## Vorbereitung
 
-Dieses Tutorial benötigt eine Docker-Installation auf ihrem lokalen System. 
-
-Sie können sich aber auch eine VM mittels Vagrant dazu einrichten:
-
-```bash
-vagrant init generic/alpine39
-vagrant up
-vagrant status
-vagrant ssh
-```
-In der VM kann dann docker installiert werden.
-
-```bash
-sudo apk update
-sudo apk add docker
-sudo addgroup <username> docker
-sudo rc-update add docker boot
-sudo service docker start
-exit
-```
-Danach wieder mit `vagrant ssh` einloggen. 
+Dieses Tutorial benötigt eine Docker-Installation auf ihrem lokalen System.
 
 Zum Test, ob Docker richtig funktioniert, `docker run hello-world` ausführen. 
-
-*Hinweis:* Sollte ihre lokale Docker-Installation nicht funktionieren, dann können Sie die folgende Übung ab Schritt 3 auch hier durchführen: https://www.katacoda.com/courses/docker/playground
 
 ## Aufgaben Teil 1
 
@@ -74,20 +52,11 @@ Docker kann viel Platz auf ihrer Festplatte verbrauchen. Für ein schnelles Aufr
 
 ## Fundierter Einstieg in Docker
 
-Für die Vorlesung wird empfohlen einen tieferen Einstieg in Docker zu machen, als dies im Rahmen der Übung möglich ist. Nutzen Sie hierfür den Docker-Kurs auf Katacoda: https://katacoda.com/courses/docker. Arbeiten Sie die folgenden Szenarien im Sinne einer Hausaufgabe durch:
- * Launching Containers
- * Deploy Static HTML Websites as Container
- * Building Container Images
- * Dockerizing Node.js
- * Optimise Builds With Docker OnBuild
- * Ignoring Files During Build
- * Create Data Containers
- * Creating Networls Between Containers Using Links
- * Creating Networks Between Containers Using Networks
- * Persisting Data Using Volumes
- * Manage Container Log Files
- * Ensuring Container Updatime With Restart Policies
- * Adding Docker Metadata & Labels
+Für die Vorlesung wird empfohlen einen tieferen Einstieg in Docker zu machen, als dies im Rahmen der Übung möglich ist. Nutzen Sie hierfür den Docker-Kurs auf Killercoda: https://killercoda.com/brian/course/docker-basics. Arbeiten Sie die folgenden Szenarien im Sinne einer Hausaufgabe durch:
+* Docker commands
+* Docker storage
+* Docker network
+* Dockerfile
 
 ## Quellen
 
