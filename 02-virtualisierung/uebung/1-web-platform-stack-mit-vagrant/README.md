@@ -34,7 +34,7 @@ $ vagrant ssh
 ```
 
 (2) Installieren sie nun als ersten den NGINX Server in der VM mittels Shell Provisioner. Editieren sie hierfür
-erneut das `Vagrantfile`. Leiten sie außerdem den Port `80` des Gast-Betriebssystems als Port `18080` auf das
+erneut das `Vagrantfile`. Leiten sie außerdem den Port `80` des Gast-Betriebssystems als Port `8080` auf das
 Hostbetriebssystem weiter.
 
 ```ruby
