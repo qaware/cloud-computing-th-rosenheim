@@ -13,19 +13,19 @@ Nginx ist ein Open Source Reverse Proxy.
 Unter https://hub.docker.com/_/nginx ist dokumentiert, wie das offizielle Docker Image
 genutzt werden kann.
 
-Schauen Sie sich die Doku an und starten Sie über die Console einen Nginx Container.
+Schauen Sie sich die Doku an und starten Sie über die Console einen Nginx-Container.
 
-Sorgen Sie dafür, dass der Port '80' auch auf Ihrem Host exponiert wird.
+Sorgen Sie dafür, dass der Port '80' auch auf Ihrem Host als Port 8080 exponiert wird.
 
 <details>
 <summary>Hinweis, falls Sie nicht weiterkommen:</summary>
 
 ```
-docker run -d -p 80:80 nginx
+docker run -d -p 8080:80 nginx
 ```
 </details>
 
-Rufen Sie dann testweise localhost:80 in Ihrem Browser auf.
+Rufen Sie dann testweise localhost:8080 in Ihrem Browser auf.
 
 ### Schritt 2: Dockerfile schreiben und eigene index.html anlegen
 In diesem Schritt wollen wir nicht mehr das fertige Image nutzen, sondern ein eigenes
@@ -36,27 +36,24 @@ Nutzen Sie hierfür ein einfaches HTML, dass eine "Hello World" Begrüßung ausg
 
 Legen Sie ein Dockerfile an.
 Führen Sie folgende Schritte aus:
-- Nutzen Sie nginx:1.19-alpine als Basisimage.
-- Kopieren Sie ihre 'index.html' nach '/usr/share/nginx/html/', 
-indem Sie das Docker Command 'COPY' nutzen.
+- Nutzen Sie `nginx:mainline` als Basisimage.
+- Kopieren Sie ihre `index.html` nach `/usr/share/nginx/html/`, indem Sie das Docker-Command `COPY` nutzen.
 - Exponieren Sie den Port 80.
-- Starten Sie nginx über das Command 'nginx'. Achten Sie darauf, -g 'daemon off;'
-beim Start mit anzugeben, damit Nginx nicht direkt nach dem Containerstart beendet wird,
-sondern im Vordergrund läuft.
+- Starten Sie nginx über das Command `nginx`. Achten Sie darauf, `-g 'daemon off;'` beim Start mit anzugeben, damit Nginx nicht direkt nach dem Containerstart beendet wird, sondern im Vordergrund läuft.
 
 <details>
 <summary>Hinweis, falls Sie nicht weiterkommen:</summary>
 
 ```
-FROM nginx:1.19-alpine
+FROM nginx:mainline
 COPY index.html /usr/share/nginx/html
 EXPOSE 80
 CMD nginx -g 'daemon off;'
 ```
 </details>
 
-### Schritt 3: Docker Image bauen
-Bauen Sie das Docker Image mit dem Namen cc-nginx und dem Tag v1.
+### Schritt 3: Docker-Image bauen
+Bauen Sie das Docker Image mit dem Namen `cc-nginx` und dem Tag `v1`.
 
 <details>
 <summary>Hinweis, falls Sie nicht weiterkommen:</summary>
@@ -64,8 +61,7 @@ Bauen Sie das Docker Image mit dem Namen cc-nginx und dem Tag v1.
 ```docker build . -t cc-nginx:v1```
 </details>
 
-Prüfen Sie danach über ```docker images```, dass das neue Docker Image in Ihrer
-lokalen Registry liegt.
+Prüfen Sie danach über `docker images`, dass das neue Docker-Image in Ihrer lokalen Registry liegt.
 
 ### Schritt 4: Container starten
 Starten Sie den Container.
@@ -77,14 +73,14 @@ Mappen Sie dabei den Port 8080 auf Ihrem Host auf den Container Port 80.
 ```docker run -it -p 8080:80 cc-nginx:v1```
 </details>
 
-Rufen Sie den gestarteten nginx Container unter localhost:8080 auf.
+Rufen Sie den gestarteten nginx-Container unter localhost:8080 auf.
 
 ### Schritt 5: Container über Docker Compose starten
 Wir nutzen jetzt unser Docker Image und starten dieses über Docker Compose.
 
-Legen Sie hierfür  Datei docker-compose.yml an, das einen nginx Instanz startet und dabei:
+Legen Sie hierfür  Datei docker-compose.yml an, das einen nginx-Instanz startet und dabei:
 
-- den Service Namen "cc-nginx" hat
+- den Service-Namen "cc-nginx" hat
 - das Image auf Basis des in Schritt 1 erstellen Dockerfiles baut
 - den Port 80 exportiert und unter 8080 auf Ihrem Host erreichbar macht
      
@@ -105,7 +101,6 @@ services:
 
 ### Bonus/Optional:
 Probieren Sie weitere Docker und Docker Compose Commands aus.
-- Skalieren Sie den nginx auf 3 Instanzen
 - Öffnen Sie eine Shell im laufenden Container
 - Editieren sie die index.html im Container
 - Schauen Sie in die nginx Logs
@@ -122,9 +117,8 @@ die Maschinen, die wir provisionieren wollen, per Docker Compose lokal hochfahre
 Wir wollen:
 - Die Ansible Control Node per Docker Compose starten
 - 3 Managed Nodes per Docker Compose starten
-- ein Playbook erstellen, dass auf allen 3 Managed Nodes einen Apache Http Server installiert, 
-konfiguriert und startet
-- das Playbook ausführen und die gestarteten Apache Http Server testweise aufrufen
+- ein Playbook erstellen, dass auf allen 3 Managed Nodes einen Apache-Httpd-Server installiert, konfiguriert und startet
+- das Playbook ausführen und die gestarteten Apache-Httpd-Server testweise aufrufen
 
 ### Hinweis:
 Falls Sie nicht weiterkommen, können Sie sich an der Musterlösung orientieren. 
@@ -135,9 +129,9 @@ Nutzen Sie auch die folgenden Referenzen:
 
 ### Schritt 1: Image für Managed Nodes bauen
 Erstellen Sie ein Dockerfile für die zu provisionierenden Maschinen / Managed Nodes. 
-Diese sollen Ubuntu in Version 22.04 beinhalten und SSH Verbindungen von außen erlauben:
-- Legen Sie dafür parallel zu dieser Readme eine Datei mit dem Namen "Dockerfile_Managed_Node" an.
-- Schreiben sie ein Dockerfile, dass die folgenden Shell-Befehle ausführt um den SSH server zu installieren:
+Diese sollen Ubuntu in Version 22.04 beinhalten und SSH-Verbindungen von außen erlauben:
+- Legen Sie dafür parallel zu dieser Readme eine Datei mit dem Namen "`Dockerfile_Managed_Node`" an.
+- Schreiben sie ein Dockerfile, das die folgenden Shell-Befehle ausführt um den SSH-Server zu installieren:
      ```
   apt-get update && apt-get install -y openssh-server
   mkdir /var/run/sshd
