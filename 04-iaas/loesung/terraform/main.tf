@@ -1,11 +1,8 @@
 provider aws {
-  version = "< 4.0"
   region  = "us-east-1"
 }
 
-provider random {
-  version = "3.0.0"
-}
+provider random {}
 
 resource random_string id_suffix {
   length  = 4
