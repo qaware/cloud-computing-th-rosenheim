@@ -44,3 +44,4 @@ cat >> /root/.bashrc <<-EOF
 EOF
 
 pip install terraform-local
+pip install awscli-local[ver1]

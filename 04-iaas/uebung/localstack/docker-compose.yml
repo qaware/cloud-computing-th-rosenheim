@@ -13,6 +13,11 @@ services:
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      custom:
+        aliases:
+          - result-bucket.s3.localhost.localstack.cloud
+          - s3.localhost.localstack.cloud
 
   iaas-container:
     build: ../iaas-container/
@@ -20,3 +25,8 @@ services:
       LOCALSTACK_HOSTNAME: localstack
     volumes:
       - ../terraform:/root/terraform
+    networks:
+      - custom
+
+networks:
+  custom:
