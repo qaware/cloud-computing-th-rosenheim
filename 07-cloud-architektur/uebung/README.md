@@ -1,8 +1,9 @@
 # Übung: Cloud Architektur
+
 ## Aufgabe 1: Twelve Factor Apps
 
 Die [Twelve Factor Apps](https://12factor.net/) beschreiben Methoden bzw. Empfehlungen zur Entwicklung von 
-Cloud Anwendungen.
+Cloud-Anwendungen.
 
 Recherchieren Sie in Ihrer Gruppe die angegebenen Faktoren. Sie können dafür diese 
 [Slides](https://www.slideshare.net/Alicanakku1/12-factor-apps)
@@ -33,12 +34,16 @@ Bearbeiten Sie in den Gruppen die folgenden Punkte:
 
 Finden Sie einen Vertreter Ihrer Gruppe, der die Vorstellung übernimmt.
 
-## Aufgabe 2: Raft Konsens Protokoll
+## Aufgabe 2: Das Raft-Konsens-Protokoll
 
 Erarbeiten Sie die Funktionsweise vom Raft Protokoll mithilfe folgender
 [Demo](http://thesecretlivesofdata.com/raft/).
 
-## Aufgabe 3: Erste Erfahrungen mit Traefik und Consul sammeln
+## Aufgabe 3: etcd
+
+Siehe Verzeichnis "etcd".
+
+## Aufgabe 4: Erste Erfahrungen mit Traefik und Consul sammeln
 
 Ziel dieser Übung ist es, erste praktische Erfahrungen mit Traefik und Consul zu machen.
 Dabei wird ein einfacher Spring Cloud REST Service zusammen mit Consul
@@ -229,36 +234,3 @@ curl -H Host:book-service-uebung http://127.0.0.1/api/books
 * Die Anwendung sollte nun unter `http://localhost:8081/book-service/api/books` erreichbar sein.
 * Die Consul UI sollte unter `http://localhost:8500/ui` erreichbar sein.
 * Die Traefik UI sollte unter `http://localhost:8080` erreichbar sein.
-
-## Aufgabe (Optional): Orchestrierung mit Kubernetes
-
-Bringen sie das Gespann aus Consul, Traefik und dem Microservice in Kubernetes zum Laufen.
-
-
-## Aufgabe (optional): Eight Fallacies of Distributed Computing
-
-Recherchieren Sie in Ihrer Gruppe die angegebenen Irrtümer / Trugschlüsse  der Verteilten Verarbeitung.
-Sie können dafür diesen [Artikel](https://www.simpleorientedarchitecture.com/8-fallacies-of-distributed-systems/)
-nutzen oder frei recherchieren.
-
-Bereiten Sie gemeinsam jeweils einen kurzen Foliensatz vor (1-3 Slides), in dem Sie
-* das angesprochene Problem beschreiben
-* mögliche Lösungen hierfür aufzeigen
-
-Finden Sie einen Vertreter Ihrer Gruppe, der die Vorstellung übernimmt.
-
-Bearbeiten Sie in den Gruppen die folgenden Punkte:
-
-* Gruppe 1:
-  * The network is reliable
-  * Latency is zero
-* Gruppe 2:
-  * Bandwidth is infinite
-  * The network is secure
-* Gruppe 3:
-  * Topology doesn't change
-  * There is one administrator
-* Gruppe 4:
-  * Transport cost is zero
-  * The network is homogeneous
-

@@ -1,0 +1,104 @@
+x-common:
+  initial_cluster_token: &initial_cluster_token '--initial-cluster-token=ANeOBQH5kUz94Cbn'
+  etcd-deployment: &etcd-deployment
+    image: bitnami/etcd:3.5
+    entrypoint: /opt/bitnami/etcd/bin/etcd
+
+version: '3.8'
+services:
+  change-vol-ownership:
+    image: ubuntu
+    user: "root"
+    volumes:
+      - etcd1:/tmp/etcd1
+      - etcd2:/tmp/etcd2
+      - etcd3:/tmp/etcd3
+    command: chown -R 1001:root /tmp/etcd1 /tmp/etcd2 /tmp/etcd3 && chmod -R 700 /tmp/etcd1 /tmp/etcd2 /tmp/etcd3
+
+  etcd-1:
+    <<: *etcd-deployment
+    command:
+      - '--name=etcd-1'
+      - '--initial-advertise-peer-urls=http://etcd-1:2380'
+      - '--listen-peer-urls=http://0.0.0.0:2380'
+      - '--listen-client-urls=http://0.0.0.0:2379'
+      - '--advertise-client-urls=http://etcd-1:2379'
+      - '--heartbeat-interval=250'
+      - '--election-timeout=1250'
+      - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
+      - '--initial-cluster-state=new'
+      - '--data-dir=/etcd/data'
+      - '--wal-dir=/etcd/wal'
+      - *initial_cluster_token
+    ports:
+      - "23791:2379"
+    volumes:
+#      - "etcd1_data:/etcd/data"
+#      - "etcd1_wal:/etcd/wal"
+      - "etcd1:/etcd"
+    depends_on:
+      change-vol-ownership:
+        condition: service_completed_successfully
+
+  etcd-2:
+    <<: *etcd-deployment
+    command:
+      - '--name=etcd-2'
+      - '--initial-advertise-peer-urls=http://etcd-2:2380'
+      - '--listen-peer-urls=http://0.0.0.0:2380'
+      - '--listen-client-urls=http://0.0.0.0:2379'
+      - '--advertise-client-urls=http://etcd-2:2379'
+      - '--heartbeat-interval=250'
+      - '--election-timeout=1250'
+      - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
+      - '--initial-cluster-state=new'
+      - '--data-dir=/etcd/data'
+      - '--wal-dir=/etcd/wal'
+      - *initial_cluster_token
+    ports:
+      - "23792:2379"
+    volumes:
+#      - "etcd2_data:/etcd/data"
+#      - "etcd2_wal:/etcd/wal"
+      - "etcd2:/etcd"
+    depends_on:
+      change-vol-ownership:
+        # Wait for the ownership to change
+        condition: service_completed_successfully
+
+  etcd-3:
+    <<: *etcd-deployment
+    command:
+      - '--name=etcd-3'
+      - '--initial-advertise-peer-urls=http://etcd-3:2380'
+      - '--listen-peer-urls=http://0.0.0.0:2380'
+      - '--listen-client-urls=http://0.0.0.0:2379'
+      - '--advertise-client-urls=http://etcd-3:2379'
+      - '--heartbeat-interval=250'
+      - '--election-timeout=1250'
+      - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
+      - '--initial-cluster-state=new'
+      - '--data-dir=/etcd/data'
+      - '--wal-dir=/etcd/wal'
+      - *initial_cluster_token
+    ports:
+      - "23793:2379"
+    volumes:
+#      - "etcd3_data:/etcd/data"
+#      - "etcd3_wal:/etcd/wal"
+      - "etcd3:/etcd"
+    depends_on:
+      change-vol-ownership:
+        # Wait for the ownership to change
+        condition: service_completed_successfully
+
+volumes:
+#  etcd1_data:
+#  etcd1_wal:
+  etcd1:
+#  etcd2_data:
+#  etcd2_wal:
+  etcd2:
+#  etcd3_data:
+#  etcd3_wal:
+  etcd3:
