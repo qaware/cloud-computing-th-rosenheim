@@ -18,7 +18,7 @@ Inhalte:
 4. [Infrastructure-as-a-Service](04-iaas)
 5. [Cluster-Scheduling](05-cluster-scheduling)
 6. [Cluster-Orchestrierung](06-orchestrierung)
-7. [Cloud-fähige Softwarearchitekturen](07-cloud-architektur)
+7. [Cloud-fähige Softwarearchitekturen](05-cloud-architektur)
 8. [Plattform-as-a-Service](08-paas)
 9. [Big Data: Speicherung und Verarbeitung](09-big-data)
 10. [Continous Delivery](11-cd)
