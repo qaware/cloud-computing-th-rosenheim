@@ -65,15 +65,15 @@
 
 04-iaas/uebung/01-jclouds/loesung/\.settings/org\.eclipse\.m2e\.core\.prefs
 
-05-cluster-scheduling/beispiele/marathon/loesung/\.classpath
+99-cluster-scheduling/beispiele/marathon/loesung/\.classpath
 
-05-cluster-scheduling/beispiele/marathon/loesung/\.project
+99-cluster-scheduling/beispiele/marathon/loesung/\.project
 
-05-cluster-scheduling/beispiele/marathon/loesung/\.settings/org\.eclipse\.core\.resources\.prefs
+99-cluster-scheduling/beispiele/marathon/loesung/\.settings/org\.eclipse\.core\.resources\.prefs
 
-05-cluster-scheduling/beispiele/marathon/loesung/\.settings/org\.eclipse\.jdt\.core\.prefs
+99-cluster-scheduling/beispiele/marathon/loesung/\.settings/org\.eclipse\.jdt\.core\.prefs
 
-05-cluster-scheduling/beispiele/marathon/loesung/\.settings/org\.eclipse\.m2e\.core\.prefs
+99-cluster-scheduling/beispiele/marathon/loesung/\.settings/org\.eclipse\.m2e\.core\.prefs
 
 05-cloud-architektur/beispiele/loesung/\.classpath
 
