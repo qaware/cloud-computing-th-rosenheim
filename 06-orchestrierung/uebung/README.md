@@ -28,5 +28,5 @@
 
 ### Übung 7 - Dashboard (Bonus)
 
-- [Beschreibung](07_bonus_dashboard.md)
+- [Beschreibung](08_bonus_dashboard.md)
 

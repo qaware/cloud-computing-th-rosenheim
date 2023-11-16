@@ -1,40 +1,8 @@
 # Cheat Sheet
 
-- [minikube](#minikube)
 - [kubectl](#kubectl)
 - [k9s](#k9s)
 - [docker](#docker)
-
-## minikube
-
-Cluster starten/stoppen/löschen
-
-```shell script
-minikube start
-minikube stop
-minikube delete
-```
-
-
-IP der VM ausgeben
-
-```shell script
-minikube ip
-```
-
-Addons installieren/anzeigen
-
-```shell script
-minikube addons enable <addon-name>
-minikube addons enable ingress
-minikube addons list
-```
-
-Version ausgeben
-
-```shell script
-minikube version
-```
 
 ## kubectl
 

@@ -40,6 +40,6 @@ public class HelloWorldController {
 }
 ```
 
-- Bauen Sie eine neue Version des `helloservice` Docker Images (siehe `build-to-minikube.sh`).
+- Bauen Sie eine neue Version des `helloservice` Docker Images (siehe `build-to-kubernetes.sh`).
 - Deployen Sie den `Hello-Service` mit zwei Replikas in den Kubernetes Cluster und verifizieren Sie über die Antwort auf einen `curl` auf den Service, dass beide Pods angesprochen werden.
 
