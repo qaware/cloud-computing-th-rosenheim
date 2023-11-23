@@ -1,0 +1,17 @@
+apiVersion: policy.linkerd.io/v1beta1
+kind: ServerAuthorization
+metadata:
+  namespace: emojivoto
+  name: voting-grpc
+  labels:
+    app.kubernetes.io/part-of: emojivoto
+    app.kubernetes.io/name: voting
+    app.kubernetes.io/version: v11
+spec:
+  server:
+    name: voting-grpc
+  # The voting service only allows requests from the web service.
+  client:
+    meshTLS:
+      serviceAccounts:
+        - name: web
