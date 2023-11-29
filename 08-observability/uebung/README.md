@@ -1,8 +1,12 @@
-# tle-fetcher Project
+# Observability (Cloud Computing @ TH Rosenheim)
 
-The TLE fetcher retrieves TLE (two-line element set) data for calculating satellites trajectories from a NASA related API.
+This project is a showcase of the LGTM stack to demonstrate the topic Observability.
+
+The tle-fetcher retrieves TLE (two-line element set) data for calculating satellites trajectories from a NASA related API.
 You can learn more information on the TLE format [here](https://en.wikipedia.org/wiki/Two-line_element_set), on orbital
 mechanics [here](https://en.wikipedia.org/wiki/Orbital_mechanics) and while playing some rounds of Kerbal Space Program.
+
+The sky-map service retrieves the data from tle-fetcher and outputs it as JSON.
 
 This project uses Quarkus. If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
@@ -14,7 +18,7 @@ To build and run this application, you will need the following dependencies on y
 |----------------|---------|
 | Docker         | *       |
 | Docker-Compose | 1.13.0+ |
-| Java           | 11      |
+| Java           | 17      |
 
 
 ## Java services
@@ -27,13 +31,14 @@ You can build the application using Gradle:
 $ ./gradlew build
 ```
 
-This will build the Java application and a docker image. The docker image will be registered as `qaware/tle-fetcher:1.0.0` within your docker daemon:
+This will build the Java applications and two docker images. The docker image will be registered as `qaware/tle-fetcher:1.0.0` and `qaware/sky-map:1.0.0` within your Docker daemon:
 
 ```shell
 $ docker images
 
 REPOSITORY           TAG     IMAGE ID       CREATED         SIZE
-qaware/tle-fetcher   1.0.0   55bd6d637c77   7 seconds ago   371MB
+qaware/sky-map       1.0.0   5f4a5695cc8f   7 seconds ago   438MB
+qaware/tle-fetcher   1.0.0   55bd6d637c77   7 seconds ago   438MB
 ```
 
 ### Configuration
@@ -42,12 +47,12 @@ All relevant configuration can be found in each service `src/main/resources/appl
 
 ## The Grafana stack
 
-The Grafana stack is configured in the directories `grafana`, `loki`, `promtail`, `mimir` and `tempo`.
+The Grafana stack is configured in the directories `grafana`, `loki`, `promtail`, `mimir`,`grafana-agent` and `tempo`.
 
 **NOTE**: It is important to change the permissions on the configuration files for the Grafana stack. Run the following command:
 
 ```shell
-$ chmod -R o+rX grafana loki mimir promtail tempo
+$ chmod -R o+rX grafana loki mimir grafana-agent promtail tempo
 ```
 
 ### Grafana
@@ -82,10 +87,10 @@ Tempo stores APM and tracing data from services. It can also be connected to Gra
 
 ## Running the services
 
-Run the applications with `docker-compose`:
+Run the applications with `docker compose`:
 
 ```shell
-$ docker-compose up
+$ docker compose up
 ```
 
 ## Related Guides
