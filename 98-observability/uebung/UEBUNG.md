@@ -15,12 +15,12 @@ Promtail-Konfiguration: https://grafana.com/docs/loki/latest/clients/promtail/co
 
 ## Übung 2: Metriken
 
-1. Sehen Sie sich die Konfiguration von Prometheus an. Welche Dienste werden bereits von Prometheus abgefragt?
-2. Quarkus stellt Metriken unter dem Pfad /q/metrics zur Verfügung. Ziehen Sie die Metriken von beiden Services mit Prometheus ab und kontrollieren Sie diese im Explore-Fenster von Grafana.
+1. Sehen Sie sich die Konfiguration des Grafana Agents an. Welche Dienste werden bereits vom Grafana Agent abgefragt?
+2. Quarkus stellt Metriken unter dem Pfad /q/metrics zur Verfügung. Ziehen Sie die Metriken von beiden Services mit dem Grafana Agent ab und kontrollieren Sie diese im Explore-Fenster von Grafana.
 3. Mit einem schönen Dashboard lassen sich die Metriken viel besser visualisieren. Importieren Sie [dieses Dashboard von der Grafana-Website](https://grafana.com/grafana/dashboards/14370-jvm-quarkus-micrometer-metrics/) und sehen Sie sich damit die Metriken von Quarkus an.
-4. Bonus: Informieren Sie sich, wie Sie selbst definierte Metriken in eine Quarkus-Anwendung einbauen können. Prometheus wird diese nun automatisch abziehen. Visualisieren Sie die Metrik in Grafana.
+4. Bonus: Informieren Sie sich, wie Sie selbst definierte Metriken in eine Quarkus-Anwendung einbauen können. Der Grafana Agent wird diese nun automatisch abziehen. Visualisieren Sie die Metrik in Grafana.
 
-Prometheus-Konfiguration: https://prometheus.io/docs/prometheus/latest/configuration/configuration/ 
+Grafana-Agent-Konfiguration: https://grafana.com/docs/agent/latest/flow/ 
 
 ## Übung 3: Traces
 
