@@ -1,0 +1,68 @@
+target: all,overrides-exporter
+
+common:
+  storage:
+    backend: s3
+    s3:
+      endpoint: minio:9000
+      access_key_id: root
+      secret_access_key: password123
+      insecure: true
+
+limits:
+  # Delete from storage metrics data older than 14 days.
+  compactor_blocks_retention_period: 14d
+
+blocks_storage:
+  s3:
+    bucket_name: mimir-blocks
+  tsdb:
+    dir: /mimir/tsdb
+  bucket_store:
+    sync_dir: /mimir/bucket_store_sync
+
+alertmanager_storage:
+  s3:
+    bucket_name: mimir-alertmanager
+
+ruler_storage:
+  s3:
+    bucket_name: mimir-ruler
+
+ruler:
+  rule_path: /mimir/rules
+
+compactor:
+  data_dir: /mimir/compactor
+  sharding_ring:
+    kvstore:
+      store: memberlist
+
+distributor:
+  ring:
+    instance_addr: 127.0.0.1
+    kvstore:
+      store: memberlist
+
+ingester:
+  ring:
+    instance_addr: 127.0.0.1
+    kvstore:
+      store: memberlist
+    replication_factor: 1
+
+server:
+  log_level: info
+  http_listen_port: 9009
+
+store_gateway:
+  sharding_ring:
+    replication_factor: 1
+
+activity_tracker:
+  # File where ongoing activities are stored. If empty, activity tracking is
+  # disabled.
+  filepath: /var/log/mimir/metrics-activity.log
+
+usage_stats:
+  enabled: false

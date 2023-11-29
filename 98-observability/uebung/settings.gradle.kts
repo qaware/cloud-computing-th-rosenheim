@@ -10,4 +10,7 @@ pluginManagement {
         id(quarkusPluginId) version quarkusPluginVersion
     }
 }
-rootProject.name="tle-service"
+rootProject.name="observability-from-scratch"
+include("tle-fetcher")
+include("sky-map")
+

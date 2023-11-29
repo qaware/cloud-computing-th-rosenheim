@@ -15,18 +15,17 @@ Promtail-Konfiguration: https://grafana.com/docs/loki/latest/clients/promtail/co
 
 ## Übung 2: Metriken
 
-1. Sehen Sie sich die Konfiguration des Grafana Agents an. Welche Dienste werden bereits vom Grafana Agent abgefragt?
-2. Quarkus stellt Metriken unter dem Pfad /q/metrics zur Verfügung. Ziehen Sie die Metriken von beiden Services mit dem Grafana Agent ab und kontrollieren Sie diese im Explore-Fenster von Grafana.
-3. Mit einem schönen Dashboard lassen sich die Metriken viel besser visualisieren. Importieren Sie [dieses Dashboard von der Grafana-Website](https://grafana.com/grafana/dashboards/14370-jvm-quarkus-micrometer-metrics/) und sehen Sie sich damit die Metriken von Quarkus an.
+1. Sehen Sie sich die Konfiguration des Grafana Agents an. Was passiert bereits im Config-File?
+2. Quarkus stellt Metriken unter dem Pfad /metrics zur Verfügung. Ziehen Sie die Metriken von beiden Services mit dem Grafana Agent ab und kontrollieren Sie diese im Explore-Fenster von Grafana.
+3. Mit einem schönen Dashboard lassen sich die Metriken viel besser visualisieren. Im Grafana ist bereits ein Dashboard konfiguriert - wie kommt das da rein?
 4. Bonus: Informieren Sie sich, wie Sie selbst definierte Metriken in eine Quarkus-Anwendung einbauen können. Der Grafana Agent wird diese nun automatisch abziehen. Visualisieren Sie die Metrik in Grafana.
 
 Grafana-Agent-Konfiguration: https://grafana.com/docs/agent/latest/flow/ 
 
 ## Übung 3: Traces
 
-1. In die Services ist bereits OpenTracing integriert. Sie müssen lediglich die Konfiguration des Tempo-Endpunkts in der application.properties ergänzen. 
-2. Machen Sie ein paar Aufrufe gegen den laufenden TLE-Service und prüfen Sie die Traces in Grafana. Wie kommen Sie an die Trace-Id?
-3. Informieren Sie sich, wie Sie zusätzliche (Meta-)Daten zu den Traces hinzufügen können und Testen Sie das an einem der Services.
-4. Bonus: Bauen Sie einen zweiten Service (Sie können dazu den TLE-Service klonen). Rufen Sie in dem neuen Service den TLE-Service auf und prüfen Sie den Aufruf in den Traces in Grafana. 
+1. In die Services ist bereits OpenTracing integriert. Sehen Sie sich die Konfiguration dazu in den application.properties der beiden Services an. 
+2. Machen Sie ein paar Aufrufe gegen den laufenden sky-map-Service (z.B. `GET http://localhost:8088/satellite/25544/pos`) und prüfen Sie die Traces in Grafana. Wie kommen Sie an die Trace-Id?
+3. Informieren Sie sich, wie Sie zusätzliche (Meta-)Daten zu den Traces hinzufügen können und Testen Sie das an einem der Services. 
 
 Agent-Konfiguration: https://quarkus.io/guides/opentracing
