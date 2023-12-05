@@ -3,6 +3,8 @@ set -euxo pipefail
 
 apt update
 DEBIAN_FRONTEND=noninteractive apt install -y -q \
+    libffi8 \
+    libffi-dev \
     python3 \
     python3-pip \
     python-is-python3 \

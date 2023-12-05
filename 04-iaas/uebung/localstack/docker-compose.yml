@@ -20,7 +20,8 @@ services:
           - s3.localhost.localstack.cloud
 
   iaas-container:
-    build: ../iaas-container/
+    # build: ../iaas-container/
+    image: qalukasbuchner/iaas-container:1.0.0
     environment:
       LOCALSTACK_HOSTNAME: localstack
     volumes:
