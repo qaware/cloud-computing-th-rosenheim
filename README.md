@@ -19,7 +19,7 @@ Inhalte:
 5. [Cluster-Scheduling](99-cluster-scheduling)
 6. [Cluster-Orchestrierung](06-orchestrierung)
 7. [Cloud-fähige Softwarearchitekturen](05-cloud-architektur)
-8. [Plattform-as-a-Service](10-paas)
+8. [Plattform-as-a-Service](10-paas-cd)
 9. [Big Data: Speicherung und Verarbeitung](11-big-data)
 10. [Continous Delivery](11-cd)
 11. [Programmiermodelle: Reactive Programming](12-programmiermodelle)
