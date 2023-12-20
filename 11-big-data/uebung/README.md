@@ -26,7 +26,7 @@ wie grün sind deine Blätter!
 Hinweis: Diese Übung wurde mit IntelliJ erstellt und lässt sich am besten damit öffnen, funktioniert aber auch mit anderen Editoren. 
 Öffnen Sie dazu am besten nur das Verzeichnis `uebung`. Wechseln sie auch auf Ihrer Shell in das Verzeichnis.
 
-Für alle folgenden Übungen muss ein lokales Ignite-Cluster laufen. Starten Sie es mit `docker-compose build && docker-compose up`.
+Für alle folgenden Übungen muss ein lokales Ignite-Cluster laufen. Starten Sie es mit `docker compose build && docker compose up`.
 
 Wenn Änderungen am Code nicht wie erwartet ins Cluster deployed werden, kann es erforderlich sein, das Cluster neu zu starten.
 
