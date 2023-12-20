@@ -22,13 +22,13 @@ repositories {
 
 dependencies {
     // Apache Ignite
-    implementation("org.apache.ignite:ignite-core:2.14.0")
-    implementation("org.apache.ignite:ignite-indexing:2.14.0")
+    implementation("org.apache.ignite:ignite-core:2.15.0")
+    implementation("org.apache.ignite:ignite-indexing:2.15.0")
 
     // Apache Commons
     implementation("org.apache.commons:commons-collections4:4.4")
-    implementation("commons-io:commons-io:2.11.0")
-    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("commons-io:commons-io:2.15.1")
+    implementation("org.apache.commons:commons-lang3:3.14.0")
 }
 
 application {
