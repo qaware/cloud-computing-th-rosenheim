@@ -22,7 +22,7 @@ Inhalte:
 8. [Plattform-as-a-Service](10-paas-cd)
 9. [Big Data: Speicherung und Verarbeitung](11-big-data)
 10. [Continous Delivery](11-cd)
-11. [Programmiermodelle: Reactive Programming](12-programmiermodelle)
+11. [Programmiermodelle: Reactive Programming](99-programmiermodelle)
 12. [Serverless](99-ci-cd_serverless)
 13. [Prüfungsvorbereitung](13-zusammenfassung)
 
