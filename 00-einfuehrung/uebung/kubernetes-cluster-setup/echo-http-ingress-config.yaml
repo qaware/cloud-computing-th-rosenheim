@@ -76,4 +76,3 @@ spec:
                 name: bar-service
                 port:
                   number: 8080
----

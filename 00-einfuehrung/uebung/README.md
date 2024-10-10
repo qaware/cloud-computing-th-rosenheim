@@ -1,68 +1,72 @@
-# Übung: Setup
+# Practice Session: Setup
 
-Ziel der heutigen Übung ist es, die benötigten Softwarekomponenten für die weiteren Übungen auf Ihren Rechnern zu installieren.
+The goal of today's session is to install all the required software components for the upcoming practice sessions. 
 
-## Installationen
+## Installation 
 
 1. Git ([Installation](https://git-scm.com/downloads))
-2. Ein Java 17 JDK (z.B. [Azul Zulu JDK](https://www.azul.com/downloads/?package=jdk).
-3. Eine Java IDE ihrer Wahl, z.B. [IntelliJ Community Edition](https://www.jetbrains.com/de-de/idea/download/)
+2. A Java 17 JDK (z.B. [Azul Zulu JDK](https://www.azul.com/downloads/?package=jdk).
+3. A Java IDE of your choice, z.B. [IntelliJ Community Edition](https://www.jetbrains.com/de-de/idea/download/)
 4. Docker ([Windows](https://docs.docker.com/docker-for-windows/install/), [Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/engine/install/))
 5. Kind (https://kind.sigs.k8s.io/docs/user/quick-start#installation)
 6. Tilt (https://docs.tilt.dev)
 7. Kubectl (https://kubernetes.io/docs/tasks/tools/)
 
-## Test des Setups
+## Test the setup
 
-1. Öffnen Sie eine Console in einem Ordner Ihrer Wahl und geben Sie `git clone https://github.com/qaware/cloud-computing-th-rosenheim.git` ein
-2. Öffnen Sie den Ordner [jdk-test-1](jdk-test-1/) in einer Console und geben Sie `mvn clean install` (`./mvnw clean install` unter Mac und Linux) ein
-3. Öffnen Sie den Ordner [jdk-test-2](jdk-test-2/) in einer Console und geben Sie `gradlew clean build` (`./gradlew clean build` unter Mac und Linux) ein
-4. Importieren Sie die [jdk-test-1/pom.xml](jdk-test-1/pom.xml) in IntelliJ und starten Sie die `main`-Methode
-5. Importieren Sie die [jdk-test-2/build.gradle](jdk-test-2/build.gradle) in IntelliJ und starten Sie die `main`-Methode
-6. Testen Sie [ihre Docker-Installation](https://docs.docker.com/get-started/#test-docker-version)
+1. Open the terminal/console in a directory of your choice and enter `git clone https://github.com/qaware/cloud-computing-th-rosenheim.git`
+2. Open the directory [jdk-test-1](jdk-test-1/) in the terminal/console and enter `mvn clean install` (`./mvnw clean install` for Mac and Linux)
+3. Open the directory [jdk-test-2](jdk-test-2/) in the terminal/console and enter `gradlew clean build` (`./gradlew clean build` for Mac and Linux)
+4. Import [jdk-test-1/pom.xml](jdk-test-1/pom.xml) in IntelliJ and start the `main` method
+5. Import [jdk-test-2/build.gradle](jdk-test-2/build.gradle) in IntelliJ and start the `main` method
+6. Test your [Docker-Setup](https://docs.docker.com/get-started/#test-docker-version) by following the instructions after opening the link in the browser
 
-## Test des lokalen Kubernetes clusters
-> **Hinweis**
-> Die nachfolgenden Schritte erfordern eine funktionale Docker Installation!
+## Testing the local Kubernetes Cluster
+> **Note**
+> The following steps require a functional Docker installation!
 
-Öffnen Sie eine Console und navigieren Sie in den Ordner [kubernetes-cluster-setup](./kubernetes-cluster-setup). 
+Open a console and navigate to the folder [kubernetes-cluster-setup](./kubernetes-cluster-setup).
 
-Erzeugen Sie einen lokalen Kind cluster mit dem Befehl:
+Create a local Kind cluster with the command:
 ```shell
-$ kind create cluster --name cc-2023 --config kind-cluster-config.yaml                                                                                                                           ─╯
+$ kind create cluster --name cc-2024 --config kind-cluster-config.yaml
 ```
-Dies kann beim ersten mal mehrere Minuten dauern. 
-Prüfen Sie mit folgendem Befehl, ob der cluster erfolgreich erstellt wurde: 
+
+This may take several minutes the first time. 
+Check if the cluster was successfully created with the following command: 
 ```shell
 $ kind get clusters
-# expected output --> cc-2023
+# expected output --> cc-2024
 ```
-Sie sollten einen cluster mit dem Namen `cc-2023` sehen. 
-Prüfen Sie mit folgendem Befehl, ob drei container gestartet wurden und ohne Neustarts laufen: 
+
+You should see a cluster named `cc-2024`. 
+Check if three containers have started and are running without restarts using the following command:
 ```shell
 $ docker ps
 ```
-Die Ausgabe sollte ungefähr so aussehen: 
+
+The output should look something like this:
 ```
 CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                                             NAMES
-ffc91bee66e0   kindest/node:v1.27.3   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds                                                     cc-2023-worker2
-bb8e1ac8987d   kindest/node:v1.27.3   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds   0.0.0.0:9999->80/tcp, 127.0.0.1:52492->6443/tcp   cc-2023-control-plane
-edc7c37d988d   kindest/node:v1.27.3   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds                                                     cc-2023-worker
+ffc91bee66e0   kindest/node:v1.27.3   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds                                                     cc-2024-worker2
+bb8e1ac8987d   kindest/node:v1.27.3   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds   0.0.0.0:9999->80/tcp, 127.0.0.1:52492->6443/tcp   cc-2024-control-plane
+edc7c37d988d   kindest/node:v1.27.3   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds                                                     cc-2024-worker
 ```
 
-Deployen Sie nun mit folgendem Befehl die Test Workloads in den cluster:
+Now deploy the test workloads in the cluster with the following command:
 ```shell
 $ tilt up
 ```
-Folgen Sie den Anweisungen auf dem Bildschirm und öffnen die Tilt UI im Browser.
-Alle Workloads sollten erfolgreich starten und nach kurzer Zeit einen stabilen Zustand erreichen.
+Follow the instructions on the screen and open the Tilt UI in your browser. 
+All workloads should start successfully and reach a stable state after a short time.
 
-Zuletzt wollen wir sicherstellen, dass auch wie erwartet mit dem cluster kommuniziert werden kann. 
-Dafür rufen Sie im Browser die URL `localhost:9999/foo/hostname` auf. Sie sollten als Antwort `foo-app` erhalten.
-Rufen Sie nun im Browser die URL `localhost:9999/bar/hostname` auf. Sie sollten als Antwort `bar-app` erhalten.
+Finally, we want to ensure that we can communicate with the cluster as expected. 
+To do this, open the URL `localhost:9999/foo/hostname` in your browser. 
+You should receive `foo-app` as a response. 
+Now open the URL `localhost:9999/bar/hostname` in your browser. 
+You should receive `bar-app` as a response.
 
-Sie können den cluster nun wieder herunterfahren. 
-Führen Sie hierfür folgenden Befehl aus:
+You can now shut down the cluster. To do this, run the following command:
 ```shell
-$ kind delete cluster --name cc-2023
+$ kind delete cluster --name cc-2024
 ```
