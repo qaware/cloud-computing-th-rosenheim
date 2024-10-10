@@ -1,37 +1,36 @@
-![Vorlesung Cloud Computing](https://github.com/qaware/cloud-computing-th-rosenheim/blob/master/vl-cc-logo.jpg "Vorlesung Cloud Computing")
+![Lecture Cloud Computing](https://github.com/qaware/cloud-computing-th-rosenheim/blob/master/vl-cc-logo.jpg "Lecture Cloud Computing")
 
 > [!WARNING]  
-> Wegen seiner Größe wurde dieses Repository am 21.09.2023 auf [Git LFS](https://git-lfs.com/) umgezogen.
-> Dadurch wurde die Git-History neu geschrieben. Falls das Repository schon vorher geklont wurde, muss es neu geklont werden.
-> Zum erfolgreichen Klonen muss Git LFS installiert sein.
+> This repository was moved to [Git LFS](https://git-lfs.com/) on 21.09.2023.
+> Hence, the git history has been rewritten. In case your local copy of the repository is older than the mentioned date, please clone it again.
+> To successfully clone this repository  Git LFS must be installed on your machine.
 
-__Aktuelle Vorlesung: Technische Hochschule Rosenheim, Wintersemester 2023/2024__
+__Current Lecture: Technische Hochschule Rosenheim, Wintersemester 2024/2025__
 
-[Organisatorisches](00-einfuehrung/Orga.pdf)
+[Organizational matters](01-introduction/organizational-matters.pdf)
 
-Inhalte:
+Contents:
 
-0. [Einführung Cloud Computing](00-einfuehrung)
-1. [Kommunikation](01-kommunikation)
-2. [Virtualisierung](02-virtualisierung)
-3. [Provisionierung](03-provisionierung)
-4. [Infrastructure-as-a-Service](04-iaas)
-5. [Cluster-Scheduling](99-cluster-scheduling)
-6. [Cluster-Orchestrierung](06-orchestrierung)
-7. [Cloud-fähige Softwarearchitekturen](05-cloud-architektur)
-8. [Plattform-as-a-Service](10-paas-cd)
-9. [Big Data: Speicherung und Verarbeitung](11-big-data)
-10. [Continous Delivery](11-cd)
-11. [Programmiermodelle: Reactive Programming](99-programmiermodelle)
-12. [Serverless](99-ci-cd_serverless)
-13. [Prüfungsvorbereitung](13-zusammenfassung)
+1. [Introduction to Cloud Computing](01-introduction)
+2. [Communication](02-communication)
+3. [Virtualization](03-virtualization)
+4. [Provisionierung](04-provisioning)
+5. [Infrastructure as a Service](05-iaas)
+6. [Cloud-native software architecture](05-cloud-architektur)
+7. [Cluster orchestration](06-orchestrierung)
+8. [Service-Meshes](06-orchestrierung)
+9. [Serverless](99-ci-cd_serverless)
+10. [Plattform as a Service](10-paas-cd)
+11. [Continous Delivery](11-cd)
+12. [Cloud runtimes](11-cd)
+13. [Exam preparation](13-zusammenfassung)
 
-Für die Übungen notwendige Software:
+Required Software for the practice sessions:
 
-* Java-Entwicklungsumgebung der Wahl (Empfehlung: IntelliJ IDEA).
+* Java IDE of your choice (Recommendation: IntelliJ IDEA).
 * Java Development Kit (JDK) 17. (https://www.azul.com/downloads/?package=jdk)
-* git in der aktuellsten Version: https://git-scm.com/. Optional: github Desktop (https://desktop.github.com).
-* Vagrant (inklusive der benötigten VirtualBox-Version) in der aktuellsten Version. (https://www.vagrantup.com)
+* git in the latest version: https://git-scm.com/. Optional: github Desktop (https://desktop.github.com).
+* Vagrant + Virtualbox in the latest version. (https://www.vagrantup.com)
 * Docker (https://www.docker.com/)
 * Kind (https://kind.sigs.k8s.io/)
 * Tilt (https://tilt.dev)
