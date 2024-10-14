@@ -1,8 +1,6 @@
-# Übung "Kommunikation"
+# Practice session - communication
 
-Sie können sich aussuchen, auf welcher Protokollbasis Sie gerne eine Übung machen würden. 
+This session includes two parts: 
 
 * [REST](rest)
 * [gRPC](grpc)
-
-Im Zweifel empfehle ich die REST-Übung. Natürlich können Sie auch beide machen :)

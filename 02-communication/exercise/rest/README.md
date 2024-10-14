@@ -1,33 +1,33 @@
-# Übung: Das REST Protokoll
+# Exercise: REST APIs
 
-Ziel dieser Übung ist es ein einfaches REST API für eine Bibliothek zu erstellen. Das API soll einfache Abfragen,
-sowie ein CRUD Interface zum Anlegen, Aktualisieren und Löschen von Büchern ermöglichen.
+The goal of this is exercise is to implement a REST interface for a library. It should feature basic create, update and delete 
+functionality. 
 
-## Vorbereitung
+## Setup
 
-1. Zunächst muss ein Anwendungsrumpf für den Microservice und das REST API erstellt werden. Wir verwenden hierfür
-den Spring Boot Initializr. Rufen sie hierfür die folgende URL auf: https://start.spring.io
+1. First, an application skeleton for the microservice and the REST API must be created.
+For this, we use the Spring Boot Initializr. Open the following URL: https://start.spring.io
 
-2. Passen sie die Projekt Metadaten nach ihren Bedürfnissen an. Wählen sie Java als Sprache und Maven als Build-Tool.
+2. Adjust the project metadata according to your needs. Select Java as the language and Maven as the build tool.
 
-3. Fügen sie die folgenden Dependencies hinzu:
-  * Spring Web
+3. Add the following dependencies:
+  Spring Web
 
-4. Generieren (`mvnw idea:idea` oder `eclipse:eclipse`) und laden sie das Projekt und speichern sie es in ihrem Arbeitsbereich.
+4. Generate (`mvnw idea:idea` or `eclipse:eclipse`) and load the project, then save it in your workspace.
 
-5. Öffnen sie eine Console, gehen sie in das Projektverzeichnis und führen sie folgendes Kommand aus: `mvnw install`
+5. Open a console, navigate to the project directory, and execute the following command: `mvnw install`
 
 
-## Aufgaben
+## Tasks
 
-### Aufgabe 1: REST-API mit Spring MVC erstellen
+### Task 1: Create a REST-API with Spring MVC
 
-Bei dieser Aufgabe geht es darum, eine einfache REST-Schnittstelle aufzubauen. Wir verwenden hierfür Spring MVC mit Spring Boot. Ein Getting Started finden sie hier: https://spring.io/guides/gs/spring-boot/
+This task is about building a simple REST interface. For this, we will use Spring MVC with Spring Boot. You can find a getting started guide here: https://spring.io/guides/gs/spring-boot/.
 
-(1) Initiale Anwendungslogik erstellen:
+(1) Create the initial application logic:
 
-(1.1) Entwerfen sie zunächst eine einfache Datenklasse um Bücher zu repräsentieren. Die Klasse soll mindestens die Felder `title`, `isbn` und `author` enthalten. Zusätzlich soll die Klasse beim Deserialisieren unbekannte
-JSON Felder ignorieren.
+(1.1) First, design a simple data class to represent books. 
+The class should contain at least the fields `title`, `isbn`, and `author`. Additionally, the class should ignore unknown JSON fields during deserialization.
 
 ```java
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -40,7 +40,7 @@ public class Book {
 }
 ```
 
-(1.2) Implementieren sie eine Bücherverwaltung, die einige Beispielbücher anlegt und erlaubt die Bücher abzufragen:
+(1.2) Implement a book management system that creates some example books and allows querying the books:
 
 ```java
 @Component
@@ -78,7 +78,8 @@ public class Bookshelf {
 }
 ```
 
-Zusätzlich muss noch eine Fehlermeldung definiert werden: 
+Additionally, you need to define an error message: 
+
 ```java
 public class BookNotFoundException extends RuntimeException {
     public BookNotFoundException(String isbn) {
@@ -87,7 +88,7 @@ public class BookNotFoundException extends RuntimeException {
 }
 ```
 
-(2) Fügen sie nun eine REST Controller Klasse hinzu. Diese dient als Haupteinstiegspunkt für das Book API. Das API soll unter dem Pfad `/api/books` erreichbar sein und als Media-Type `application/json` produzieren.
+(2) Now add a class that is annotated as RestController. This class marks the entrypoint to the Book API. The API shall be available under the path `/api/books` and produce content with media-type `application/json`.
 
 ```java
 @RestController
@@ -97,10 +98,12 @@ public class BookController {
 }
 ```
 
-(3) REST Interface erstellen:
+(3) Implement REST Interface :
 
-(3.1) Fügen sie der REST Resource nun entsprechende Methoden zum Abruf von Büchern hinzu. Es soll die Möglichkeit geben alle Bücher per `GET /api/books` abzurufen sowie einzelne Bücher mittels ISBN per `GET /api/books/{isbn}`. Implementieren sie die Business-Logik rudimentär (statische Liste statt DB). Achten sie bei
-der Implementierung auf die Verwendung der korrekten HTTP Verben und Status-Codes, z.B. für den Fall das ein Buch per ISBN nicht gefunden wurde.
+(3.1) Add the appropriate methods to the REST resource for retrieving books. 
+It should be possible to retrieve all books via `GET /api/books` as well as individual books by ISBN via `GET /api/books/{isbn}`. 
+Implement the business logic in a basic manner (using a static list instead of a database). 
+Make sure to use the correct HTTP verbs and status codes, for example, in the case where a book is not found by ISBN.
 
 ```java
     @GetMapping
@@ -115,7 +118,7 @@ der Implementierung auf die Verwendung der korrekten HTTP Verben und Status-Code
     }
 ```
 
-(3.2) Erstellen sie einen Exceptionmapper, damit Java-Exceptions in HTTP-Statuscodes umgewandelt werden:
+(3.2) Create an exception mapper that converts java exceptions to http status codes:
 ```java
 @ControllerAdvice
 class BookNotFoundExceptionMapper {
@@ -129,17 +132,16 @@ class BookNotFoundExceptionMapper {
 }
 ```
 
-(4) Starten Sie die Anwendung mit dem Befehl `mvnw spring-boot:run` (alternativ können sie die Anwendung natürlich aus der IDE heraus starten). 
-Die Anwendung und das REST API sollte nun unter der folgenden URL erreichbar sein: `http://localhost:8080/api/books`.
+(4) Start the application with the command `mvnw spring-boot:run` or using the IDE.
+The application and its API should be available under: `http://localhost:8080/api/books`.
 
-Testen sie manuell die beiden erstellten Endpunkte mit dem Browser. Probieren sie den Fehler aus dem ExceptionMapper zu provozieren.
+Manually test the created endpoints in the browser. Try to produce an error the triggers the exception mapper.
 
-### Aufgabe 2: API Dokumentation
+### Task 2: API documentation
 
-Eine gute REST API braucht Dokumentation bzw. eine Beschreibung der angebotenen
-Funktionalität die von Maschinen verarbeitet werden kann. Der Standard hierfür ist OpenAPI (ehemals Swagger).
+A good REST API needs documentation or a description of the offered functionality that can be processed by machines. The standard for this is OpenAPI (formerly Swagger).
 
-(1) Fügen sie zunächst in der `pom.xml` die folgenden Dependencies hinzu:
+(1) Add the following dependency to the `pom.xml`:
 ```xml
 <dependency>
     <groupId>org.springdoc</groupId>
@@ -148,32 +150,34 @@ Funktionalität die von Maschinen verarbeitet werden kann. Der Standard hierfür
 </dependency>
 ```
 
-(2) Annotieren und dokumentieren sie nun die vorhandenen Klassen der REST-API über OpenAPI-Annotationen zusätzlich zu den bereits vorhandenen Spring-Annotationen. Nutzen Sie hierfür die folgenden OpenAPI-Annotationen, eine Beschreibung der Annotationen ist hier zugänglich: https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations.
+(2) Now annotate and document the existing classes of the REST API with OpenAPI annotations in addition to the already existing Spring annotations. 
+Use the following OpenAPI annotations. A description of the annotations can be accessed here: https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations.
 
-| Swagger-Annotation                 | Code-Element                                                                                                                                    |
-|------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| `@OpenAPIDefinition`               | Metadaten für die gesamte OpenAPI Definition                                                                               |
-| `@Operation`                       | Einzelne Methode der Ressourcen-Klasse                                                                                                          |
-| `@ApiResponses` und `@ApiResponse` | Antworten einer Methode der Ressourcen-Klasse (überlegen Sie sich hier mögliche Fehlersituationen und bilden Sie diese auf http-Status-Codes ab) |
-| `@Schema`                          | Entitäts-Klasse und Properties der Entität                                                                                                      |
+| Swagger-Annotation                 | Code-Element                                                                                                            |
+|------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| `@OpenAPIDefinition`               | Metadata for the whole OpenAPI Definition                                                                               |
+| `@Operation`                       | Single method of the resource class                                                                                     |
+| `@ApiResponses` und `@ApiResponse` | Response of a method in the resource class (think about potential error situations and model them in the api defintion) |
+| `@Schema`                          | Model classes that are relevant for serialization/deserialization.                                                      |
 
-(3) Starten Sie die Anwendung nun neu. Die API-Beschreibung sollte nun unter der URL http://localhost:8080/v3/api-docs zugänglich sein.
+(3) Restart the application. The API description should now be available under http://localhost:8080/v3/api-docs.
 
-(4) Die API-Beschreibung ist nicht nur als JSON verfügbar, sondern kann auch mit der Swagger UI exploriert werden. Öffnen Sie die Swagger UI unter http://localhost:8080/swagger-ui/index.html.
+(4) The API description is not available as JSON only, but can be explored visually using a web UI. Open the Swagger UI under http://localhost:8080/swagger-ui/index.html.
 
 
-### Kür: REST-API weiter ausbauen
-Bauen Sie die REST-Schnittstelle weiter aus und fügen sie Logik zum Anlegen, Aktualisieren und Löschen von Büchern hinzu:
+### Task 3: Extend the REST-API
+Extend the read only Rest API by offering endpoints for creating, updating and deleting books. 
 
-* `DELETE /api/books/{isbn}` löscht ein Buch und gibt bei Erfolg HTTP 204 zurück
-* `POST /api/books` legt ein Buch an, akzeptiert `application/json` und gibt HTTP 201 mit der neuen URL zurück.
-* `PUT /api/books/{isbn}` aktualisiert das Buch, akzeptiert `application/json` und gibt HTTP 200 zurück.
+* `DELETE /api/books/{isbn}` deletes a book and returns HTTP 204 when successful
+* `POST /api/books`  creates a book, accepts `application/json` and returns HTTP 201 including the new URL of the created book.
+* `PUT /api/books/{isbn}` updates a book, accepts `application/json` and returns HTTP 200 on success.
 
-Überlegen Sie sich weitere Anwendungsfälle, die die Schnittstelle abbilden soll als einfache Liste (auf Papier). Leiten Sie aus den Anwendungsfällen ein Datenmodell ab (auf Papier). Erstellen Sie aus den Anwendungsfällen, dem Datenmodell und den vorgestellten Entwurfsregeln eine REST-Schnittstelle.
-
+Think of additional use cases that the interface should represent as a simple list (on paper). 
+Derive a data model from the use cases (on paper). 
+Create a REST interface based on the use cases, the data model, and the design rules presented.
 
 ## Quellen
-Diese Übung soll auch eine eigenständige Problemlösung auf Basis von Informationen aus dem Internet vermitteln. Sie können dazu für die eingesetzten Technologien z.B. die folgenden Quellen nutzen:
+This exercise is also intended to teach independent problem-solving based on information from the internet. For the technologies used, you can utilize the following sources, for example:
 
 Maven
 * http://maven.apache.org/guides/getting-started

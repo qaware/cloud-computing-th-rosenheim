@@ -1,43 +1,39 @@
-# Übung: gRPC
+# Exercise: gRPC
 
-Ziel dieser Übung ist es, einen einfachen gRPC-Service für eine Bibliothek zu erstellen. Das API soll einfache Abfragen,
-sowie ein CRUD Interface zum Anlegen, Aktualisieren und Löschen von Büchern ermöglichen.
+The goal of this exercise is to create a simple gRPC service for a library. 
+The API should allow for simple queries as well as a CRUD interface to create, update, and delete books.
 
-Es sollen folgende Operationen möglich sein (hier beispielhaft in Java-Syntax angegeben):
+The following operations should be possible (given here as an example in Java syntax):
 
 * `Collection<Book> listAll()`
 * `void add(Book book)`
 * `void delete(String isbn)`
 * `void update(String isbn, Book newBook)` 
 
-Ein Buch besteht aus `String isbn`, `String title` und `String author`. `isbn` ist die ID des Buchs.
+A book consists of the attributes `String isbn`, `String title` and `String author`. `isbn` is the ID of a book.
 
-Sollten Sie an einer Stelle steckenbleiben, werfen Sie einen Blick in die [Lösung](loesung) oder fragen Sie Ihren Betreuer!
+## Setup
 
-## Vorbereitung
+Familiarize yourself with gRPC. Read the [gRPC Tutorial](https://grpc.io/docs/languages/java/basics/).
+Then, you should create a new project that includes both the server and the client. Whether you use Maven or Gradle is up to you. 
+The [solution](solution) is implemented with Maven.
 
-Machen Sie sich mit gRPC vertraut. Lesen Sie dazu [das gRPC Tutorial](https://grpc.io/docs/languages/java/basics/).
-Dann sollten Sie ein neues Projekt anlegen, das sowohl den Server als auch den Client beinhaltet. Ob Sie Maven oder
-Gradle verwenden, bleibt Ihnen überlassen. Die [Lösung](loesung) ist mit Maven implementiert.
+gRPC services are generated from `.proto` files. There are plugins for Gradle and Maven that handle this. 
+These are shown on the [gRPC GitHub page](https://github.com/grpc/grpc-java).
 
-gRPC-Services werden aus `.proto` Dateien generiert. Es gibt für Gradle und Maven Plugins, die dies erledigen. Auf der
-[gRPC GitHub Seite](https://github.com/grpc/grpc-java) werden diese gezeigt.
+## Define gRPC Service
 
-## gRPC Service definieren
+Now define your gRPC `BookService` in a `.proto` file. In doing so, you need to design the API of the service (see above).
+This API also includes input and return types, which are defined in the [Protocol Buffers format](https://developers.google.com/protocol-buffers/docs/proto3).
 
-Definieren Sie nun Ihren gRPC `BookService` in einer `.proto`-Datei. Dabei müssen Sie die API des Services designen (siehe oben).
-Diese API beinhaltet auch Eingabe- und Rückgabetypen, die im [Protocol Buffers Format](https://developers.google.com/protocol-buffers/docs/proto3)
-definiert werden. 
+## Create the server
 
-## Server erstellen
+Implement the gRPC Server. Start the server on a port of your choice in the `main`-method.
 
-Implementieren Sie nun den gRPC Server. In der `main`-Methode des Servers sollten Sie diesen Server auf einem Port Ihrer
-Wahl starten.
+## Create the client
 
-## Client erstellen
-
-Damit Sie den Server testen können, bietet sich ein gRPC Client an. Erstellen Sie eine neue `main`-Methode für den Client
-und verwenden Sie die von gRPC erzeugten Client-Klassen, um mit ihrem Server zu kommunizieren.
+To test the server, you need a grpc client. Let's implement one. Create a new `main`-methode for the client. 
+Implement the client by using the generated client classes to communicate with your server. 
 
 # Quellen
 
