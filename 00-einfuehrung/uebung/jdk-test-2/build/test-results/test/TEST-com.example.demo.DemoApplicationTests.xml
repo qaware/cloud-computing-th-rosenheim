@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.demo.DemoApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-10-05T12:28:19" hostname="QA-L-HEWCJP" time="0.496">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.example.demo.DemoApplicationTests" time="0.496"/>
+  <system-out><![CDATA[14:28:18.672 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.demo.DemoApplicationTests]: DemoApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:28:18.731 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.demo.DemoApplication for test class com.example.demo.DemoApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.4)
+
+2023-10-05T14:28:18.944+02:00  INFO 1196643 --- [    Test worker] com.example.demo.DemoApplicationTests    : Starting DemoApplicationTests using Java 17.0.8.1 with PID 1196643 (started by zalintyre in /home/zalintyre/Dokumente/qaware/Vorlesungen/cloudcomputing/cloud-computing-th-rosenheim/00-einfuehrung/uebung/jdk-test-2)
+2023-10-05T14:28:18.946+02:00  INFO 1196643 --- [    Test worker] com.example.demo.DemoApplicationTests    : No active profile set, falling back to 1 default profile: "default"
+2023-10-05T14:28:19.576+02:00  INFO 1196643 --- [    Test worker] com.example.demo.DemoApplicationTests    : Started DemoApplicationTests in 0.768 seconds (process running for 1.456)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
