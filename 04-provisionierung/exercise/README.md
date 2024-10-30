@@ -1,48 +1,50 @@
-# Übung: Provisionierung mit Ansible und Docker Compose
+# Übung: Provisioning with Ansible and Docker Compose
 
-## Übung 1: Provisionierung mit Docker und Docker Compose
-Ziel dieser Übung ist, praktische Erfahrungen mit Docker und Docker Compose zu sammeln.
+## Exercise 1: Provisioning with Docker and Docker Compose
 
-Wir wollen in dieser Übung:
-- ein fertiges Docker Image nutzen
-- ein Docker Image bauen
-- ein Image über Docker Compose starten
+The aim of this exercise is to gain practical experience with Docker and Docker Compose.
 
-### Schritt 1: Docker Image nutzen und Container starten
-Nginx ist ein Open Source Reverse Proxy. 
-Unter https://hub.docker.com/_/nginx ist dokumentiert, wie das offizielle Docker Image
-genutzt werden kann.
+In this exercise, we want to:
+- use a ready-made Docker image
+- build a Docker image
+- start an image via Docker Compose
 
-Schauen Sie sich die Doku an und starten Sie über die Console einen Nginx-Container.
+### Step 1: Use the Docker image and start the container
 
-Sorgen Sie dafür, dass der Port '80' auch auf Ihrem Host als Port 8080 exponiert wird.
+Nginx is an open-source reverse proxy.
+https://hub.docker.com/_/nginx documents how the official Docker image
+can be used.
+
+Study the documentation and start an Nginx container via the console.
+
+Make sure that port '80' is also exposed on your host as port 8080.
 
 <details>
-<summary>Hinweis, falls Sie nicht weiterkommen:</summary>
+<summary>Hint if you get stuck:</summary>
 
 ```
 docker run -d -p 8080:80 nginx
 ```
 </details>
 
-Rufen Sie dann testweise localhost:8080 in Ihrem Browser auf.
+Then enter localhost:8080 in your browser to test it.
 
-### Schritt 2: Dockerfile schreiben und eigene index.html anlegen
-In diesem Schritt wollen wir nicht mehr das fertige Image nutzen, sondern ein eigenes
-angepasstes Image bauen.
+### Step 2: Write a Dockerfile and create your own index.html
+In this step, we no longer want to use the finished image, but instead build our own
+customized image.
 
-Legen Sie hierfür zunächst eine index.html an. Diese Seite soll unser Webserver ausliefern, wenn er aufgerufen wird.
-Nutzen Sie hierfür ein einfaches HTML, dass eine "Hello World" Begrüßung ausgibt.
+First create an index.html. This page should be delivered by our web server when it is accessed.
+Use a simple HTML that outputs a “Hello World” greeting.
 
-Legen Sie ein Dockerfile an.
-Führen Sie folgende Schritte aus:
-- Nutzen Sie `nginx:mainline` als Basisimage.
-- Kopieren Sie ihre `index.html` nach `/usr/share/nginx/html/`, indem Sie das Docker-Command `COPY` nutzen.
-- Exponieren Sie den Port 80.
-- Starten Sie nginx über das Command `nginx`. Achten Sie darauf, `-g 'daemon off;'` beim Start mit anzugeben, damit Nginx nicht direkt nach dem Containerstart beendet wird, sondern im Vordergrund läuft.
+Create a Dockerfile.
+Follow these steps:
+Use `nginx:mainline` as the base image.
+Copy your `index.html` to `/usr/share/nginx/html/` using the Docker command `COPY`.
+Expose port 80.
+Start nginx with the command 'nginx'. Be sure to include '-g “daemon off;”' when starting it, so that Nginx is not closed immediately after the container starts, but runs in the foreground.
 
 <details>
-<summary>Hinweis, falls Sie nicht weiterkommen:</summary>
+<summary>Note if you get stuck:</summary>
 
 ```
 FROM nginx:mainline
@@ -52,40 +54,43 @@ CMD nginx -g 'daemon off;'
 ```
 </details>
 
-### Schritt 3: Docker-Image bauen
-Bauen Sie das Docker Image mit dem Namen `cc-nginx` und dem Tag `v1`.
+### Step 3: Build the Docker image
+
+Build the Docker image named `cc-nginx` and tagged as `v1`.
 
 <details>
-<summary>Hinweis, falls Sie nicht weiterkommen:</summary>
+<summary>Note if you get stuck:</summary>
 
 ```docker build . -t cc-nginx:v1```
 </details>
 
-Prüfen Sie danach über `docker images`, dass das neue Docker-Image in Ihrer lokalen Registry liegt.
+Then use 'docker images' to check that the new Docker image is in your local registry.
 
-### Schritt 4: Container starten
-Starten Sie den Container.
-Mappen Sie dabei den Port 8080 auf Ihrem Host auf den Container Port 80.
+### Step 4: Start container
+
+Start the container.
+Map port 8080 on your host to container port 80.
 
 <details>
-<summary>Hinweis, falls Sie nicht weiterkommen:</summary>
+<summary>Note if you get stuck:</summary>
 
 ```docker run -it -p 8080:80 cc-nginx:v1```
 </details>
 
-Rufen Sie den gestarteten nginx-Container unter localhost:8080 auf.
+Access the started nginx container at localhost:8080.
 
-### Schritt 5: Container über Docker Compose starten
-Wir nutzen jetzt unser Docker Image und starten dieses über Docker Compose.
+### Step 5: Start container via Docker Compose
 
-Legen Sie hierfür  Datei docker-compose.yml an, das einen nginx-Instanz startet und dabei:
+We now use our Docker image and start it via Docker Compose.
 
-- den Service-Namen "cc-nginx" hat
-- das Image auf Basis des in Schritt 1 erstellen Dockerfiles baut
-- den Port 80 exportiert und unter 8080 auf Ihrem Host erreichbar macht
+To do this, create a docker compose.yaml file that starts an nginx instance and:
+
+- has the service name “cc-nginx”
+- builds the image based on the Dockerfile created in step 1
+- exports port 80 and makes it accessible on port 8080 on your host
      
 <details>
-<summary>Wenn Sie nicht weiterkommen, können Sie folgenden Codeblock verwenden:</summary>
+<summary>If you get stuck, you can use the following code block:</summary>
 
 ```
 version: '3.8'
@@ -100,66 +105,70 @@ services:
 </details>
 
 ### Bonus/Optional:
-Probieren Sie weitere Docker und Docker Compose Commands aus.
-- Öffnen Sie eine Shell im laufenden Container
-- Editieren sie die index.html im Container
-- Schauen Sie in die nginx Logs
-- ...
+
+Try out some more Docker and Docker Compose commands.
+Open a shell in the running container
+Edit the index.html in the container
+Look at the nginx logs
+...
 
 
-## Übung 2: Provisionierung mit Ansible
-Ziel dieser Übung ist, praktische Erfahrungen mit Ansible zu sammeln und Docker und Docker Compose
-noch besser kennenzulernen.
+## Exercise 2: Provisioning with Ansible
 
-Um das lokale Setup möglichst einfach zu halten, werden wir sowohl die Ansible Control Node als auch 
-die Maschinen, die wir provisionieren wollen, per Docker Compose lokal hochfahren.
+The goal of this exercise is to gain practical experience with Ansible and to get to know Docker and Docker Compose
+even better.
 
-Wir wollen:
-- Die Ansible Control Node per Docker Compose starten
-- 3 Managed Nodes per Docker Compose starten
-- ein Playbook erstellen, dass auf allen 3 Managed Nodes einen Apache-Httpd-Server installiert, konfiguriert und startet
-- das Playbook ausführen und die gestarteten Apache-Httpd-Server testweise aufrufen
+To keep the local setup as simple as possible, we will use Docker Compose to start both the Ansible Control Node and
+the machines we want to provision locally.
 
-### Hinweis:
-Falls Sie nicht weiterkommen, können Sie sich an der Musterlösung orientieren. 
+We want to:
+- Start the Ansible control node with Docker Compose
+- Start 3 managed nodes with Docker Compose
+- Create a playbook that installs, configures and starts an Apache HTTP server on all 3 managed nodes
+- Run the playbook and access the started Apache HTTP servers for testing purposes
 
-Nutzen Sie auch die folgenden Referenzen:
+### Note:
+If you get stuck, you can refer to the sample solution.
+
+You can also use the following references:
 - Docker Compose Syntax: https://docs.docker.com/compose/compose-file/
 - Ansible Documentation: https://docs.ansible.com/ansible/latest/index.html 
 
-### Schritt 1: Image für Managed Nodes bauen
-Erstellen Sie ein Dockerfile für die zu provisionierenden Maschinen / Managed Nodes. 
-Diese sollen Ubuntu in Version 22.04 beinhalten und SSH-Verbindungen von außen erlauben:
-- Legen Sie dafür parallel zu dieser Readme eine Datei mit dem Namen "`Dockerfile_Managed_Node`" an.
-- Schreiben sie ein Dockerfile, das die folgenden Shell-Befehle ausführt um den SSH-Server zu installieren:
-     ```
+### Step 1: Build an image for managed nodes
+
+Create a Dockerfile for the machines/managed nodes to be provisioned.
+These should include Ubuntu version 22.04 and allow SSH connections from outside:
+```
   apt-get update && apt-get install -y openssh-server
   mkdir /var/run/sshd
   echo 'root:verysecretpassword' | chpasswd
   sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
   sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
   echo "export VISIBLE=now" >> /etc/prof
-     ```
-- Mit dem folgenden Befehl wir der ssh Server dann gestartet:
-     ```
+```
+
+The ssh server is then started with the following command:
+```
   /usr/sbin/sshd -D
-     ```
+```
 
-#### Bonus/Optional: 
-Erstellen Sie alternativ selbst ein Docker Image, das SSH Verbindungen von außen erlaubt:
-- Wählen Sie ein Ubuntu Basisimage.
-- Sorgen Sie dafür, dass eine SSH-Verbindung zum Container aufgebaut werden kann (per SSH Daemon), 
-und hinterlegen Sie hierfür die Credentials Username="root" und Passwort="verysecretpassword".
+#### Bonus/Optional:
 
-### Schritt 2: Managed Node und Ansible Control Node über Docker Compose gemeinsam starten
-Erstellen Sie ein Docker Compose File (Datei mit dem Namen "docker-compose.yml" parallel zu dieser Readme), das
-- Eine Managed Node startet und dabei:
-     - den Service Namen "managed-node" hat
-     - das Image auf Basis des in Schritt 1 erstellen Dockerfiles baut
-     - den Port 80 exportiert
-     
+Alternatively, you can create a Docker image that allows external SSH connections:
+- Choose a Ubuntu base image.
+- Make sure that an SSH connection to the container can be established (via SSH daemon),
+  and store the credentials username=“root” and password=“verysecretpassword” for this purpose.
+
+### Step 2: Start managed node and Ansible control node together using Docker Compose
+
+Create a Docker Compose file (file named “docker compose.yml” alongside this readme) that
+- starts a managed node and in doing so:
+  - has the service name “managed-node”
+  - builds the image based on the Dockerfile created in step 1
+  - exports port 80
+
      <details>
-     <summary>Wenn Sie nicht weiterkommen, können Sie folgenden Codeblock verwenden:</summary>
+     <summary>If you get stuck, you can use the following code block:</summary>
      
      ```
   managed-node:
@@ -170,15 +179,15 @@ Erstellen Sie ein Docker Compose File (Datei mit dem Namen "docker-compose.yml" 
       - "80"
      ```
      </details>
-- Eine Ansible Control Node startet und dabei:
-     - den Service Namen "ansible-node" hat
-     - das fertige Image "willhallonline/ansible:2.9-alpine-3.13" nutzt. In diesem ist Ansible in Version 2.9 mit
-     Python3 verfügbar. (siehe https://hub.docker.com/r/willhallonline/ansible)
-     - ein Memory Limit von 100 MB hat
-     - erst gestartet wird, wenn die Managed Node läuft
-     
+- An Ansible Control Node starts and in doing so:
+  - has the service name “ansible-node”
+  - uses the finished image “willhallonline/ansible:2.9-alpine-3.13”. This provides Ansible version 2.9 with
+    Python3. (see https://hub.docker.com/r/willhallonline/ansible)
+  - has a memory limit of 100 MB
+  - is only started when the managed node is running
+
      <details>
-     <summary>Wenn Sie nicht weiterkommen, können Sie folgenden Codeblock verwenden:</summary>
+     <summary>If you get stuck, you can use the following code block:</summary>
      
      ```
   ansible-node:
@@ -189,59 +198,59 @@ Erstellen Sie ein Docker Compose File (Datei mit dem Namen "docker-compose.yml" 
       - managed-node
     ```
     </details>
-- Geben Sie im Docker Compose File ein Netzwerk vom Typ "bridge" an und sorgen Sie dafür, dass die Managed
-Node und die Ansible Control Node im gleichen Netzwerk laufen. Denken Sie daran, das im Docker Compose File
-für jeden der Services mittels "networks" anzugeben.
+In the Docker Compose file, specify a network of type “bridge” and make sure that the
+Managed Node and the Ansible Control Node run in the same network. Remember to specify this in the Docker Compose file
+for each of the services using “networks”.
 
-### Schritt 3: Setup testen
-Starten Sie die Managed Node über
+### Step 3: Test the setup
+Start the Managed Node via
 ```
-docker-compose up --build -d
+docker compose up --build -d
 ```
-Starten Sie eine Shell auf der Ansible Control Node über
+Start a shell on the Ansible control node via
 ```
-docker-compose run ansible-node /bin/sh
+docker compose run ansible-node /bin/sh
 ``` 
 
-Stellen Sie eine SSH Verbindung zur Managed Node über folgendes Kommando her:
+Establish an SSH connection to the managed node using the following command:
 ```
 ssh managed-node
 ```
-Geben Sie das Passwort 'verysecretpassword' ein, wenn Sie danach gefragt werden.
-Sie können die SSH-Verbindung mit ```exit``` wieder beenden.
+Enter the password 'verysecretpassword' when prompted.
+You can terminate the SSH connection with ```exit.
 
-Sie können sowohl über den Service Namen 'managed-node' als auch mit vorangestelltem Präfix 'uebung' (der Name
-des Ordners) und Suffix '1' eine SSH Verbindung herstellen. Verifizieren Sie das über 
+You can establish an SSH connection both via the service name 'managed-node' and with the prefix 'exercise' (the name
+of the folder) and suffix '1'. Verify this with 
 ```
 ssh uebung_managed-node_1
 ```
 
-### Schritt 4: Erste Schritte mit Ansible
+### Step 4: Getting started with Ansible
 
-Konfigurieren Sie die Maschinen, die Sie mit Ansible provisionieren wollen, über die Hosts Datei.
-Legen Sie hierzu einen Ordner "ansible" und darin die Datei "hosts" an.
+Configure the machines that you want to provision with Ansible using the hosts file.
+To do this, create an “ansible” folder and a “hosts” file inside it.
 
-Legen Sie die Group "server_hosts" an, tragen Sie darin die Managed Node ein, und konfigurieren Sie Ansible:
-- Geben Sie python3 als Python Interpreter an
-- Hinterlegen Sie für die SSH-Verbindung Username und Passwort und fügen sie das ssh-Argument '-o StrictHostKeyChecking=no' hinzu
+Create the group “server_hosts”, enter the managed node in it, and configure Ansible:
+- Specify python3 as the Python interpreter
+  - Enter the username and password for the SSH connection and add the ssh argument '-o StrictHostKeyChecking=no'
 
-     <details>
-     <summary>Wenn Sie nicht weiterkommen, können Sie folgenden Codeblock verwenden:</summary>
+       <details>
+       <summary>If you get stuck, you can use the following code block:</summary>
 
       ```
-      [server_hosts]
-      uebung_managed-node_1
+        [server_hosts]
+        uebung_managed-node_1
 
-      [server_hosts:vars]
-      ansible_python_interpreter=/usr/bin/python3
-      ansible_ssh_user=root
-      ansible_ssh_pass=verysecretpassword
-      ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-      ```
+        [server_hosts:vars]
+        ansible_python_interpreter=/usr/bin/python3
+        ansible_ssh_user=root
+        ansible_ssh_pass=verysecretpassword
+        ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+        ```
 
-    </details>
+      </details>
 
-Mounten Sie diese Datei über Docker Compose für den Service ansible-node unter /etc/ansible/hosts:
+Mount this file via Docker Compose for the ansible-node service at /etc/ansible/hosts:
 
 ```
     volumes:
@@ -249,24 +258,24 @@ Mounten Sie diese Datei über Docker Compose für den Service ansible-node unter
     - "./ansible/hosts:/etc/ansible/hosts"
 ```
 
-Starten Sie die Ansible Node neu über
+Restart the Ansible node via
 ```
-docker-compose run ansible-node /bin/sh
+docker compose run ansible-node /bin/sh
 ``` 
 
-Führen Sie darin folgende Kommandos aus
-- Version ausgeben:  ```ansible --version```
-- Alle Managed Nodes pingen: ```ansible all -m ping```
-- Remote Command auf allen Managed Nodes ausführen: ```ansible all -m command -a "echo hello"```
+Run the following commands in it
+- Output version: ansible --version
+- Ping all managed nodes: ansible all -m ping
+- Run remote command on all managed nodes: `ansible all -m command -a “echo hello”`
 
-### Schritt 6: Apache Http Server per Ansible Playbook installieren und konfigurieren
+### Step 6: Install and configure the Apache HTTP server using an Ansible playbook
 
-Legen Sie den Ordner 'playbooks' an und darin eine Datei mit dem Namen 'install-apache2.yml'.
-Machen Sie sich über https://docs.ansible.com/ansible/latest/index.html mit der Ansible Syntax vertraut.
+Create the folder 'playbooks' and inside it a file named 'install-apache2.yml'.
+Familiarize yourself with the Ansible syntax at https://docs.ansible.com/ansible/latest/index.html.
 
-Tragen Sie die Hosts 'server_hosts' und den Remote User 'root' ein.
+Enter the hosts 'server_hosts' and the remote user 'root'.
 
-Mounten Sie das Playbook über Docker Compose in die Ansible Control Node unter '/root/playbooks'.
+Mount the playbook via Docker Compose into the Ansible Control Node under '/root/playbooks'.
 
      <details>
      <summary>Wenn Sie nicht weiterkommen, können Sie folgenden Codeblock verwenden:</summary>
@@ -279,111 +288,111 @@ Mounten Sie das Playbook über Docker Compose in die Ansible Control Node unter 
 
      </details>
 
-Führen Sie im Playbook die folgenden Tasks aus:
+In the Playbook, perform the following tasks:
 
-- Testen Sie, ob Sie zur Managed Node eine Verbindung aufbauen können. Verwenden Sie dafür das Ansible Module 'ping'
- (https://docs.ansible.com/ansible/latest/modules/ping_module.html#stq=copy%20module&stp=1).
-- Installieren Sie über das Ansible Module 'apt' apache2 in der Version 'latest' (https://docs.ansible.com/ansible/latest/modules/apt_module.html).
-- Legen Sie eine eigene index.html an, die der Apache ausliefern soll, und kopieren Sie diese auf die Managed Node unter '/var/www/html/index.html'.
-Verwenden Sie hierzu das Ansible Module 'copy' (https://docs.ansible.com/ansible/latest/modules/copy_module.html).
-- Stellen Sie über das Ansible Module 'service' sicher, dass der Apache Http Server gestartet wurde (https://docs.ansible.com/ansible/latest/modules/service_module.html).
+- Test whether you can establish a connection to the managed node. To do this, use the Ansible module 'ping'
+  (https://docs.ansible.com/ansible/latest/modules/ping_module.html#stq=copy%20module&stp=1).
+- Use the Ansible module 'apt' to install the 'latest' version of Apache2 (https://docs.ansible.com/ansible/latest/modules/apt_module.html).
+- Create your own index.html that you want Apache to deliver and copy it to the managed node under '/var/www/html/index.html'.
+  Use the Ansible module 'copy' (https://docs.ansible.com/ansible/latest/modules/copy_module.html) for this.
+- Use the Ansible module 'service' to ensure that the Apache HTTP server has been started (https://docs.ansible.com/ansible/latest/modules/service_module.html).
 
-Führen Sie das Playbook auf der Ansible Control Node aus:
+Run the playbook on the Ansible control node:
 
 ```
 ansible-playbook /root/playbooks/install-apache.yml
 ```
 
-### Schritt 6: Aufruf des gestarteten Webservers
-Finden Sie über 
+### Step 6: Starting the web server
+
+Find out via 
 
 ```
 docker ps
 ```
 
-heraus, unter welchem Port der gestartete Webserver auf Ihrem Host erreichbar ist. 
-Welcher Port leitet Requests an den exponierten Port '80' des Containers weiter?
+under which port the started web server can be accessed on your host.
+Which port forwards requests to the exposed port '80' of the container?
 
-Rufen Sie in Ihrem Browser localhost:<port> für den spezifischen Port auf und verifizieren Sie, dass Ihre index.html
-angezeigt wird.
+In your browser, enter localhost:<port> for the specific port and verify that your index.html
+is displayed.
 
-### Schritt 7: Skalieren der Managed Nodes
+### Step 7: Scale the managed nodes
 
-Skalieren Sie die Managed Nodes auf 3. 
-Nutzen Sie hierfür das docker-compose Kommando 'up' mit der Option '--scale' (siehe https://docs.docker.com/compose/reference/up/).
+Scale the managed nodes to 3.
+Use the docker compose command 'up' with the '--scale' option (see https://docs.docker.com/compose/reference/up/).
 
-Ändern Sie die Datei 'hosts' so ab, dass alle 3 Managed Nodes provisioniert werden können und führen Sie die 
-Provisionierung aus.
+Modify the 'hosts' file so that all 3 managed nodes can be provisioned and execute the
+provisioning.
 
 ### Troubleshooting
-Stellen Sie sicher, dass Sie über Docker den Zugriff auf die gemounteten Dateien erlauben.
+Make sure that you allow access to the mounted files via Docker.
 
 
-## Übung 3: Packer (Optional)
+## Exercise 3: Packer (Optional)
 
-### Schritt 1: Packer installieren
-Installieren Sie Packer, indem Sie die Anleitung auf https://learn.hashicorp.com/tutorials/packer/getting-started-install
-befolgen.
+### Step 1: Install packer
+Install packer by following the instructions on https://learn.hashicorp.com/tutorials/packer/getting-started-install
+.
 
-### Schritt 2: Packer kennenlernen
-Machen Sie sich mit Packer vertraut, indem Sie sich die Beispiele auf https://learn.hashicorp.com/tutorials/packer/getting-started-build-image?in=packer/getting-started
-anschauen.
+### Step 2: Get to know Packer
+Familiarize yourself with Packer by looking at the examples at https://learn.hashicorp.com/tutorials/packer/getting-started-build-image?in=packer/getting-started
+.
 
-Optional: bauen Sie eins der Beispiele lokal mit Packer.
+Optional: build one of the examples locally with Packer.
 
-### Schritt 3: Docker Image mit Packer bauen
-Lesen Sie die Doku zum Bauen von Docker Images mit Packer: https://www.packer.io/docs/builders/docker
+### Step 3: Build a Docker image with Packer
+Read the documentation on building Docker images with Packer: https://www.packer.io/docs/builders/docker
 
-Legen Sie ein Packer Template an.
-Verwenden Sie den Docker Builder von Packer, um ein Nginx Image mit.
-einer eigenen Welcome Seite zu bauen.
+Create a Packer template.
+Use Packer's Docker Builder to build an Nginx image with
+its own welcome page.
 
-Verwenden Sie als Basisimage "nginx:1.19-alpine".
+Use “nginx:1.19-alpine” as the base image.
 
-Exponieren Sie Port 80 im Image und führen Sie das CMD "nginx -g daemon off;"
-zum Start von Nginx aus.
+Expose port 80 in the image and execute the CMD “nginx -g daemon off;”
+to start Nginx.
 
-Da wir ein Alpine Image verwenden, in dem per Default ```Bash```
-nicht installiert ist, nutzen Sie das folgende ```run_command```
-von Packer, damit später beim Container-Start ```/bin/sh``` anstelle von
-```/bin/bash``` verwendet wird:
+Since we are using an Alpine image in which `bash` is not installed by default,
+use the following run_command
+from Packer so that `/bin/sh` is used instead of
+'/bin/bash` when the container is started later:
 ...
 ```"run_command": [ "-d", "-t", "-i", "{{.Image}}", "/bin/sh" ] ```
 
-Nutzen Sie den File Provisioner von Packer, um eine lokal angelegte index.html
-nach /usr/share/nginx/html/ im Image zu kopieren.
+Use Packer's file provisioner to copy a locally created index.html
+to /usr/share/nginx/html/ in the image.
 
-Nutzen Sie den Post Processor "docker-tag" von Packer, um dem Image den.
-Namen "packer-nginx" und den Tag "1.0" zu geben.
+Use Packer's post-processor “docker-tag” to give the image the.
+Name “packer-nginx” and the tag “1.0”.
 
-Führen Sie
-```packer build <Ihr Template>``` aus.
+Execute
+```packer build <Ihr Template>``` .
 
-Prüfen Sie über ```docker images```, ob das Docker Image in Ihrer lokalen.
-Registry verfügbar ist.
+Use ```docker images``` to check whether the Docker image is available in your local registry.
 
-Starten Sie dann den Container mit ```docker```.
-Mappen Sie dabei den Containerport 80 auf den Host Port 8080.
+Then start the container with docker.
+Map the container port 80 to the host port 8080.
 
 <details>
-<summary>Hinweis, falls Sie nicht weiterkommen:</summary>
+<summary>Note if you get stuck:</summary>
 
 ```
 docker run -d -p 8080:80 packer-nginx:1.0
 ```
 </details>
 
-Rufen Sie im Browser ```localhost:8080``` auf und verifizieren Sie,
-dass Ihre Welcome Seite angezeigt wird.
+In the browser, enter ```localhost:8080``` and verify
+that your welcome page is displayed.
 
 ### Bonus/Optional 1:
-Verwenden Sie anstelle des Nginx Images ein Alpine oder Centos Image.
-Installieren Sie Nginx per shell Provisioner.
+Use an Alpine or Centos image instead of the Nginx image.
+Install Nginx using the shell provisioner.
 
-### Bonus/Optional 2: Ansible Provisionierung mit Packer ausführen
+### Bonus/Optional 2: Run Ansible Provisioning with Packer
 
-Nutzen Sie Ansible zur Provisionierung mit Packer..
-Verwenden Sie dafür das Playbook aus Übung 2 und führen Sie dieses mit dem
-Ansible Provisioner von Packer aus..
+Use Ansible for provisioning with Packer.
+Use the Playbook from Exercise 2 and run it with the
+Ansible Provisioner from Packer.
 
-Nutzen Sie hierzu die Packer Doku und recherchieren Sie Beispiele.
+Use the Packer documentation and research examples.
