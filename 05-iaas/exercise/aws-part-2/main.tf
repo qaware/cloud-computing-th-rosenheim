@@ -32,7 +32,7 @@ resource "random_string" "id_suffix" {
 locals {
   # Use this variable as prefix for all resource names.
   # This avoids conflicts with globally unique resources (all resources with a hostname).
-  env = "${terraform.workspace}-${random_string.id_suffix.result}"
+  env = "default"
 
   # Use this map to apply env-specific values for certain components.
   env_config = {

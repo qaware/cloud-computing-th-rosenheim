@@ -6,8 +6,6 @@ resource "aws_security_group" "app" {
 }
 
 resource "aws_security_group_rule" "app_ingress_ssh_all" {
-  #checkov:skip=CKV_AWS_24:Ensure no security groups allow ingress from 0.0.0.0:0 to port 22
-
   security_group_id = aws_security_group.app.id
   description       = "Allows SSH from everywhere"
   type              = "ingress"
@@ -17,15 +15,18 @@ resource "aws_security_group_rule" "app_ingress_ssh_all" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-resource "aws_security_group_rule" "app_ingress_http_lb" {
-  security_group_id        = aws_security_group.app.id
-  description              = "Allows HTTP access from the load balancer"
-  type                     = "ingress"
-  from_port                = 8080
-  to_port                  = 8080
-  protocol                 = "tcp"
-  source_security_group_id = aws_security_group.lb.id
-}
+# ToDo: Allow Ingress from the Security Group of the Load Balancer to the App Security Group in port 8080
+# See: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
+
+# resource "aws_security_group_rule" "app_ingress_http_lb" {
+#   security_group_id        =
+#   description              = "Allows HTTP access from the load balancer"
+#   type                     = "ingress"
+#   from_port                =
+#   to_port                  =
+#   protocol                 = "tcp"
+#   source_security_group_id =
+# }
 
 resource "aws_security_group_rule" "app_egress_all" {
   security_group_id = aws_security_group.app.id
@@ -38,8 +39,6 @@ resource "aws_security_group_rule" "app_egress_all" {
 }
 
 resource "aws_launch_template" "app" {
-  #checkov:skip=CKV_AWS_88:EC2 instance should not have public IP
-
   name                                 = local.env
   image_id                             = "ami-01e444924a2233b07"
   instance_initiated_shutdown_behavior = "terminate"
@@ -56,12 +55,6 @@ resource "aws_launch_template" "app" {
     tags          = local.standard_tags
   }
 
-  metadata_options {
-    http_endpoint          = "enabled"
-    http_tokens            = "required"
-    instance_metadata_tags = "enabled"
-  }
-
   user_data = base64encode(
     templatefile(
       "${path.module}/init.sh", { message = local.config.message }
@@ -69,25 +62,28 @@ resource "aws_launch_template" "app" {
   )
 }
 
-resource "aws_autoscaling_group" "app" {
-  name                = local.env
-  min_size            = 0
-  max_size            = 4
-  desired_capacity    = 1
-  vpc_zone_identifier = module.vpc.public_subnets
-  health_check_type   = "ELB"
-  target_group_arns   = [aws_lb_target_group.app.arn]
+# ToDo: Create an AutoScaling Group that manages 0 to 4 instances, with a default of 1
+# See: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group
 
-  launch_template {
-    id = aws_launch_template.app.id
-  }
+# resource "aws_autoscaling_group" "app" {
+#   name                = local.env
+#   min_size            =
+#   max_size            =
+#   desired_capacity    =
+#   vpc_zone_identifier = module.vpc.public_subnets
+#   health_check_type   =
+#   target_group_arns   = []
 
-  dynamic "tag" {
-    for_each = local.standard_tags_asg
-    content {
-      key                 = tag.value.key
-      propagate_at_launch = tag.value.propagate_at_launch
-      value               = tag.value.value
-    }
-  }
-}
+#   launch_template {
+#     id =
+#   }
+
+#   dynamic "tag" {
+#     for_each = local.standard_tags_asg
+#     content {
+#       key                 = tag.value.key
+#       propagate_at_launch = tag.value.propagate_at_launch
+#       value               = tag.value.value
+#     }
+#   }
+# }

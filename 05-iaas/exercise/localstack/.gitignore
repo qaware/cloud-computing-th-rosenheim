@@ -1,1 +1,5 @@
-volume/
+.terraform/
+terraform.tfstate*
+.terraform.lock.hcl
+builds/
+output.txt
