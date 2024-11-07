@@ -35,6 +35,7 @@ Think of a unique name for naming/tags for your resources.
 In this part of the exercise, you will create a virtual network with a single subnet with internet access.
 
 1. Click on _Services_ in the menu bar, select _VPC_ > _Your VPCs_ > _Create VPC_.
+   * Use the option "vpc only", **not** "vpc and more"
    * Give it a unique name that you can use to identify your network, e.g., _lbuchner_.
    * Use the IPv4 address range `10.0.0.0/16`.
    * Click _Create VPC_.  
