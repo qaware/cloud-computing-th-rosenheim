@@ -108,7 +108,7 @@ In this part of the exercise, you will create an Auto Scaling group, which allow
 2. Click on _Launch Templates_ in the sidebar, then _Create Launch Template_.
    * Use your unique name again.
    * For the description, "Launch Template for a simple web application." is appropriate.
-   * Under _Application and OS Images_, choose an Ubuntu _AMI_, for example, `ami-01e444924a2233b07`.
+   * Under _Application and OS Images_, choose an Ubuntu _AMI_, for example, `ami-0084a47cc718c111a`.
    * Under _Instance type_, select `t2.micro`.
    * Under _Network settings_, select your security group for the application.
    * Under _Advanced details_, use the following script as _User Data_:
