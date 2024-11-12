@@ -13,5 +13,6 @@ nodes:
       - containerPort: 80
         hostPort: 9999
         protocol: TCP
-  - role: worker
-  - role: worker
+  # if your machine has enough resources, enable additional workers
+  # - role: worker
+  # - role: worker
