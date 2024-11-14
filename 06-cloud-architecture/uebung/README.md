@@ -1,91 +1,91 @@
-# Übung: Cloud Architektur
+# Exercise: Cloud Architektur
 
-## Aufgabe 1: Twelve Factor Apps
+## Task 1: Twelve Factor Apps
 
-Die [Twelve Factor Apps](https://12factor.net/) beschreiben Methoden bzw. Empfehlungen zur Entwicklung von 
-Cloud-Anwendungen.
+The [Twelve Factor Apps](https://12factor.net/) describe methods and recommendations for developing
+cloud applications.
 
-Recherchieren Sie in Ihrer Gruppe die angegebenen Faktoren. Sie können dafür diese 
-[Slides](https://www.slideshare.net/Alicanakku1/12-factor-apps)
-nutzen oder frei recherchieren.
+Research the given factors in your group. You can use these
+[slides] (https://www.slideshare.net/Alicanakku1/12-factor-apps)
+or research freely.
 
-Bereiten Sie gemeinsam jeweils einen kurzen Foliensatz vor (1 Slide je Factor), in dem Sie
-* den Idee hinter dem jeweiligen Factor benennen
-* die Empfehlung erläutern
+Prepare a short set of slides together (1 slide per factor), in which you
+* state the idea behind the respective factor
+* explain the recommendation
 
-Bearbeiten Sie in den Gruppen die folgenden Punkte:
+Work on the following points in your groups:
 
-* Gruppe 1:
-    * Codebase
-    * Dependencies
-    * Configuration
-* Gruppe 2:
-    * Backing Services
-    * Build, release, run
-    * Processes
-* Gruppe 3:
-    * Port binding
-    * Concurrency
-    * Disposability
-* Gruppe 4:
-    * Dev/Prod Parity
-    * Logs
-    * Admin Processes
+* Group 1:
+  * Code base
+  * Dependencies
+  * Configuration
+* Group 2:
+  * Backing services
+  * Build, release, run
+  * Processes
+* Group 3:
+  * Port binding
+  * Concurrency
+  * Availability
+* Group 4:
+  * Dev/prod parity
+  * Logs
+  * Admin processes
 
-Finden Sie einen Vertreter Ihrer Gruppe, der die Vorstellung übernimmt.
+Find a representative of your group to take over the presentation.
 
-## Aufgabe 2: Das Raft-Konsens-Protokoll
+## Task 2: The Raft Consensus Protocol
 
-Erarbeiten Sie die Funktionsweise vom Raft Protokoll mithilfe folgender
-[Demo](http://thesecretlivesofdata.com/raft/).
+Work out how the Raft protocol works with the help of the following
+[documentation](http://thesecretlivesofdata.com/raft/).
 
-## Aufgabe 3: etcd
+## Task 3: etcd
 
-Siehe Verzeichnis "etcd".
+See directory “etcd”.
 
-## Aufgabe 4: Erste Erfahrungen mit Traefik und Consul sammeln
+## Task 4: Gather initial experience with Traefik and Consul
 
-Ziel dieser Übung ist es, erste praktische Erfahrungen mit Traefik und Consul zu machen.
-Dabei wird ein einfacher Spring Cloud REST Service zusammen mit Consul
-für Service Discovery und Configuration und Traeffik als Edge Server aufgesetzt.
+The aim of this exercise is to gain initial practical experience with Traefik and Consul.
+A simple Spring Cloud REST service is set up together with Consul
+for service discovery and configuration and Traeffik as an edge server.
 
-Diese Übung orientiert sich an diesem [Tutorial](https://m.mattmclaugh.com/traefik-and-consul-catalog-example-2c33fc1480c0).
+Diese Exercise orientiert sich an diesem [Tutorial](https://m.mattmclaugh.com/traefik-and-consul-catalog-example-2c33fc1480c0).
 
-## Vorbereitung
+## Preparation
 
-* Das Aufsetzen eines Spring Cloud Microservice ist in Übung 1 beschrieben. Die Lösung dieser
-  Übung dient als Startpunkt und wird in dieser Übung erweitert.
+* Setting up a Spring Cloud microservice is described in Exercise 1. The solution to that
+  exercise serves as a starting point and will be expanded in this exercise.
 
-## Aufgaben
+## Tasks
 
-### Testen sie den vorgefertigten Container
+### Test the pre-built container
 
-Zuerst müssen sie den Book-Service im Unterverzeichnis `book-service` bauen. Benutzen Sie dazu den Befehl:
+First, you need to build the book service in the subdirectory `book-service`. To do this, use the command:
 ```shell
 ./mvnw package
 ```
 
-Nun können Sie den Container mit dem Docker-Compose File in diesem Verzeichnis bauen und starten:
+Now you can build and start the container with the Docker Compose file in this directory:
 ```shell
 docker-compose up --build
 ```
-Testen Sie, dass der Book-Service korrekt gestartet wird.
-Nach dem Start sollten sie den Book-Service direkt auf Port `18080` erreichbar sein. 
-Sie können dies z.B. mit
+Test that the book service is started correctly.
+After starting, the book service should be directly accessible on port 18080.
+You can check this, for example, with
 ```
 curl http://localhost:18080/api/books
 ```
-überprüfen. 
-
-### Consul Cluster (Single Node) mit Docker Compose
-
-Erweitern Sie das Docker Compose File um einen Consul Service (im Single Node Betrieb)
-Verwenden Sie das dafür aktuellste offizielle Docker Image von Hashicorp.: [hub.docker.com/_/consul](https://hub.docker.com/_/consul)
  
-Stellen Sie sicher, dass die Consul UI gestartet wird, und alle benötigen Ports exponiert werden.
+
+### Consul Cluster (Single Node) with Docker Compose
+
+Add a Consul service (in single-node operation) to the Docker Compose file
+Use the latest official Docker image from Hashicorp: [hub.docker.com/_/consul](https://hub.docker.com/_/consul)
+
+Make sure that the Consul UI is started and that all required ports are exposed.
 
 <details>
-<summary>Orientieren Sie sich an folgendem Abschnitt, falls Sie nicht weiterkommen:</summary>
+<summary>Refer to the following section if you get stuck:</summary>
 
 ```
   consul:
@@ -98,17 +98,17 @@ Stellen Sie sicher, dass die Consul UI gestartet wird, und alle benötigen Ports
 ```
 </details>
 
-Starten sie den Consul Service. Sie sollten nun mit die UI mit [http://localhost:8500/ui/](http://localhost:8500/ui/) aufrufen können.
+Start the Consul service. You should now be able to access the UI by visiting [http://localhost:8500/ui/](http://localhost:8500/ui/).
 
 ### Spring Cloud Microservice
 
-Erweitern Sie den book-service so, dass sich dieser
+Expand the book-service so that it
 
-* beim Start bei der Consul Service Discovery anmeldet,
-* beim Start seine Konfigurationswerte bei Consul abholt,
-* die Service-Schnittstellen (nicht die Admin Schnittstellen) über Traefik aufgerufen werden können
+* logs on to the Consul Service Discovery when starting up,
+* retrieves its configuration values from Consul when starting up,
+* the service interfaces (not the admin interfaces) can be accessed via Traefik
 
-Die folgenden Dependencies müssen der `pom.xml` hinzugefügt werden:
+The following dependencies must be added to the pom.xml:
 
 ```xml
 <!-- required for Consol discovery and configuration -->
@@ -122,7 +122,7 @@ Die folgenden Dependencies müssen der `pom.xml` hinzugefügt werden:
 </dependency>
 ```
 
-Danach muss unter `src/main/resources` die Datei `bootstrap.properties` angelegt werden:
+After that, the file `bootstrap.properties` must be created under `src/main/resources`:
 
 ```properties
 spring.application.name=book-service
@@ -146,7 +146,7 @@ spring.cloud.consul.config.format=properties
 spring.cloud.consul.config.data-key=data
 ```
 
-Im gleichen Verzeichnis müssen sie noch die Datei `application.properties` erweitern:
+In the same directory, you still have to expand the file `application.properties`:
 ```properties
 # assign a unique instance ID
 spring.cloud.consul.discovery.instance-id=${spring.application.name}:${spring.application.instance_id:${random.value}}
@@ -158,7 +158,7 @@ spring.cloud.consul.discovery.heartbeat.enabled=true
 ```
 
 
-Falls Sie nicht weiterkommen, verwenden Sie folgenden Abschnitt:
+If you get stuck, use the following section:
 ```yaml
  book-service:
     build: ./book-service
@@ -173,29 +173,28 @@ Falls Sie nicht weiterkommen, verwenden Sie folgenden Abschnitt:
       - SPRING_CLOUD_CONSUL_HOST=consul
 ```
 
-Zuletzt müssen sie dafür sorgen, dass der book-service nach Consul gestartet wird. 
-Erweitern sie dazu die book-service docker-compose Konfiguration um den folgenden Block:
+Finally, you have to ensure that the book-service is started after Consul.
+To do this, expand the book-service docker-compose configuration with the following block:
 ```yaml
     depends_on:
       - consul
 
 ```
 
-### Traefik Edge Service mit Consul Backend
+### Traefik Edge Service with Consul backend
 
-Betreiben Sie den Traefik Edge Service mittels Docker Compose und verwenden Sie
-Consul als Discovery Backend für Traefik.
+Run the Traefik Edge Service using Docker Compose and use
+Consul as the discovery backend for Traefik.
 
-Benutzen sie dazu das offizielle Traefik Image: [https://hub.docker.com/_/traefik](https://hub.docker.com/_/traefik)
-* Konfigurieren sie die API (= Traefik Dashboard) mit dem CLI Parameter `--api.insecure=true`.
-* Konfigurieren sie Consul als Catalog, siehe dazu: [https://doc.traefik.io/traefik/providers/consul-catalog/](https://doc.traefik.io/traefik/providers/consul-catalog/)
-* Exponieren Sie folgenden Ports: `80`, `8080` (für die API)
+Use the official Traefik image: [https://hub.docker.com/_/traefik](https://hub.docker.com/_/traefik)
+Configure the API (= Traefik Dashboard) with the CLI parameter `--api.insecure=true`.
+Configure Consul as a catalog, see: [https://doc.traefik.io/traefik/providers/consul-catalog/](https://doc.traefik.io/traefik/providers/consul-catalog/)
+* Expose the following ports: 80, 8080 (for the API)
 
-Starten Sie den Container ebenfalls über Docker Compose und übergeben Sie beim Start die nötigen Konfigurationen zur
-Interaktion mit Consul.
+Start the container with Docker Compose and pass the necessary configurations for interacting with Consul when starting.
 
 <details>
-<summary>Falls Sie nicht weiterkommen, verwenden Sie folgenden Abschnitt:</summary>
+<summary>If you get stuck, use the following section:</summary>
 
 ```yaml
   reverse-proxy:
@@ -215,22 +214,22 @@ Interaktion mit Consul.
 
 ### Anbinden des Book-Service an Traefik
 
-In der `application.properties` müssen zudem folgende Properties angelegt werden, um die Service-Registrierung
-in Consul und die Tags für Traefik korrekt zu konfigurieren:
+The following properties must also be added to application.properties to correctly configure the service registration
+in Consul and the tags for Traefik:
 
 ```properties
 # Configuration for traefik
 spring.cloud.consul.discovery.tags=traefik.enable=true,traefik.frontend.rule=PathPrefixStrip:/book-service,traefik.tags=api,traefik.frontend.entrypoint=h
 ```
 
-Starten Sie die Services erneut. Wenn alles geklappt hat sollten sie nun den Book-Service in der Traefik-API sehen.
-Sie sollten nun den Book-Service über Traefik aufrufen können, z.B. über:
+Restart the services. If everything went well, you should now see the book service in the Traefik API.
+You should now be able to call the book service via Traefik, e.g. via:
 ```shell
 curl -H Host:book-service-uebung http://127.0.0.1/api/books
 ```
 
 ### Testen
 
-* Die Anwendung sollte nun unter `http://localhost:8081/book-service/api/books` erreichbar sein.
-* Die Consul UI sollte unter `http://localhost:8500/ui` erreichbar sein.
-* Die Traefik UI sollte unter `http://localhost:8080` erreichbar sein.
+The application should now be accessible at http://localhost:8081/book-service/api/books.
+The Consul UI should be accessible at http://localhost:8500/ui.
+The Traefik UI should be accessible at http://localhost:8080.

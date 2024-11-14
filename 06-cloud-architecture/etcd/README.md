@@ -24,7 +24,7 @@ localhost:23791, 2848abbfff24c332, 3.5.10, 20 kB, true, false, 3, 12, 12,
 5. Setzen Sie einige Werte in den ersten etcd-Node. Beispiel:
 
 ```shell
-$ etcdctl --endpoints=localhost:23791 put vorlesung "Cloud Computing WS 2023/24"
+$ etcdctl --endpoints=localhost:23791 put vorlesung "Cloud Computing WS 2024/25"
 OK
 ```
 
