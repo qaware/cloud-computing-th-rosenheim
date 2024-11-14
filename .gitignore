@@ -11,9 +11,9 @@
 
 *.iml
 
-06-cloud-architektur/uebung/loesung/bin/fabio
+06-cloud-architecture/uebung/loesung/bin/fabio
 
-06-cloud-architektur/uebung/loesung/bin/consul
+06-cloud-architecture/uebung/loesung/bin/consul
 
 \.DS_Store
 
@@ -75,15 +75,15 @@
 
 99-cluster-scheduling/beispiele/marathon/loesung/\.settings/org\.eclipse\.m2e\.core\.prefs
 
-06-cloud-architektur/beispiele/loesung/\.classpath
+06-cloud-architecture/beispiele/loesung/\.classpath
 
-06-cloud-architektur/beispiele/loesung/\.project
+06-cloud-architecture/beispiele/loesung/\.project
 
-06-cloud-architektur/beispiele/loesung/\.settings/org\.eclipse\.core\.resources\.prefs
+06-cloud-architecture/beispiele/loesung/\.settings/org\.eclipse\.core\.resources\.prefs
 
-06-cloud-architektur/beispiele/loesung/\.settings/org\.eclipse\.jdt\.core\.prefs
+06-cloud-architecture/beispiele/loesung/\.settings/org\.eclipse\.jdt\.core\.prefs
 
-06-cloud-architektur/beispiele/loesung/\.settings/org\.eclipse\.m2e\.core\.prefs
+06-cloud-architecture/beispiele/loesung/\.settings/org\.eclipse\.m2e\.core\.prefs
 
 11-big-data/uebung/loesung/\.classpath
 

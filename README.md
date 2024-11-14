@@ -16,7 +16,7 @@ Contents:
 3. [Virtualization](03-virtualization)
 4. [Provisionierung](04-provisioning)
 5. [Infrastructure as a Service](05-iaas)
-6. [Cloud-native software architecture](06-cloud-architektur)
+6. [Cloud-native software architecture](06-cloud-architecture)
 7. [Cluster orchestration](07-orchestrierung)
 8. [Service-Meshes](07-orchestrierung)
 9. [Serverless](99-ci-cd_serverless)
