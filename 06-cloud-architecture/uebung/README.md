@@ -26,7 +26,7 @@ Work on the following points in your groups:
 * Group 3:
   * Port binding
   * Concurrency
-  * Availability
+  * Disposability
 * Group 4:
   * Dev/prod parity
   * Logs
