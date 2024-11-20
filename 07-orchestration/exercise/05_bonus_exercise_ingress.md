@@ -3,12 +3,9 @@
 Infos:
 
 - [Cheat-Sheet](cheat-sheet.md)
-- In der ersten Übung dieses Semesters haben Sie den nginx-ingress-controller installiert. 
+  In the first exercise of this semester, you installed the nginx ingress controller.
 
-Aufgaben:
+Tasks:
 
-1. Legen Sie für den `Hello-Service` einen
-  [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource)
-  an.
-2. Prüfen Sie, ob der Service von außerhalb des Clusters erreichbar ist.
-
+1. Create an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource) for the 'Hello service'.
+2. Check whether the service can be accessed from outside the cluster.

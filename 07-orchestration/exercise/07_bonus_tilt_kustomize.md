@@ -1,10 +1,10 @@
-# Bonus Übung 7. Tilt / Kustomize
+# Exercise 7. Tilt / Kustomize (Bonus)
 
 Infos:
 
 - [Cheat-Sheet](cheat-sheet.md)
 
-Aufgaben:
+Tasks:
 
-1. Benutzen Sie Kustomize, um die bisherigen YAML-Dateien mit nur einem Befehl in Kubernetes zu deployen.
-2. Erstellen Sie ein `Tiltfile`, mit dem Sie die Kustomize-Dateien im Cluster deployen.
+1. Use Kustomize to deploy the previous YAML files to Kubernetes with just one command.
+2. Create a `tilt file` that you can use to deploy the Kustomize files to the cluster.

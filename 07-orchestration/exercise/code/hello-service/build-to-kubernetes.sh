@@ -9,4 +9,4 @@ set -euo pipefail
 VERSION="1"
 docker build -t "helloservice:${VERSION}" .
 
-kind load docker-image "helloservice:${VERSION}" --name=cc-2023
+kind load docker-image "helloservice:${VERSION}" --name=kind

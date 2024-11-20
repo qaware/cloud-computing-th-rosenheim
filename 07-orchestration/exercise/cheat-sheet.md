@@ -6,14 +6,14 @@
 
 ## kubectl
 
-Kubernetes YAML anwenden (Do whatever it takes to make the cluster look like this)
+Apply Kubernetes YAML (do whatever is necessary to make the cluster look like this)
 
 ```shell script
 kubectl apply -f path/to/file.yaml
 kubectl apply -f path/to/dir
 ```
 
-Version ausgeben
+Print Version
 
 ```shell script
 kubectl version
@@ -21,7 +21,7 @@ kubectl version
 
 ## k9s
 
-Starten
+Start
 
 ```shell script
 k9s
@@ -29,14 +29,14 @@ k9s
 
 Navigation
 
-- `?` Keyboard Shortcuts anzeigen
-- `:deployment` Kubernetes Resource anzeigen (Bsp.: `:deployments`, `:services`, `:pods`, `:ingress`, ...)
-- `/` Aktuelle Anzeige filtern
-- `enter` Intelligent untergeordnete Resource / Konzept anzeigen (`service` -> `pods` -> `containers` -> `logs`)
-- `esc` Raus aus: Ansicht / Kommando / Filter
+- `?` Show keyboard shortcuts
+- `:deployment` Show Kubernetes resource (e.g.: `:deployments`, `:services`, `:pods`, `:ingress`, ...)
+- `/` Filter current screen
+- `enter` Intelligent sub resource / show concept (`service` -> `pods` -> `containers` -> `logs`)
+- `esc` Get out of: View / Command / Filter
 - `d,v,e,l,…` Describe, View, Edit, Logs, ...
 
-Version ausgeben
+Show version
 
 ```shell script
 k9s version
@@ -44,28 +44,28 @@ k9s version
 
 ## docker
 
-Container-Image bauen
+Build container image
 
 ```shell script
 # docker build -t <tag> <path-to-dir-with-Dockerfile>
 docker build -t my-app:1 .
 ```
 
-Shell in einem laufenden Container starten
+Start Shell in a running container
 
 ```shell script
 # docker exec -it <container-name-or-id> /bin/bash
 docker exec -it 066c891518fa /bin/bash
 ```
 
-Neuen Container starten und Shell öffnen
+Start a new container and open a shell
 
 ```shell script
 # docker run -it --entrypoint <shell> <image-name-or-id>
 docker run --rm -it --entrypoint bash my-app
 ```
 
-Version ausgeben
+Print version
 
 ```shell script
 docker version

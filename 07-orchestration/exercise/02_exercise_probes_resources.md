@@ -1,36 +1,36 @@
-# Übung 2. Probes und Resource Constraints
+# Exercise 2. Probes and Resource Constraints
 
 Infos:
 
 - [Cheat-Sheet](cheat-sheet.md)
 
-Aufgaben:
+Tasks:
 
-1. Bauen Sie in das Deployment der App `Hello-Service` Liveness- und
-  Readiness-Probes ein, siehe
-  [HTTP Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-http-request).
-2. Vergeben Sie
-  [Resource Requests und Limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes).
-3. Prüfen Sie mittels `k9s`, ob die App korrekt startet.
+1. Include liveness and readiness probes in the deployment of the 'Hello-Service' app
+   , see
+   [HTTP Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-http-request).
+2. Assign
+   [Resource Requests and Limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes).
+3. Use k9s to check whether the app starts correctly.
 
 Bonus:
 
-4. Prüfen Sie, was passiert, wenn die Readiness oder Liveness Probes fehlschlagen.
-5. Prüfen Sie, was passiert, wenn zu wenige oder zu viele Ressourcen angefragt werden.
-   1. Verifizieren Sie, dass kein Pod gescheduled werden kann (Pending).
-   2. Nutzen Sie die `<d>` Describe Funktion in k9s, um die Events des Pods anzusehen.
-6. Bauen Sie eine
-  [Startup-Probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-startup-probes)
-  ein.
+4. Check what happens when the readiness or liveness probes fail.
+5. Check what happens when too few or too many resources are requested.
+    1. Verify that no pod can be scheduled (pending).
+    2. Use the <d>Describe function in k9s to view the pod's events.
+6. Build a
+   [Startup-Probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-startup-probes)
+   .
 
-7. Probe Zeit berechnen
+7. calculate probe delays
 
-Angenommen:
+Assumed:
 
-  - die Liveness Probe des Containers funktioniert und
-  - der Request auf den Endpunkt `/actuator/health/readiness` läuft in einen Timeout.
+- the liveness probe of the container is working and
+- the request to the endpoint `/actuator/health/readiness` times out.
 
-Wie lange dauert es, bis eine App mit der nachfolgenden Readiness Probe als "Not Ready" markiert wird?
+How long does it take for an app to be marked as “Not Ready” with the subsequent readiness probe?
 
 ```yaml
   readinessProbe:

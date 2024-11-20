@@ -1,29 +1,30 @@
-# Übung 4. Config Maps
+# Exercise 4. Config Maps
 
 Infos:
 
 - [Cheat-Sheet](cheat-sheet.md)
 
-Aufgaben:
+Tasks:
 
-1. Erstellen Sie eine
-  [Config Map](https://kubernetes.io/docs/concepts/configuration/configmap/#configmaps-and-pods)
-  für die App `Hello-Service`. Hinterlegen Sie eine passende Konfiguration,
-  sodass der Gruß aus der Config geladen wird.
-2. Binden Sie die
-  [Config Map Key als Umgebungsvariable](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)
-  in das Deployment des `Hello-Service` ein.
+1. Create a
+   [Config Map](https://kubernetes.io/docs/concepts/configuration/configmap/#configmaps-and-pods)
+   for the Hello-Service app. Store a suitable configuration so that
+   the greeting is loaded from the config.
+2. Bind the
+   [Config Map Key as an environment variable](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)
+   in the deployment of the Hello service.
 
-Tipp: Sehen Sie sich dafür die Nutzung der Umgebungsvariable `GREETING` im
-`HelloWorldController` an.
+Tip: See how the environment variable GREETING is used in
+HelloWorldController.
 
 Bonus:
 
-3. Als Alternative zum expliziten Einbinden einzelner Keys als
-  Umgebungsvariable: Binden Sie alle
-  [Keys der Config Map auf einmal](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variableshttps://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables)
-  ein. Stichwort: `envFrom`.
-4. (Vorwissen: Volumes) Als Alternative zu Umgebungsvariablen: Binden Sie die
-  [Keys einer Config Map als Files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#populate-a-volume-with-data-stored-in-a-configmap)
-  in den Container ein. Hinweis: Dafür ist natürlich auch eine Code-Anpassung nötig.
+3. As an alternative to explicitly integrating individual keys as
+   environment variables: Integrate all
+   [config map keys at once](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container- environment-variableshttps://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables)
+   ein. Keyword: `envFrom`.
+4. (Previous knowledge: Volumes) As an alternative to environment variables: Bind the
+   [keys of a config map as files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#populate-a-volume-with-data-stored-in-a-configmap)
+   into the container. Note: This also requires a code adjustment, of course.
+
 

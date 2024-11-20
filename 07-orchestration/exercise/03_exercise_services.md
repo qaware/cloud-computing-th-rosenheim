@@ -1,18 +1,16 @@
-# Übung 3. Services
+# Exercise 3. Services
 
 Infos:
 
 - [Cheat-Sheet](cheat-sheet.md)
 
-Aufgaben:
+Tasks:
 
-1. Legen Sie für die App `Hello-Service` einen
-  [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service)
-  an.
-2. Starten Sie einen temporären Pod und überprüfen Sie aus diesem heraus, dass der Service für den
-  `Hello-Service` per `curl` über seinen Hostnamen erreichbar ist.
+1. Create a [Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service) for the Hello Service app .
+2. Start a temporary pod and use it to check that the service for the
+   Hello Service can be accessed via curl using its host name.
 
-Starten einer Shell in einem temporären Pod
+Launching a shell in a temporary pod:
 
 ```shell script
 kubectl run my-shell --rm -i --tty --image byrnedo/alpine-curl --command sh
@@ -20,9 +18,9 @@ kubectl run my-shell --rm -i --tty --image byrnedo/alpine-curl --command sh
 
 Bonus:
 
-3. Load Balancing testen
+3. Load Balancing
 
-- Bauen Sie den `Hello-Service` so um, dass der `/hello` Endpunkt die lokale IP Adresse zurückgibt (im Body oder als Header).
+- Change the Hello service so that the /hello endpoint returns the local IP address (in the body or as a header).
 
 ```java
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +38,6 @@ public class HelloWorldController {
 }
 ```
 
-- Bauen Sie eine neue Version des `helloservice` Docker Images (siehe `build-to-kubernetes.sh`).
-- Deployen Sie den `Hello-Service` mit zwei Replikas in den Kubernetes Cluster und verifizieren Sie über die Antwort auf einen `curl` auf den Service, dass beide Pods angesprochen werden.
+Build a new version of the 'helloservice' Docker image (see 'build-to-kubernetes.sh').
+Deploy the 'Hello-Service' with two replicas in the Kubernetes cluster and verify that both pods are addressed by checking the response to a 'curl' to the service.
 
