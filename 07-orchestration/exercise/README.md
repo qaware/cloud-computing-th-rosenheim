@@ -1,32 +1,32 @@
-# Übung Orchestrierung
+# Exercise Orchestration 
 
 - [Cheat-Sheet](cheat-sheet.md)
 
 ### Übung 1 - Pods & Deployments
 
-- [Beschreibung](01_uebung_pods_deployments.md)
+- [Description](01_exercise_pods_deployments)
 
 ### Übung 2 - Probes und Resource Constraints
 
-- [Beschreibung](02_uebung_probes_resources.md)
+- [Description](02_exercise_probes_resources)
 
 ### Übung 3 - Services
 
-- [Beschreibung](03_uebung_services.md)
+- [Description](03_exercise_services)
 
 ### Übung 4 - Config Maps
 
-- [Beschreibung](04_uebung_config_maps.md)
+- [Description](04_exercise_config_maps)
 
 ### Übung 5 - Ingress
 
-- [Beschreibung](05_bonus_uebung_ingress.md)
+- [Description](05_bonus_exercise_ingress)
 
 ### Übung 6 - Persistent Volumes (Bonus)
 
-- [Beschreibung](06_bonus_uebung_persistent_volumes.md)
+- [Description](06_bonus_exercise_persistent_volumes)
 
 ### Übung 7 - Dashboard (Bonus)
 
-- [Beschreibung](08_bonus_dashboard.md)
+- [Description](08_bonus_dashboard.md)
 
