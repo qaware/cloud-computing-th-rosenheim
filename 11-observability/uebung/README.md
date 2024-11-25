@@ -14,11 +14,11 @@ This project uses Quarkus. If you want to learn more about Quarkus, please visit
 
 To build and run this application, you will need the following dependencies on your system:
 
-| Name           | Version |
-|----------------|---------|
-| Docker         | *       |
-| Docker-Compose | 1.13.0+ |
-| Java           | 17      |
+| Name                  | Version |
+|-----------------------|---------|
+| Docker                | *       |
+| Docker Compose plugin | 1.13.0+ |
+| Java                  | 21      |
 
 
 ## Java services
