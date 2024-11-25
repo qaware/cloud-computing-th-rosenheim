@@ -28,7 +28,7 @@ services:
       - default
 
   grafana:
-    image: grafana/grafana:9.5.14
+    image: grafana/grafana:11.3.1
     depends_on:
       - tempo
     ports:
@@ -42,7 +42,7 @@ services:
       - default
 
   tempo:
-    image: grafana/tempo:2.3.0
+    image: grafana/tempo:2.6.1
     command:
       - '-config.file=/etc/tempo.yaml'
     ports:
@@ -61,7 +61,7 @@ services:
       - default
 
   loki:
-    image: grafana/loki:2.9.2
+    image: grafana/loki:3.3.0
     command:
       - '-config.file=/etc/loki/local-config.yaml'
     volumes:
@@ -70,7 +70,7 @@ services:
       - default
 
   promtail:
-    image: grafana/promtail:2.9.2
+    image: grafana/promtail:3.3.0
     depends_on:
       - loki
     command:
@@ -83,7 +83,7 @@ services:
       - default
 
   mimir:
-    image: grafana/mimir:2.9.3
+    image: grafana/mimir:2.14.2
     command: ["-config.file=/etc/mimir.yaml"]
     depends_on:
       - minio
@@ -93,7 +93,7 @@ services:
       - ./mimir/metrics-activity.log:/var/log/mimir/metrics-activity.log
 
   minio:
-    image: minio/minio:RELEASE.2023-11-15T20-43-25Z
+    image: minio/minio:RELEASE.2024-11-07T00-52-20Z
     entrypoint: [""]
     command: ["sh", "-c", "mkdir -p /data/mimir && minio server --quiet /data"]
     depends_on:
@@ -124,20 +124,20 @@ services:
       exit 0;
       "
 
-  grafana-agent:
-    image: grafana/agent:v0.37.4
-    entrypoint: grafana-agent run /etc/grafana-agent.river --storage.path=/tmp/data-agent
+  alloy:
+    image: grafana/alloy:v1.5.0
+    entrypoint: alloy run /etc/alloy.river --storage.path=/tmp/data-agent
     environment:
       - AGENT_MODE=flow
     volumes:
-      - ./grafana-agent/grafana-agent.river:/etc/grafana-agent.river
-      - grafana-agent-data-agent:/tmp/data-agent
+      - ./alloy/alloy.river:/etc/alloy.river
+      - alloy-data-agent:/tmp/data-agent
 
 volumes:
   tle_fetcher_logs: {}
   sky_map_logs: {}
   grafana_data: {}
-  grafana-agent-data-agent: {}
+  alloy-data-agent: {}
   loki_data: {}
   mimir_data: {}
   minio_blocks: {}

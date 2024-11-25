@@ -11,10 +11,10 @@ clients:
 scrape_configs:
   - job_name: "Quarkus application logs"
     static_configs:
-      - # TODO: Logs vom tle-fetcher-Service abziehen
-      - # TODO: Logs vom sky-map-Service abziehen
+      - # TODO: Collect logs of tle-fetcher service
+      - # TODO: Collect logs of sky-map service
     pipeline_stages:
-      - # TODO: Json-Parsing
+      - # TODO: parse Json
       - timestamp:
           source: timestamp
           format: RFC3339Nano
