@@ -47,12 +47,12 @@ All relevant configuration can be found in each service `src/main/resources/appl
 
 ## The Grafana stack
 
-The Grafana stack is configured in the directories `grafana`, `loki`, `promtail`, `mimir`,`grafana-agent` and `tempo`.
+The Grafana stack is configured in the directories `grafana`, `loki`, `promtail`, `mimir`,`alloy` and `tempo`.
 
 **NOTE**: It is important to change the permissions on the configuration files for the Grafana stack. Run the following command:
 
 ```shell
-$ chmod -R o+rX grafana loki mimir grafana-agent promtail tempo
+$ chmod -R o+rX grafana loki mimir alloy promtail tempo
 ```
 
 ### Grafana
@@ -77,9 +77,9 @@ The configuration `promtail/promtail.yaml` scrapes the application logs from the
 
 Mimir is a time series storage that can be connected to Grafana.
 
-### Grafana Agent
+### Alloy
 
-Grafana Agent periodically scrapes metrics from known endpoints and sends it to Grafana Mimir.
+Alloy periodically scrapes metrics from known endpoints and sends it to Grafana Mimir.
 
 ### Tempo
 
@@ -95,11 +95,10 @@ $ docker compose up
 
 ## Related Guides
 
-- SmallRye OpenTracing ([guide](https://quarkus.io/guides/opentracing)): Trace your services with SmallRye OpenTracing
+- OpenTelemetry Tracing ([guide](https://quarkus.io/guides/opentelemetry-tracing)): Using OpenTelemetry Tracing
 - Micrometer Registry Prometheus ([guide](https://quarkus.io/guides/micrometer)): Enable Prometheus support for Micrometer
-- REST Client Classic ([guide](https://quarkus.io/guides/rest-client)): Call REST services
-- RESTEasy Classic JSON-B ([guide](https://quarkus.io/guides/rest-json)): JSON-B serialization support for RESTEasy Classic
-- RESTEasy Classic ([guide](https://quarkus.io/guides/resteasy)): REST endpoint framework implementing JAX-RS and more
+- Quarkus REST Client ([guide](https://quarkus.io/guides/rest-client)): Call REST services
+- Writing JSON REST Services [guide](https://quarkus.io/guides/rest-json)): JSON-serialization for REST web services
 - Logging JSON ([guide](https://quarkus.io/guides/logging#json-logging)): Add JSON formatter for console logging
 - SmallRye Health ([guide](https://quarkus.io/guides/microprofile-health)): Monitor service health
 - Micrometer metrics ([guide](https://quarkus.io/guides/micrometer)): Instrument the runtime and your application with dimensional metrics using Micrometer.
