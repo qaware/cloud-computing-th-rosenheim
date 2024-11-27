@@ -23,13 +23,20 @@ $ kubectl apply -f nginx-ingress-controller.yaml
 ```
 Depending on your network connection, it may take several minutes for the controller to start successfully.
 
-## Install the Dashboard
+## Install the Dashboard (optional)
+
+This step may help you to get a better understanding, what's happening inside kubernetes when installing a service mesh. 
+
+Install [helm](https://helm.sh/) if not yet installed. 
+Helm is basically a package manager for kubernetes components. 
 
 Execute the following commands in sequence:
 ```shell
 $ cd code/dashboard
-# Installs the dashboard in Kubernetes
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+# Add kubernetes-dashboard repository
+$ helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+# Deploy a Helm Release named "kubernetes-dashboard" using the kubernetes-dashboard chart
+$ helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 # Creates a service account named admin-user
 $ kubectl apply -f admin-user-serviceaccount.yaml
 # Creates a role binding for the service account created.
@@ -73,7 +80,8 @@ Validate your setup with:
 $ linkerd check --pre
 ```
 
-You should see no errors.
+You should see no errors. 
+However, due way linkerd changed how releases work, you may see similar warnings, such as `unsupported version channel: stable-2.14.10.`
 
 # Install LinkerD in the Cluster
 
@@ -209,6 +217,9 @@ Check if you can successfully call the service without the mesh, for example, wi
 ```shell
 $ kubectl run grpcurl --rm -it --image=networld/grpcurl --restart=Never --command -- ./grpcurl -plaintext voting-svc.emojivoto:8080 emojivoto.v1.VotingService/VoteDog
 ```
+
+Of course, this should not work. Calls from outside the mesh are not possible. 
+Further, the authorization policies you created specifically allow access only for the web service.
 
 # Mesh all the things
 Mesh the Nginx ingress controller and the Kubernetes dashboard.  
