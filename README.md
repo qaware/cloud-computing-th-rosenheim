@@ -18,12 +18,12 @@ Contents:
 5. [Infrastructure as a Service](05-iaas)
 6. [Cloud-native software architecture](06-cloud-architecture)
 7. [Cluster orchestration](07-orchestration)
-8. [Service-Meshes](07-orchestration)
-9. [Serverless](archive/99-ci-cd_serverless)
-10. [Plattform as a Service](10-paas-cd)
-11. [Continous Delivery](11-cd)
-12. [Cloud runtimes](11-cd)
-13. [Exam preparation](13-zusammenfassung)
+8. [Service-Meshes](08-service-meshes)
+9. [devops & CI/CD](09-devops&ci-cd)
+10. [Plattform as a Service](10-paas)
+11. [Observability](11-observability)
+12. [Serverless](12-serverless)
+13. [Exam preparation](13-summary)
 
 Required Software for the practice sessions:
 
