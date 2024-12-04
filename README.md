@@ -19,7 +19,7 @@ Contents:
 6. [Cloud-native software architecture](06-cloud-architecture)
 7. [Cluster orchestration](07-orchestration)
 8. [Service-Meshes](07-orchestration)
-9. [Serverless](99-ci-cd_serverless)
+9. [Serverless](archive/99-ci-cd_serverless)
 10. [Plattform as a Service](10-paas-cd)
 11. [Continous Delivery](11-cd)
 12. [Cloud runtimes](11-cd)
