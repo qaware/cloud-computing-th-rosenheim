@@ -1,28 +1,28 @@
-# Übung: PaaS mit Vercel
+# Exercise: PaaS with Vercel
 
-Vercel ist ein serverless PAAS, das sich auf moderne Webfrontends spezialisiert hat.
-Ihr könnt eine Vielzahl verschiedener Frameworks nutzen und mit nur wenigen Klicks ein automatisiertes Deployment und Hosting einrichten.
+Vercel is a serverless PaaS specializing in modern web frontends.  
+You can use a variety of frameworks and set up automated deployment and hosting with just a few clicks.
 
-## Aufgabe 1
+## Task 1
 
-Erstellen Sie sich einen [kostenlosen Vercel-Account](https://vercel.com/signup/).
+Create a [free Vercel account](https://vercel.com/signup/).
 
-## Aufgabe 2
+## Task 2
 
-Erzeugen Sie über Vercel ein Github Repository und deployen Sie ein template Ihrer Wahl. 
-Stellen Sie sicher, dass das Deployment funktioniert hat. Sie können nun die fertige Website im Browser aufrufen. 
-Die Domain finden Sie in Vercel selbst.
+Use Vercel to create a GitHub repository and deploy a template of your choice.  
+Ensure the deployment was successful. You can now access the deployed website in your browser.  
+The domain can be found directly in Vercel.
 
-## Aufgabe 3
+## Task 3
 
-Klonen Sie das erzeugte Repository. Adaptieren Sie die Javascript/Typescript files im repository.
-Committen Sie die Änderungen und pushen Sie den Stand. 
-Sie sollten in Vercel den Build verfolgen können. 
-Innerhalb von weniger Minuten sollte ihr neuer Stand bereits unter der gleichen Domäne verfügbar sein.
+Clone the generated repository. Modify the JavaScript/TypeScript files in the repository.  
+Commit the changes and push the updates.  
+You should be able to track the build process in Vercel.  
+Within minutes, your updated version should be live under the same domain.
 
 ### (Optional) Storage
 
-Vercel bietet über Partner auch integrierte Storage Lösungen an. 
-Das macht es Ihnen leicht kleinere, aber durchaus vollwertige Produkte komplett über Vercel abzudecken.
-Probieren Sie beispielsweise das Redis oder Postgres Angebot aus: 
-https://vercel.com/blog/vercel-storage
+Vercel also offers integrated storage solutions through partners,  
+making it easy to build smaller yet fully functional products entirely on Vercel.  
+Try out options like Redis or Postgres:  
+[https://vercel.com/blog/vercel-storage](https://vercel.com/blog/vercel-storage)  
