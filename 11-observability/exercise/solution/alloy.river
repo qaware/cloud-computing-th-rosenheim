@@ -1,0 +1,24 @@
+// Create a prometheus.scrape component labeled "default."
+prometheus.scrape "default" {
+  targets = [
+    {"__address__" = "tle-fetcher:8080"},
+    {"__address__" = "sky-map:8088"},
+  ]
+
+  forward_to = [prometheus.remote_write.mimir.receiver]
+}
+
+// Send metrics to a Prometheus remote_write endpoint.
+prometheus.remote_write "mimir" {
+  endpoint {
+    url = "http://mimir:9009/api/v1/push"
+    headers = {
+        "X-Scope-OrgID" = "1",
+    }
+  }
+}
+
+logging {
+  level  = "info"
+  format = "logfmt"
+}
