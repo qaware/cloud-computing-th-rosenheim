@@ -5,7 +5,7 @@ The goal of today's session is to install all the required software components f
 ## Installation 
 
 1. Git ([Installation](https://git-scm.com/downloads))
-2. A Java 17 JDK (z.B. [Azul Zulu JDK](https://www.azul.com/downloads/?package=jdk).
+2. A Java 21 JDK (z.B. [Azul Zulu JDK](https://www.azul.com/downloads/?package=jdk).
 3. A Java IDE of your choice, z.B. [IntelliJ Community Edition](https://www.jetbrains.com/de-de/idea/download/)
 4. Docker ([Windows](https://docs.docker.com/docker-for-windows/install/), [Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/engine/install/))
 5. Kind (https://kind.sigs.k8s.io/docs/user/quick-start#installation)
@@ -15,7 +15,7 @@ The goal of today's session is to install all the required software components f
 ## Test the setup
 
 1. Open the terminal/console in a directory of your choice and enter `git clone https://github.com/qaware/cloud-computing-th-rosenheim.git`
-2. Open the directory [jdk-test-1](jdk-test-1/) in the terminal/console and enter `mvn clean install` (`./mvnw clean install` for Mac and Linux)
+2. Open the directory [jdk-test-1](jdk-test-1/) in the terminal/console and enter `mvnw clean install` (`./mvnw clean install` for Mac and Linux)
 3. Open the directory [jdk-test-2](jdk-test-2/) in the terminal/console and enter `gradlew clean build` (`./gradlew clean build` for Mac and Linux)
 4. Import [jdk-test-1/pom.xml](jdk-test-1/pom.xml) in IntelliJ and start the `main` method
 5. Import [jdk-test-2/build.gradle](jdk-test-2/build.gradle) in IntelliJ and start the `main` method
@@ -29,17 +29,17 @@ Open a console and navigate to the folder [kubernetes-cluster-setup](./kubernete
 
 Create a local Kind cluster with the command:
 ```shell
-$ kind create cluster --name cc-2024 --config kind-cluster-config.yaml
+$ kind create cluster --name cc-2025 --config kind-cluster-config.yaml
 ```
 
 This may take several minutes the first time. 
 Check if the cluster was successfully created with the following command: 
 ```shell
 $ kind get clusters
-# expected output --> cc-2024
+# expected output --> cc-2025
 ```
 
-You should see a cluster named `cc-2024`. 
+You should see a cluster named `cc-2025`. 
 Check if three containers have started and are running without restarts using the following command:
 ```shell
 $ docker ps
@@ -48,9 +48,9 @@ $ docker ps
 The output should look something like this:
 ```
 CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                                             NAMES
-ffc91bee66e0   kindest/node:v1.27.3   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds                                                     cc-2024-worker2
-bb8e1ac8987d   kindest/node:v1.27.3   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds   0.0.0.0:9999->80/tcp, 127.0.0.1:52492->6443/tcp   cc-2024-control-plane
-edc7c37d988d   kindest/node:v1.27.3   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds                                                     cc-2024-worker
+ffc91bee66e0   kindest/node:v1.34.0   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds                                                     cc-2025-worker2
+bb8e1ac8987d   kindest/node:v1.34.0   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds   0.0.0.0:9999->80/tcp, 127.0.0.1:52492->6443/tcp   cc-2025-control-plane
+edc7c37d988d   kindest/node:v1.34.0   "/usr/local/bin/entr…"   45 seconds ago   Up 42 seconds                                                     cc-2025-worker
 ```
 
 Now deploy the test workloads in the cluster with the following command:
@@ -68,5 +68,5 @@ You should receive `bar-app` as a response.
 
 You can now shut down the cluster. To do this, run the following command:
 ```shell
-$ kind delete cluster --name cc-2024
+$ kind delete cluster --name cc-2025
 ```
