@@ -1,0 +1,5 @@
+GRPC localhost:50051/helloworld.Greeter/SayHello
+
+{
+  "name": "Cloud Computing"
+}

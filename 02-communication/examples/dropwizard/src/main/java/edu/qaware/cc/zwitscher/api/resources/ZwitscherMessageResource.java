@@ -1,31 +1,30 @@
 package edu.qaware.cc.zwitscher.api.resources;
 
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiResponse;
-import com.wordnik.swagger.annotations.ApiResponses;
 import edu.qaware.cc.zwitscher.api.entities.ZwitscherMessage;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.ws.rs.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 
-@Api(value = "/messages", description = "Zwitscher Messages")
 @Path("/messages")
 public class ZwitscherMessageResource {
     
     @Path("/random")
     @GET
     @Produces("application/json")
-    @ApiOperation(value = "Eine beliebige Nachricht zurückgeben", 
-            notes = "Diese Methode dient nur zu Demonstrationszwecken. "
-                    + "Sie gibt eine beliebige Nachricht zurück.")
+    @Operation(
+            summary = "Eine beliebige Nachricht zurückgeben", 
+            description = "Diese Methode dient nur zu Demonstrationszwecken. Sie gibt eine beliebige Nachricht zurück."
+    )
     @ApiResponses(value = {
-        @ApiResponse(code = 400, message = "Es kann keine vernünftige Nachricht generiert werden"),
-        @ApiResponse(code = 404, message = "Die generierte Nachricht ist unvernünftig") 
+        @ApiResponse(responseCode = "400", description = "Es kann keine vernünftige Nachricht generiert werden"),
+        @ApiResponse(responseCode = "404", description = "Die generierte Nachricht ist unvernünftig") 
     })    
     public ZwitscherMessage getRandomMessage(){
         return new ZwitscherMessage("YO!");
@@ -33,15 +32,17 @@ public class ZwitscherMessageResource {
     
     @GET
     @Produces("application/json")  
-    @ApiOperation(value = "Den aktuellen Nachrichtenstrom zurückgeben",             
-            response = ZwitscherMessage.class,
-            responseContainer = "List")
+    @Operation(summary = "Den aktuellen Nachrichtenstrom zurückgeben")
     @ApiResponses(value = {
-        @ApiResponse(code = 404, message = "Es können keine Nachrichten geholt werden") 
+        @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ZwitscherMessage.class)))),
+        @ApiResponse(responseCode = "404", description = "Es können keine Nachrichten geholt werden") 
     })    
     public List<ZwitscherMessage> getMessageStream(
-            @DefaultValue("") @QueryParam("keyword") String keyword){
-        List<ZwitscherMessage> messages = new ArrayList<ZwitscherMessage>();
+            @DefaultValue("")
+            @QueryParam("keyword")
+            String keyword
+    ){
+        List<ZwitscherMessage> messages = new ArrayList<>();
         messages.add(new ZwitscherMessage("yo"));
         return messages;
     }
