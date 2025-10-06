@@ -7,3 +7,7 @@ server:
       port: 2891      
 logging:
   level: INFO
+
+# the only required property is resourcePackage, for more config options see below
+swagger:
+  resourcePackage: edu.qaware.cc.zwitscher

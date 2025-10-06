@@ -28,8 +28,8 @@ dependencies {
 
     implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
 
-    compileOnly("org.projectlombok:lombok:1.18.36")
-    annotationProcessor("org.projectlombok:lombok:1.18.36")
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
 
     implementation("com.github.davidmoten:predict4java:1.3.1")
     implementation("org.apache.commons:commons-math3:3.6.1")
@@ -41,8 +41,9 @@ group = "de.qaware.cloudcomputing"
 version = "1.0.0"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of("21")
+    }
 }
 
 tasks.withType<Test> {

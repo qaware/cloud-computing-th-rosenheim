@@ -38,7 +38,7 @@ public class HelloWorldClient {
     /** Construct client connecting to HelloWorld server at {@code host:port}. */
     public HelloWorldClient(String host, int port) {
         channel = ManagedChannelBuilder.forAddress(host, port)
-                .usePlaintext(true)
+                .usePlaintext()
                 .build();
         blockingStub = GreeterGrpc.newBlockingStub(channel);
     }

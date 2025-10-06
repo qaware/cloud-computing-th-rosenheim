@@ -41,15 +41,12 @@ public class HelloWorldServer {
                 .build()
                 .start();
         logger.info("Server started, listening on " + port);
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                // Use stderr here since the logger may have been reset by its JVM shutdown hook.
-                System.err.println("*** shutting down gRPC server since JVM is shutting down");
-                HelloWorldServer.this.stop();
-                System.err.println("*** server shut down");
-            }
-        });
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            // Use stderr here since the logger may have been reset by its JVM shutdown hook.
+            System.err.println("*** shutting down gRPC server since JVM is shutting down");
+            HelloWorldServer.this.stop();
+            System.err.println("*** server shut down");
+        }));
     }
 
     private void stop() {
@@ -76,7 +73,7 @@ public class HelloWorldServer {
         server.blockUntilShutdown();
     }
 
-    private class GreeterImpl implements GreeterGrpc.Greeter {
+    private static class GreeterImpl extends GreeterGrpc.GreeterImplBase {
 
         public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
 
