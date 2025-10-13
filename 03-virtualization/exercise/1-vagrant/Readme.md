@@ -133,9 +133,9 @@ Next, copy the configuration and example files from your host (in the same direc
 
 ```bash
 sudo mkdir -p /usr/share/nginx/www
-sudo cp /vagrant/vagrant/default /etc/nginx/sites-available/default
-sudo cp /vagrant/vagrant/info.php /usr/share/nginx/www/info.php
-sudo cp /vagrant/vagrant/index.html /usr/share/nginx/www/index.html
+sudo cp /vagrant/default /etc/nginx/sites-available/default
+sudo cp /vagrant/info.php /usr/share/nginx/www/info.php
+sudo cp /vagrant/index.html /usr/share/nginx/www/index.html
 
 sudo systemctl reload nginx
 ```
