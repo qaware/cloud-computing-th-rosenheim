@@ -38,7 +38,7 @@ Use a simple HTML that outputs a “Hello World” greeting.
 
 Create a Dockerfile.
 Follow these steps:
-Use `nginx:mainline` as the base image.
+Use `nginx:alpine` as the base image.
 Copy your `index.html` to `/usr/share/nginx/html/` using the Docker command `COPY`.
 Expose port 80.
 Start nginx with the command 'nginx'. Be sure to include '-g “daemon off;”' when starting it, so that Nginx is not closed immediately after the container starts, but runs in the foreground.
@@ -47,7 +47,7 @@ Start nginx with the command 'nginx'. Be sure to include '-g “daemon off;”' 
 <summary>Note if you get stuck:</summary>
 
 ```
-FROM nginx:mainline
+FROM nginx:alpine
 COPY index.html /usr/share/nginx/html
 EXPOSE 80
 CMD nginx -g 'daemon off;'
@@ -70,6 +70,7 @@ Then use 'docker images' to check that the new Docker image is in your local reg
 
 Start the container.
 Map port 8080 on your host to container port 80.
+Ensure that the container from step 1 is shut down to avoid port conflicts.
 
 <details>
 <summary>Note if you get stuck:</summary>
@@ -137,7 +138,7 @@ You can also use the following references:
 ### Step 1: Build an image for managed nodes
 
 Create a Dockerfile for the machines/managed nodes to be provisioned.
-These should include Ubuntu version 22.04 and allow SSH connections from outside:
+These should include Ubuntu version 25.10 and allow SSH connections from outside:
 ```
   apt-get update && apt-get install -y openssh-server
   mkdir /var/run/sshd
@@ -161,7 +162,7 @@ Alternatively, you can create a Docker image that allows external SSH connection
 
 ### Step 2: Start managed node and Ansible control node together using Docker Compose
 
-Create a Docker Compose file (file named “docker compose.yml” alongside this readme) that
+Create a Docker Compose file (file named “docker-compose.yml” alongside this readme) that
 - starts a managed node and in doing so:
   - has the service name “managed-node”
   - builds the image based on the Dockerfile created in step 1
@@ -179,9 +180,9 @@ Create a Docker Compose file (file named “docker compose.yml” alongside this
       - "80"
      ```
      </details>
-- An Ansible Control Node starts and in doing so:
+- starts an Ansible Control Node and in doing so:
   - has the service name “ansible-node”
-  - uses the finished image “willhallonline/ansible:2.9-alpine-3.13”. This provides Ansible version 2.9 with
+  - uses the finished image “willhallonline/ansible:2.18-alpine-3.22”. This provides Ansible version 2.18 with
     Python3. (see https://hub.docker.com/r/willhallonline/ansible)
   - has a memory limit of 100 MB
   - is only started when the managed node is running
@@ -191,7 +192,7 @@ Create a Docker Compose file (file named “docker compose.yml” alongside this
      
      ```
   ansible-node:
-    image: "willhallonline/ansible:2.9-alpine-3.13"
+    image: "willhallonline/ansible:2.18-alpine-3.22"
     networks:
       - cloudcomputing
     depends_on:
@@ -219,10 +220,10 @@ ssh managed-node
 Enter the password 'verysecretpassword' when prompted.
 You can terminate the SSH connection with ```exit.
 
-You can establish an SSH connection both via the service name 'managed-node' and with the prefix 'exercise' (the name
+You can establish an SSH connection both via the service name 'managed-node' and with the prefix 'uebung-ansible' (the name
 of the folder) and suffix '1'. Verify this with 
 ```
-ssh uebung_managed-node_1
+ssh uebung-ansible-managed-node-1
 ```
 
 ### Step 4: Getting started with Ansible
@@ -239,7 +240,7 @@ Create the group “server_hosts”, enter the managed node in it, and configure
 
       ```
         [server_hosts]
-        uebung_managed-node_1
+        uebung-ansible-managed-node-1
 
         [server_hosts:vars]
         ansible_python_interpreter=/usr/bin/python3
@@ -266,11 +267,11 @@ docker compose run ansible-node /bin/sh
 Run the following commands in it
 - Output version: ansible --version
 - Ping all managed nodes: ansible all -m ping
-- Run remote command on all managed nodes: `ansible all -m command -a “echo hello”`
+- Run remote command on all managed nodes: `ansible all -m command -a 'uptime'`
 
 ### Step 6: Install and configure the Apache HTTP server using an Ansible playbook
 
-Create the folder 'playbooks' and inside it a file named 'install-apache2.yml'.
+Create the folder 'playbooks' and inside it a file named 'install-apache.yml'.
 Familiarize yourself with the Ansible syntax at https://docs.ansible.com/ansible/latest/index.html.
 
 Enter the hosts 'server_hosts' and the remote user 'root'.
@@ -278,11 +279,11 @@ Enter the hosts 'server_hosts' and the remote user 'root'.
 Mount the playbook via Docker Compose into the Ansible Control Node under '/root/playbooks'.
 
      <details>
-     <summary>Wenn Sie nicht weiterkommen, können Sie folgenden Codeblock verwenden:</summary>
+     <summary>In case you get stuck you can use the following code block:</summary>
 
       ```
           volumes:
-          [...]]
+          [...]
           - "./playbooks:/root/playbooks"
       ```
 
@@ -320,7 +321,7 @@ is displayed.
 ### Step 7: Scale the managed nodes
 
 Scale the managed nodes to 3.
-Use the docker compose command 'up' with the '--scale' option (see https://docs.docker.com/compose/reference/up/).
+Use the docker compose command 'up' with the '--scale' option (see https://docs.docker.com/compose/reference/up/) or add the scale configuration to the docker-compose.yml
 
 Modify the 'hosts' file so that all 3 managed nodes can be provisioned and execute the
 provisioning.
@@ -348,7 +349,7 @@ Create a Packer template.
 Use Packer's Docker Builder to build an Nginx image with
 its own welcome page.
 
-Use “nginx:1.19-alpine” as the base image.
+Use “nginx:1.29-alpine” as the base image.
 
 Expose port 80 in the image and execute the CMD “nginx -g daemon off;”
 to start Nginx.
@@ -367,7 +368,7 @@ Use Packer's post-processor “docker-tag” to give the image the.
 Name “packer-nginx” and the tag “1.0”.
 
 Execute
-```packer build <Ihr Template>``` .
+```packer build <Your Template>``` .
 
 Use ```docker images``` to check whether the Docker image is available in your local registry.
 

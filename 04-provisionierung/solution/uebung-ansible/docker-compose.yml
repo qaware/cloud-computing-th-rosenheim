@@ -1,25 +1,28 @@
-version: '3'
-
 services:
   managed-node:
     build:
       context: .
       dockerfile: Dockerfile_Managed_Node
     image: "cc-managed:latest"
+    scale: 3
     networks:
       - cloudcomputing
     ports:
       - "80"
     
   ansible-node:
-    image: "willhallonline/ansible:2.13-alpine-3.12"
+    image: "willhallonline/ansible:2.18-alpine-3.22"
     networks:
       - cloudcomputing
     depends_on:
       - managed-node
     volumes:
-    - "./ansible/hosts:/etc/ansible/hosts"
-    - "./playbooks:/root/playbooks"
+      - "./ansible/hosts:/etc/ansible/hosts"
+      - "./playbooks:/root/playbooks"
+    deploy:
+      resources:
+        limits:
+          memory: 100M
 
 networks:
   cloudcomputing:

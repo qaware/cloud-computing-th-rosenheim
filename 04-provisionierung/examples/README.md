@@ -1,8 +1,8 @@
-# Beispiel: Provisionierung mit Packer
+# Exa,ple: Provisioning with Packer
 
-Dieses Beispiel demonstriert die Erzeugung eines Amazon Images mit Packer zur Erzeugung von standadisierten [Dokku](http://dokku.viewdocs.io/dokku/) Instanzen.
+This example demonstrates the creation of an Amazon image with Packer to create standardized [Dokku](http://dokku.viewdocs.io/dokku/) instances.
 
-[asciinema](https://asciinema.org) demonstration ausführbar mit:
+[asciinema](https://asciinema.org) demonstration executable with:
 
 ```bash
 asciinema play asciinema.cast
