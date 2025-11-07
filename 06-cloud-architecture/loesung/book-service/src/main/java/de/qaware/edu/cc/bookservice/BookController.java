@@ -1,24 +1,17 @@
 package de.qaware.edu.cc.bookservice;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Collection;
@@ -34,19 +27,19 @@ public class BookController {
     }
 
     @GetMapping
-    @ApiOperation(value = "Find books", response = Book.class, responseContainer = "List")
+    @Operation(summary = "Find books")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Found all books")
+            @ApiResponse(responseCode = "200", description = "Found all books", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Book.class))))
     })
-    public Collection<Book> books(@ApiParam(value = "title to search") @RequestParam(value = "title", required = false) String title) {
+    public Collection<Book> books(@Parameter(description = "title to search") @RequestParam(value = "title", required = false) String title) {
         return bookshelf.findByTitle(title);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Create book")
+    @Operation(summary = "Create book")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Created the book"),
-            @ApiResponse(code = 409, message = "Book already exists")
+            @ApiResponse(responseCode = "201", description = "Created the book"),
+            @ApiResponse(responseCode = "409", description = "Book already exists")
     })
     public ResponseEntity<Void> create(@RequestBody Book book) {
         boolean created = bookshelf.create(book);
@@ -58,40 +51,40 @@ public class BookController {
     }
 
     @GetMapping(value = "/{isbn}")
-    @ApiOperation(value = "Find book by ISBN", response = Book.class)
+    @Operation(summary = "Find book by ISBN")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Found the book"),
-            @ApiResponse(code = 404, message = "Book not found")
+            @ApiResponse(responseCode = "200", description = "Found the book", content = @Content(schema =  @Schema(implementation = Book.class))),
+            @ApiResponse(responseCode = "404", description = "Book not found")
     })
-    public Book byIsbn(@ApiParam(value = "ISBN to search") @PathVariable("isbn") String isbn) {
+    public Book byIsbn(@Parameter(description = "ISBN to search") @PathVariable("isbn") String isbn) {
         return bookshelf.findByIsbn(isbn);
     }
 
     @PutMapping(value = "/{isbn}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Update book by ISBN")
+    @Operation(summary = "Update book by ISBN")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Updated the book")
+            @ApiResponse(responseCode = "204", description = "Updated the book")
     })
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(
-            @ApiParam(value = "ISBN to search") @PathVariable("isbn") String isbn,
+            @Parameter(description = "ISBN to search") @PathVariable("isbn") String isbn,
             @RequestBody Book book
     ) {
         bookshelf.update(isbn, book);
     }
 
     @DeleteMapping("/{isbn}")
-    @ApiOperation(value = "Delete book by ISBN")
+    @Operation(summary = "Delete book by ISBN")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Book deleted")
+            @ApiResponse(responseCode = "204", description = "Book deleted")
     })
-    @ResponseStatus(HttpStatus.OK)
-    public void delete(@ApiParam(value = "ISBN to delete") @PathVariable("isbn") String isbn) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@Parameter(description = "ISBN to delete") @PathVariable("isbn") String isbn) {
         bookshelf.delete(isbn);
     }
 
     @ExceptionHandler(BookNotFoundException.class)
-    public ResponseEntity handleBookNotFoundException(BookNotFoundException exception) {
+    public ResponseEntity<?> handleBookNotFoundException(BookNotFoundException exception) {
         return ResponseEntity.notFound().build();
     }
 }

@@ -1,9 +1,9 @@
-FROM maven:3.5-jdk-8-alpine as build
+FROM maven:3.9.11-eclipse-temurin-21-alpine as build
 
 COPY . /src
 RUN cd /src && mvn package
 
-FROM openjdk:8u151-jre-slim
+FROM openjdk:21-jdk-slim
 
 COPY --from=build /src/target/book-service-*.jar /app/book-service.jar
 RUN chmod +x /app/book-service.jar

@@ -1,7 +1,7 @@
 package de.qaware.edu.cc.bookservice;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ import java.util.Objects;
  * Simple book POJO.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel("Book")
+@Schema
 public class Book {
     private String title;
     private String author;

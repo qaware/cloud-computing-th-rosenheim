@@ -1,55 +1,55 @@
-# Übung: etcd
+# Exercise: etcd
 
-Dokumentation `ectdctl`: https://etcd.io/docs/v3.5/dev-guide/
+Documentation `ectdctl`: https://etcd.io/docs/v3.6/dev-guide/
 
-1. Installieren Sie die aktuelle Version von `etcdctl` auf Ihrem System: https://github.com/etcd-io/etcd/releases
-2. Starten Sie das etcd-Cluster mit `docker compose up -d`.
-3. Sehen Sie sich das etcd-Cluster an:
+1. Install the most recent verions of `etcdctl` on your system: https://github.com/etcd-io/etcd/releases
+2. Start the etcd-Cluster with `docker compose up -d`.
+3. Have a look to the etcd-Cluster:
 
 ```shell
 $ docker ps                                          
 CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                                                   NAMES
-7ff698f8fcbb   bitnami/etcd:3.5       "/opt/bitnami/etcd/b…"   37 minutes ago   Up 37 minutes   2380/tcp, 0.0.0.0:32823->2379/tcp, :::32823->2379/tcp   etcd-etcd-2-1
-781cc8e9a056   bitnami/etcd:3.5       "/opt/bitnami/etcd/b…"   37 minutes ago   Up 37 minutes   2380/tcp, 0.0.0.0:32824->2379/tcp, :::32824->2379/tcp   etcd-etcd-1-1
-f40bcfb1920b   bitnami/etcd:3.5       "/opt/bitnami/etcd/b…"   37 minutes ago   Up 37 minutes   2380/tcp, 0.0.0.0:32822->2379/tcp, :::32822->2379/tcp   etcd-etcd-3-1
+7ff698f8fcbb   bitnami/etcd:3.6.4       "/opt/bitnami/etcd/b…"   37 minutes ago   Up 37 minutes   2380/tcp, 0.0.0.0:23792->2379/tcp, :::23792->2379/tcp   etcd-etcd-2-1
+781cc8e9a056   bitnami/etcd:3.6.4       "/opt/bitnami/etcd/b…"   37 minutes ago   Up 37 minutes   2380/tcp, 0.0.0.0:23791->2379/tcp, :::23791->2379/tcp   etcd-etcd-1-1
+f40bcfb1920b   bitnami/etcd:3.6.4       "/opt/bitnami/etcd/b…"   37 minutes ago   Up 37 minutes   2380/tcp, 0.0.0.0:23793->2379/tcp, :::23793->2379/tcp   etcd-etcd-3-1
 ```
 
-4. Prüfen Sie beispielhaft für den ersten Node seinen Status:
+4. As an example, check the status of the first node:
 
 ```shell
 $ etcdctl --endpoints=localhost:23791 endpoint status
-localhost:23791, 2848abbfff24c332, 3.5.10, 20 kB, true, false, 3, 12, 12,
+localhost:23791, 2848abbfff24c332, 3.6.4, 3.6.0, 20 kB, 16 kB, 20%, 0 B, false, false, 3, 12, 12, , , false
 ```
 
-5. Setzen Sie einige Werte in den ersten etcd-Node. Beispiel:
+5. Set some values for the first etcd-Node. Example:
 
 ```shell
-$ etcdctl --endpoints=localhost:23791 put vorlesung "Cloud Computing WS 2024/25"
+$ etcdctl --endpoints=localhost:23791 put lecture "Cloud Computing WS 2025/26"
 OK
 ```
 
-6. Abbonieren Sie an einem der Nodes Änderungen auf einen Key. Was passiert jetzt, wenn Sie den Wert an einem anderen Node ändern? Können Sie das nutzen, um die komplette Versionsgeschichte zu einem Key zu sehen?
+6. Subscribe to the changes for one key on one of the nodes. What happens when you change the value on one of the other nodes? Can you use that to see the complete version history for one key?
 
 ```shell
-$ etcdctl --endpoints=localhost:23792 watch vorlesung
+$ etcdctl --endpoints=localhost:23792 watch lecture
 ```
 
-7. Fragen Sie Ihre Werte am selben Node ab. Was passiert, wenn Sie die Anfrage an einen anderen Node stellen?
+7. Request the values on the first node. What happens when you send you request to another node?
 
 ```shell
-$ etcdctl --endpoints=localhost:23791 get vorlesung
+$ etcdctl --endpoints=localhost:23791 get lecture
 ...
 ```
 
-8. Überschreiben Sie die Werte mehrfach mit neuen Werten. Welcher Wert steht jetzt als Konsens im Cluster? Können Sie sich auch die vorigen Werte ansehen?
-9. Stoppen Sie einen der etcd-Nodes und wiederholen Sie put und get mit neuen Werten. Was passiert, nachdem Sie den Node wieder starten?
+8. Override the values multiple times with new values. Which value is now stored as consensus in the cluster? Can you also see the previous values?
+9. Stop one of the etcd-Nodes and repeat put and get with new values. What happens after you restart the node?
 
 ```shell
-$ docker compose stop etcd-1
+$ docker stop etcd-etcd-1-1
 
 ...
 
-$ docker compose start etcd-1
+$ docker start etcd-etcd-1-1
 ```
 
-10. Was passiert, wenn Sie zwei von drei Nodes stoppen?
+10. What happens if you stop two or three of the nodes?

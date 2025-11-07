@@ -2,7 +2,7 @@ package de.qaware.edu.cc.bookservice;
 
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -42,7 +42,7 @@ public class Bookshelf {
             return books
                     .stream()
                     .filter((Book b) -> b.getTitle().equalsIgnoreCase(title))
-                    .collect(Collectors.toList());
+                    .toList();
         }
     }
 

@@ -80,7 +80,7 @@ curl http://localhost:18080/api/books
 ### Consul Cluster (Single Node) with Docker Compose
 
 Add a Consul service (in single-node operation) to the Docker Compose file
-Use the latest official Docker image from Hashicorp: [hub.docker.com/_/consul](https://hub.docker.com/_/consul)
+Use the latest official Docker image from Hashicorp: [https://hub.docker.com/r/hashicorp/consul](https://hub.docker.com/r/hashicorp/consul)
 
 Make sure that the Consul UI is started and that all required ports are exposed.
 
@@ -122,7 +122,7 @@ The following dependencies must be added to the pom.xml:
 </dependency>
 ```
 
-After that, the file `bootstrap.properties` must be created under `src/main/resources`:
+After that, the file [application.properties](book-service/src/main/resources/application.properties) must be extended under `src/main/resources`:
 
 ```properties
 spring.application.name=book-service
@@ -134,7 +134,7 @@ spring.cloud.consul.host=${consul.host:consul}
 spring.cloud.consul.port=${consul.port:8500}
 
 spring.cloud.consul.config.enabled=true
-spring.cloud.consul.config.prefix=configuration
+spring.cloud.consul.config.prefixes=configuration
 spring.cloud.consul.config.default-context=application
 
 # do not fail at startup if Consul is not there
@@ -144,10 +144,7 @@ spring.cloud.consul.config.fail-fast=false
 # e.g. configuration/book-service/data
 spring.cloud.consul.config.format=properties
 spring.cloud.consul.config.data-key=data
-```
 
-In the same directory, you still have to expand the file `application.properties`:
-```properties
 # assign a unique instance ID
 spring.cloud.consul.discovery.instance-id=${spring.application.name}:${spring.application.instance_id:${random.value}}
 
@@ -165,8 +162,6 @@ If you get stuck, use the following section:
     image: book-service:1.1.0
     ports:
       - 18080:18080
-    depends_on:
-      - consul
     networks:
       - cloud-architecture
     environment:
@@ -225,7 +220,7 @@ spring.cloud.consul.discovery.tags=traefik.enable=true,traefik.frontend.rule=Pat
 Restart the services. If everything went well, you should now see the book service in the Traefik API.
 You should now be able to call the book service via Traefik, e.g. via:
 ```shell
-curl -H Host:book-service-uebung http://127.0.0.1/api/books
+curl -H Host:book-service http://127.0.0.1/api/books
 ```
 
 ### Testen
