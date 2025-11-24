@@ -7,7 +7,7 @@ We will use the service mesh [LinkerD](https://linkerd.io) in this exercise.
 For this exercise, use a fresh Kind cluster with the provided configuration in [kind-cluster-config.yaml](code/clusterconfig/kind-cluster-config.yaml).  
 Start the cluster with:
 ```shell
-$ kind create cluster --name cc-2024 --config kind-cluster-config.yaml
+$ kind create cluster --name cc-2025 --config kind-cluster-config.yaml
 ```
 
 # Install the Kubernetes Dashboard
@@ -229,6 +229,6 @@ Secure the communication with authorization policies.
 LinkerD has much more to offer.  
 Explore more features of the service mesh.  
 A good starting point would be the following:
-- https://linkerd.io/2.14/tasks/configuring-retries/
-- https://linkerd.io/2.14/tasks/circuit-breakers/
-- https://linkerd.io/2.14/tasks/distributed-tracing/
+- https://linkerd.io/2.19/reference/retries/
+- https://linkerd.io/2.19/reference/circuit-breaking/
+- https://linkerd.io/2.19/tasks/distributed-tracing/
