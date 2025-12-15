@@ -29,8 +29,8 @@ dependencies {
 
     implementation("io.quarkus:quarkus-opentelemetry")
 
-    compileOnly("org.projectlombok:lombok:1.18.36")
-    annotationProcessor("org.projectlombok:lombok:1.18.36")
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
 }
 
 group = "de.qaware.cloudcomputing"
