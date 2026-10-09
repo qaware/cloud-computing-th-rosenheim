@@ -1,6 +1,7 @@
 # Practice session - communication
 
-This session includes two parts: 
+This session includes three parts: 
 
 * [REST](rest)
 * [gRPC](grpc)
+* [Kafka](kafka)
