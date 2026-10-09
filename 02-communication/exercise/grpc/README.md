@@ -24,7 +24,7 @@ These are shown on the [gRPC GitHub page](https://github.com/grpc/grpc-java).
 ## Define gRPC Service
 
 Now define your gRPC `BookService` in a `.proto` file. In doing so, you need to design the API of the service (see above).
-This API also includes input and return types, which are defined in the [Protocol Buffers format](https://developers.google.com/protocol-buffers/docs/proto3).
+This API also includes input and return types, which are defined in the [Protocol Buffers format](https://protobuf.dev/programming-guides/proto3/).
 
 ## Create the server
 
@@ -32,12 +32,12 @@ Implement the gRPC Server. Start the server on a port of your choice in the `mai
 
 ## Create the client
 
-To test the server, you need a grpc client. Let's implement one. Create a new `main`-methode for the client. 
+To test the server, you need a grpc client. Let's implement one. Create a new `main` method for the client. 
 Implement the client by using the generated client classes to communicate with your server. 
 
-# Quellen
+# Sources
 
 * https://github.com/grpc/grpc-java
 * https://grpc.io/docs/languages/java/basics/
 * https://www.baeldung.com/grpc-introduction
-* https://developers.google.com/protocol-buffers/docs/proto3
+* https://protobuf.dev/programming-guides/proto3/

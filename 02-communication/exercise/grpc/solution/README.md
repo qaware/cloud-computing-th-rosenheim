@@ -1,8 +1,9 @@
-# Lösung gRPC
+# Solution gRPC
 
-1. Starten Sie in Ihrer IDE die `main`-Methode der Klasse `de.qaware.edu.cc.bookservice.server.Server`
-2. Starten Sie in Ihrer IDE die `main`-Methode der Klasse `de.qaware.edu.cc.bookservice.client.Client`
+1. Build the project once with `./mvnw compile`, so that the gRPC classes are generated from the `.proto` file.
+2. In your IDE, start the `main` method of the class `de.qaware.edu.cc.bookservice.server.Server`.
+3. In your IDE, start the `main` method of the class `de.qaware.edu.cc.bookservice.client.Client`.
 
-* [gRPC Definition](src/main/proto/book.proto)
-* [Server-Implementierung](src/main/java/de/qaware/edu/cc/bookservice/server/BookServiceImpl.java)
-* [Client-Implementierung](src/main/java/de/qaware/edu/cc/bookservice/client/Client.java)
+* [gRPC definition](src/main/proto/book.proto)
+* [Server implementation](src/main/java/de/qaware/edu/cc/bookservice/server/BookServiceImpl.java)
+* [Client implementation](src/main/java/de/qaware/edu/cc/bookservice/client/Client.java)

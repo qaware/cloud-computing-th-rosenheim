@@ -15,7 +15,8 @@
     <maven.compiler.parameters>true</maven.compiler.parameters>
 
     <grpc.version>1.75.0</grpc.version>
-    <protoc.version>4.32.1</protoc.version>
+    <!-- The version of protoc must match protobuf-java -->
+    <protobuf.version>4.32.1</protobuf.version>
   </properties>
 
   <dependencies>
@@ -37,35 +38,23 @@
     <dependency>
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java</artifactId>
-      <version>4.32.1</version>
+      <version>${protobuf.version}</version>
     </dependency>
   </dependencies>
 
   <build>
-    <extensions>
-      <extension>
-        <groupId>kr.motd.maven</groupId>
-        <artifactId>os-maven-plugin</artifactId>
-        <version>1.7.1</version>
-      </extension>
-    </extensions>
     <plugins>
       <plugin>
         <groupId>io.github.ascopes</groupId>
         <artifactId>protobuf-maven-plugin</artifactId>
         <version>3.10.0</version>
         <configuration>
-          <!--
-            The version of protoc must match protobuf-java. If you don't depend on
-            protobuf-java directly, you will be transitively depending on the
-            protobuf-java version that grpc depends on.
-          -->
-          <protocVersion>4.32.1</protocVersion>
+          <protocVersion>${protobuf.version}</protocVersion>
           <binaryMavenPlugins>
             <binaryMavenPlugin>
               <groupId>io.grpc</groupId>
               <artifactId>protoc-gen-grpc-java</artifactId>
-              <version>1.75.0</version>
+              <version>${grpc.version}</version>
             </binaryMavenPlugin>
           </binaryMavenPlugins>
         </configuration>
