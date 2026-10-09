@@ -8,14 +8,15 @@ functionality.
 1. First, an application skeleton for the microservice and the REST API must be created.
 For this, we use the Spring Boot Initializr. Open the following URL: https://start.spring.io
 
-2. Adjust the project metadata according to your needs. Select Java as the language and Maven as the build tool.
+2. Adjust the project metadata according to your needs. Select Java as the language, Maven as the build tool, 
+Spring Boot 4.x and Java 21 (or newer).
 
 3. Add the following dependencies:
   Spring Web
 
-4. Generate (`mvnw idea:idea` or `eclipse:eclipse`) and load the project, then save it in your workspace.
+4. Generate the project, unzip it into your workspace and open it in your IDE (open the `pom.xml` as a project).
 
-5. Open a console, navigate to the project directory, and execute the following command: `mvnw install`
+5. Open a console, navigate to the project directory, and execute the following command: `./mvnw install` (Windows: `mvnw install`)
 
 
 ## Tasks
@@ -36,44 +37,59 @@ public class Book {
     private String author;
     private String isbn;
 
+    public Book() {
+        // required by Jackson for deserialization
+    }
+
+    public Book(String title, String author, String isbn) {
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+    }
+
     // getter and setter
 }
 ```
 
-(1.2) Implement a book management system that creates some example books and allows querying the books:
+(1.2) Implement a book management system that creates some example books and allows querying the books.
+The books are stored by their ISBN, which is the identifier of a book:
 
 ```java
 @Component
 public class Bookshelf {
 
-    private final Set<Book> books = new HashSet<>();
+    private final Map<String, Book> books = new ConcurrentHashMap<>();
 
     @PostConstruct
     public void initialize() {
-        books.add(new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "0345391802"));
-        books.add(new Book("The Martian", "Andy Weir", "0553418025"));
-        books.add(new Book("Guards! Guards!", "Terry Pratchett", "0062225758"));
-        books.add(new Book("Alice in Wonderland", "Lewis Carroll", "3458317422"));
-        books.add(new Book("Life, the Universe and Everything", "Douglas Adams", "0345391829"));
+        add(new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "0345391802"));
+        add(new Book("The Martian", "Andy Weir", "0553418025"));
+        add(new Book("Guards! Guards!", "Terry Pratchett", "0062225758"));
+        add(new Book("Alice in Wonderland", "Lewis Carroll", "3458317422"));
+        add(new Book("Life, the Universe and Everything", "Douglas Adams", "0345391829"));
+    }
+
+    private void add(Book book) {
+        books.put(book.getIsbn(), book);
     }
 
     public Collection<Book> findByTitle(String title) {
-        if (StringUtils.isEmpty(title)) {
-            return books;
+        if (title == null || title.isBlank()) {
+            return List.copyOf(books.values());
         } else {
-            return books
+            return books.values()
                     .stream()
                     .filter((Book b) -> b.getTitle().equalsIgnoreCase(title))
-                    .collect(Collectors.toList());
+                    .toList();
         }
     }
 
     public Book findByIsbn(String isbn) {
-        return books
-                .stream()
-                .filter((Book b) -> b.getIsbn().equals(isbn))
-                .findFirst()
-                .orElseThrow(() -> new BookNotFoundException(isbn));
+        Book book = books.get(isbn);
+        if (book == null) {
+            throw new BookNotFoundException(isbn);
+        }
+        return book;
     }
 }
 ```
@@ -92,9 +108,16 @@ public class BookNotFoundException extends RuntimeException {
 
 ```java
 @RestController
-@RequestMapping("/api/books")
+@RequestMapping(value = "/api/books", produces = MediaType.APPLICATION_JSON_VALUE)
 public class BookController {
-  // implement methods
+
+    private final Bookshelf bookshelf;
+
+    public BookController(Bookshelf bookshelf) {
+        this.bookshelf = bookshelf;
+    }
+
+    // implement methods
 }
 ```
 
@@ -132,7 +155,7 @@ class BookNotFoundExceptionMapper {
 }
 ```
 
-(4) Start the application with the command `mvnw spring-boot:run` or using the IDE.
+(4) Start the application with the command `./mvnw spring-boot:run` or using the IDE.
 The application and its API should be available under: `http://localhost:8080/api/books`.
 
 Manually test the created endpoints in the browser. Try to produce an error the triggers the exception mapper.
@@ -141,12 +164,12 @@ Manually test the created endpoints in the browser. Try to produce an error the 
 
 A good REST API needs documentation or a description of the offered functionality that can be processed by machines. The standard for this is OpenAPI (formerly Swagger).
 
-(1) Add the following dependency to the `pom.xml`:
+(1) Add the following dependency to the `pom.xml` (springdoc 3.x is required for Spring Boot 4, springdoc 2.x only works with Spring Boot 3):
 ```xml
 <dependency>
     <groupId>org.springdoc</groupId>
     <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-    <version>2.8.13</version>
+    <version>3.1.1</version>
 </dependency>
 ```
 
@@ -169,25 +192,27 @@ Use the following OpenAPI annotations. A description of the annotations can be a
 Extend the read only Rest API by offering endpoints for creating, updating and deleting books. 
 
 * `DELETE /api/books/{isbn}` deletes a book and returns HTTP 204 when successful
-* `POST /api/books`  creates a book, accepts `application/json` and returns HTTP 201 including the new URL of the created book.
-* `PUT /api/books/{isbn}` updates a book, accepts `application/json` and returns HTTP 200 on success.
+* `POST /api/books`  creates a book, accepts `application/json` and returns HTTP 201 including the new URL of the created book 
+  in the `Location` header (hint: `ResponseEntity.created(...)`). If a book with the same ISBN already exists, return HTTP 409.
+* `PUT /api/books/{isbn}` updates a book, accepts `application/json` and returns HTTP 200 on success, HTTP 404 if the book does not exist.
 
 Think of additional use cases that the interface should represent as a simple list (on paper). 
 Derive a data model from the use cases (on paper). 
 Create a REST interface based on the use cases, the data model, and the design rules presented.
 
-## Quellen
+## Sources
 This exercise is also intended to teach independent problem-solving based on information from the internet. For the technologies used, you can utilize the following sources, for example:
 
 Maven
-* http://maven.apache.org/guides/getting-started
+* https://maven.apache.org/guides/getting-started
 
 Spring Boot
 * https://start.spring.io
-* https://docs.spring.io/spring-boot/docs/current/reference/html/index.html
-* https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-developing-web-applications.html
+* https://docs.spring.io/spring-boot/index.html
+* https://docs.spring.io/spring-boot/reference/web/servlet.html
 
 
 OpenAPI/Swagger
-* http://swagger.io
+* https://swagger.io
+* https://springdoc.org
 * https://github.com/swagger-api/swagger-core

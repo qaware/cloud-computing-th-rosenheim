@@ -1,6 +1,6 @@
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jre
 
-COPY target/book-service-1.0.1.jar /app/
-RUN chmod +x /app/book-service-1.0.1.jar
+COPY target/book-service-1.0.1.jar /app/book-service.jar
 
-ENTRYPOINT ["/app/book-service-1.0.1.jar"]
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/app/book-service.jar"]

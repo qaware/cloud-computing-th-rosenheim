@@ -1,13 +1,12 @@
 package de.qaware.edu.cc.bookservice;
 
 import jakarta.annotation.PostConstruct;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Simple bookshelf component to hold and manage the Book entities.
@@ -15,18 +14,21 @@ import java.util.stream.Collectors;
 @Component
 public class Bookshelf {
 
-    private final Set<Book> books = new HashSet<>();
+    /**
+     * Books stored by ISBN. The ISBN is the identifier of a book, so it must be unique.
+     */
+    private final Map<String, Book> books = new ConcurrentHashMap<>();
 
     /**
      * Initialize some test data.
      */
     @PostConstruct
     public void initialize() {
-        books.add(new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "0345391802"));
-        books.add(new Book("The Martian", "Andy Weir", "0553418025"));
-        books.add(new Book("Guards! Guards!", "Terry Pratchett", "0062225758"));
-        books.add(new Book("Alice in Wonderland", "Lewis Carroll", "3458317422"));
-        books.add(new Book("Life, the Universe and Everything", "Douglas Adams", "0345391829"));
+        create(new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "0345391802"));
+        create(new Book("The Martian", "Andy Weir", "0553418025"));
+        create(new Book("Guards! Guards!", "Terry Pratchett", "0062225758"));
+        create(new Book("Alice in Wonderland", "Lewis Carroll", "3458317422"));
+        create(new Book("Life, the Universe and Everything", "Douglas Adams", "0345391829"));
     }
 
     /**
@@ -36,13 +38,13 @@ public class Bookshelf {
      * @return a collection of books
      */
     public Collection<Book> findByTitle(String title) {
-        if (StringUtils.isEmpty(title)) {
-            return books;
+        if (title == null || title.isBlank()) {
+            return List.copyOf(books.values());
         } else {
-            return books
+            return books.values()
                     .stream()
                     .filter((Book b) -> b.getTitle().equalsIgnoreCase(title))
-                    .collect(Collectors.toList());
+                    .toList();
         }
     }
 
@@ -51,13 +53,14 @@ public class Bookshelf {
      *
      * @param isbn the isbn of the book
      * @return the book that matched the isbn
+     * @throws BookNotFoundException if there is no book with the given ISBN
      */
     public Book findByIsbn(String isbn) {
-        return books
-                .stream()
-                .filter((Book b) -> b.getIsbn().equals(isbn))
-                .findFirst()
-                .orElseThrow(() -> new BookNotFoundException(isbn));
+        Book book = books.get(isbn);
+        if (book == null) {
+            throw new BookNotFoundException(isbn);
+        }
+        return book;
     }
 
     /**
@@ -66,30 +69,32 @@ public class Bookshelf {
      * @param isbn isbn of the book
      */
     public void delete(String isbn) {
-        books.removeIf(b -> b.getIsbn().equals(isbn));
+        books.remove(isbn);
     }
 
     /**
-     * Create book of not already present.
+     * Create book if no book with the same ISBN is present.
      *
      * @param book the book to create
-     * @return true of created, otherwise false
+     * @return true if created, otherwise false
      */
     public boolean create(Book book) {
-        return books.add(book);
+        return books.putIfAbsent(book.getIsbn(), book) == null;
     }
 
     /**
-     * Find and update the book with given ISBN.
+     * Find and update the book with given ISBN. The ISBN itself can not be changed.
      *
      * @param isbn the ISBN to update
      * @param book the updated book
+     * @return the updated book
+     * @throws BookNotFoundException if there is no book with the given ISBN
      */
     public Book update(String isbn, Book book) {
-        Book found = findByIsbn(isbn);
-
-        found.setTitle(book.getTitle());
-        found.setAuthor(book.getAuthor());
-        return found;
+        Book updated = books.computeIfPresent(isbn, (key, existing) -> new Book(book.getTitle(), book.getAuthor(), isbn));
+        if (updated == null) {
+            throw new BookNotFoundException(isbn);
+        }
+        return updated;
     }
 }
