@@ -38,20 +38,23 @@ If this command completes successfully, you’re ready to begin.
    apk add nginx curl
    ```
 
-5. **Start the NGINX web server**
-   Launch NGINX with:
+5. **Configure and start the NGINX web server**
+   Alpine’s NGINX package ships with a default site that answers *every* request with `404 Not Found`.
+   Let it serve the bundled welcome page from `/var/lib/nginx/html` instead:
+
+   ```bash
+   sed -i 's|return 404;|root /var/lib/nginx/html;|' /etc/nginx/http.d/default.conf
+   ```
+
+   Then launch NGINX with:
 
    ```bash
    nginx
    ```
 
-   **Note:** If you encounter the error
-   `_open() "/run/nginx/nginx.pid" failed_`,
-   create the missing directory using:
-
-   ```bash
-   mkdir /run/nginx
-   ```
+   **Note:** On older Alpine versions you may encounter the error
+   `open() "/run/nginx/nginx.pid" failed`.
+   In that case, create the missing directory using `mkdir -p /run/nginx`.
 
 6. **Test the web server**
    Use curl to fetch the web page served by NGINX on port 80:
@@ -60,7 +63,8 @@ If this command completes successfully, you’re ready to begin.
    curl localhost
    ```
 
-   You should see the default NGINX welcome page.
+   You should see the NGINX welcome page (`<h1>Welcome to nginx!</h1>`).
+   If you skipped the configuration change above, you get a `404 Not Found` page instead — which still proves that NGINX is running.
 
 7. **Access from the host**
    Try accessing the same page from your host system.
@@ -131,6 +135,7 @@ If this command completes successfully, you’re ready to begin.
    ```
 
    to view container details and logs.
+   Why does `docker logs` stay empty even after you accessed the page? *(Hint: look at where Alpine’s NGINX writes its access log, e.g. `/var/log/nginx/`. Docker only captures what the main process writes to stdout/stderr.)*
 
 ---
 
@@ -140,8 +145,9 @@ In Part 1, we created an image manually and configured NGINX via command-line ar
 Now we’ll automate this using a Dockerfile.
 
 1. **Choose a base image**
-   Use `alpine:3.11` as the base image.
-   This automatically pulls the latest bugfix version within that release (e.g., 3.11.6).
+   Use `alpine:3.24` as the base image.
+   This automatically pulls the latest bugfix version within that release (e.g., 3.24.2).
+   Pinning a release (instead of `latest`) keeps your build reproducible; check the [Alpine releases page](https://alpinelinux.org/releases/) for currently supported versions.
 
 2. **Create a Dockerfile**
    Write a `Dockerfile` to build the image automatically.
@@ -175,6 +181,7 @@ Now we’ll automate this using a Dockerfile.
    ```
 
    You should see the NGINX welcome page again.
+   *(Remember the configuration change from Part 1 — your Dockerfile has to apply it as well.)*
 
 ---
 
@@ -230,7 +237,7 @@ Work through these scenarios as extended practice:
 For additional information, consult these official and community resources:
 
 * [Docker Documentation](https://docs.docker.com)
-* [Interactive Docker Tutorial](https://www.docker.com/tryit)
+* [Docker Get Started Guide](https://docs.docker.com/get-started/)
 * [Docker Command Cheat Sheet](https://github.com/wsargent/docker-cheat-sheet)
 * [Docker CLI and Dockerfile Reference](https://docs.docker.com/reference/)
 
