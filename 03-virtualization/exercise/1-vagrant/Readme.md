@@ -23,11 +23,11 @@ Before starting, make sure that:
 
 ### **Task 1: Setting up Vagrant and a Virtual Machine**
 
-In this part, you’ll create and configure an Ubuntu 22.04 virtual machine using Vagrant.
+In this part, you’ll create and configure an Ubuntu 24.04 virtual machine using Vagrant.
 
 #### **Step 1: Initialize a Vagrant Box**
 
-Run the following command to initialize a base Ubuntu 24.04 box: 
+Change into the `vagrant/` folder of this exercise (it already contains the configuration and example files you'll need in Step 4) and run the following command to initialize a base Ubuntu 24.04 box:
 
 ```bash
 vagrant init bento/ubuntu-24.04
@@ -121,11 +121,11 @@ mysql -u root -p
 
 Finally, install **PHP** and configure NGINX to serve PHP files.
 
-Extend your provisioner with:
+Extend your provisioner with (we install `php-fpm` directly — the `php` metapackage would also pull in Apache, which clashes with NGINX on port 80):
 
 ```bash
 # PHP
-sudo apt-get install -y php php-fpm php-mysql
+sudo apt-get install -y php-fpm php-mysql
 sudo systemctl start php8.3-fpm
 ```
 
