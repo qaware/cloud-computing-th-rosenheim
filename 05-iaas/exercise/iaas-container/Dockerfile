@@ -5,7 +5,7 @@
 #checkov:skip=CKV_DOCKER_3: Ensure that a user for the container has been created
 
 # https://hub.docker.com/_/ubuntu/tags
-FROM ubuntu:24.04@sha256:3f85b7caad41a95462cf5b787d8a04604c8262cdcdf9a472b8c52ef83375fe15
+FROM ubuntu:24.04@sha256:68ee22004a9109b44973313b02ff7b1de250f1de0f5ecb628d73f579aaff33ac
 
 ARG IMAGE_CREATED="1970-01-01T00:00:00Z"
 ARG IMAGE_REVISION="master"
@@ -35,7 +35,7 @@ ENV GNUPG_VERSION="2.4.4"
 
 # https://packages.ubuntu.com/noble/ca-certificates
 # renovate: datasource=repology depName=ubuntu_24_04/ca-certificates versioning=loose
-ENV CA_VERSION="20240203"
+ENV CA_VERSION="20260816ubuntu0.24.04.1"
 
 # https://packages.ubuntu.com/noble/curl
 # renovate: datasource=repology depName=ubuntu_24_04/curl versioning=loose
