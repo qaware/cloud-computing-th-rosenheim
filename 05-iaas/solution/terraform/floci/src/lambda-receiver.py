@@ -1,12 +1,16 @@
-import boto3
 import json
+import os
 
-# Replace 'YOUR_BUCKET_NAME' with your S3 bucket name
-BUCKET_NAME = 'result-bucket'
+import boto3
+
+# The bucket name is passed in by Terraform as an environment variable
+BUCKET_NAME = os.environ['BUCKET_NAME']
 
 def lambda_handler(event, context):
     # Initialize the S3 client
-    s3 = boto3.client('s3', endpoint_url = 'http://localstack:4566')
+    # No endpoint is configured here: in AWS the client uses the real endpoint,
+    # in Floci the AWS_ENDPOINT_URL environment variable injected by Floci is used.
+    s3 = boto3.client('s3')
 
     try:
         # Convert the data to a JSON string
@@ -19,7 +23,8 @@ def lambda_handler(event, context):
         s3.put_object(
             Bucket=BUCKET_NAME,
             Key=object_key,
-            Body=data_json
+            Body=data_json,
+            ContentType='application/json'
         )
 
         return {
@@ -28,7 +33,5 @@ def lambda_handler(event, context):
         }
     except Exception as e:
         print(f"Error: {str(e)}")
-        return {
-            'statusCode': 500,
-            'body': 'Error uploading data to S3 bucket.'
-        }
+        # Raise the error, so the message is not deleted from the queue and will be retried
+        raise

@@ -1,11 +1,15 @@
+import os
+
 import boto3
 
-# Replace 'YOUR_QUEUE_URL' with your actual SQS queue URL
-QUEUE_URL = 'http://localstack:4566/000000000000/terraform-example-queue'
+# The queue URL is passed in by Terraform as an environment variable
+QUEUE_URL = os.environ['QUEUE_URL']
 
 def lambda_handler(event, context):
     # Initialize the SQS client
-    sqs = boto3.client('sqs', endpoint_url = 'http://localstack:4566')
+    # No endpoint is configured here: in AWS the client uses the real endpoint,
+    # in Floci the AWS_ENDPOINT_URL environment variable injected by Floci is used.
+    sqs = boto3.client('sqs')
 
     # Define the message to send
     message = "Hello, World!"

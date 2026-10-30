@@ -14,5 +14,5 @@ Walk through the interactive terraform lab https://learn.hashicorp.com/tutorials
 
 [Part - 1](./aws-part-1) Setting up infrastructure using the AWS Management console  
 [Part - 2](./aws-part-2) Setting up infrastructure in AWS with terraform  
-[Part - 3](./localstack) Setting up infrastructure locally with terraform and localstack
+[Part - 3](./floci) Setting up infrastructure locally with terraform and floci
 

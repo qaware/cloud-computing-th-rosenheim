@@ -84,11 +84,6 @@ In this part of the exercise, you will create a load balancer to distribute requ
       * Under _Health checks_
          * Select the protocol `HTTP`.
          * Choose the path `/`.
-      * Under _Advanced health check settings_
-         * Select the port `Traffic port`.
-         * Set the _Healthy threshold_ to `2`.
-         * Set the _Unhealthy threshold_ to `2`.
-         * Set the _Interval_ to `10 seconds`.
       * There is no need to register _Targets_, as this will be managed by the auto scaling group.
       * Complete the process by clicking _Create target group_.
    * Select the target group you created.
@@ -109,7 +104,7 @@ In this part of the exercise, you will create an Auto Scaling group, which allow
 2. Click on _Launch Templates_ in the sidebar, then _Create Launch Template_.
    * Use your unique name again.
    * For the description, "Launch Template for a simple web application." is appropriate.
-   * Under _Application and OS Images_, choose an Ubuntu _AMI_, for example, `ami-0084a47cc718c111a`.
+   * Under _Application and OS Images_, choose the AWS provided _Amazon Linux_ image (Amazon Linux 2023).
    * Under _Instance type_, select `t2.micro`.
    * Under _Network settings_, select your security group for the application.
    * Under _Advanced details_, use the following script as _User Data_:
@@ -118,17 +113,17 @@ In this part of the exercise, you will create an Auto Scaling group, which allow
      #!/bin/bash
      set -euxo pipefail
 
-     apt-get update
-     apt-get install -y busybox cowsay
-     source /etc/environment
+     dnf install -y python3-pip nano
+     pip3 install cowsay
 
+     mkdir -p /var/www
      {
        echo "<pre>"
-       /usr/games/cowsay -f dragon Hello World
+       python3 -c "import cowsay; print(cowsay.get_output_string('dragon', 'Hello World'))"
        echo "</pre>"
-     } >> index.html
+     } > /var/www/index.html
 
-     nohup busybox httpd -f index.html -p 8080 &
+     nohup python3 -m http.server 8080 --directory /var/www &
      ```
 
    * Finish by clicking _Create launch template_.
@@ -161,7 +156,7 @@ After creation, two instances should be generated according to your specificatio
    * Go to _Instances_ and select (without clicking on the detail view) one of your instances.
    * Go to _Actions_ in the top right, select _Connect_, and then click _Connect_ again in the following view.
    * You are now connected to a shell session on the host.
-   * A `httpd` service is running on the host, hosting the website.  
+   * A Python `http.server` process is running on the host, hosting the website.  
      Stop the process.
    * What do you observe with the target group, auto scaling group, and your instances? How does the website behave during this time?
 
@@ -173,14 +168,14 @@ Solution for stopping the process:
 > Find the relevant process id, e.g. with `ps`:
 >
 > ``` shell
-> ps aux | grep httpd
+> ps aux | grep http.server
 > ```
 >
 > Exemplary result:
 >
 > ``` text
-> root        6634  0.0  0.1   2788  1660 ?        S    15:07   0:00 busybox httpd -f index.html -p 8080
-> ubuntu      7287  0.0  0.0   7672   652 pts/0    S+   15:19   0:00 grep --color=auto httpd
+> root        6634  0.0  1.9 239920 19092 ?        S    15:07   0:00 python3 -m http.server 8080 --directory /var/www
+> ec2-user    7287  0.0  0.2 222316  2084 pts/0    S+   15:19   0:00 grep --color=auto http.server
 > ```
 >
 > Kill the process `6634`, in this case requires root permissions:
@@ -293,10 +288,10 @@ You may use the instance id to connect via `ec2-instance-connect`:
 ``` shell
 aws ec2-instance-connect ssh \
   --instance-id <INSTANZ ID> \
-  --os-user ubuntu
+  --os-user ec2-user
 ```
 
-Edit the `index.html` file under `/` so that a penguin appears—you will need root privileges for this.  
+Edit the `index.html` file under `/var/www` so that a penguin appears—you will need root privileges for this.  
 If you don’t know how to create a penguin, simply change the message from _Hello World_ to _I am a penguin_.
 
 Solution:
@@ -306,7 +301,7 @@ Solution:
 
 > Edit the file using `nano`, for example:
 > <pre>
-> sudo nano /index.html
+> sudo nano /var/www/index.html
 > </pre>
 > Depending on your operating system, save your changes with CTRL+O (Windows) or Control+O (MacOS).
 

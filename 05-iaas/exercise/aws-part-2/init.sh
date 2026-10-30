@@ -1,14 +1,14 @@
 #!/bin/bash
 set -euxo pipefail
 
-apt-get update
-apt-get install -y busybox cowsay
-rm -rf /var/lib/apt/lists/*
+dnf install -y python3-pip nano
+pip3 install cowsay
 
+mkdir -p /var/www
 {
   echo "<pre>"
-  /usr/games/cowsay -f dragon ${message}
+  python3 -c "import cowsay; print(cowsay.get_output_string('dragon', '${message}'))"
   echo "</pre>"
-} >> index.html
+} > /var/www/index.html
 
-nohup busybox httpd -f index.html -p 8080 &
+nohup python3 -m http.server 8080 --directory /var/www &

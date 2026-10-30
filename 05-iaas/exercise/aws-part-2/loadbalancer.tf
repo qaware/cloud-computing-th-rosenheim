@@ -2,10 +2,10 @@
 # See: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
 
 # ToDo: Allow incoming traffic on the Load Balancer on port 80 from everywhere
-# See: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
+# See: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
 
 # ToDo: Allow outgoing traffic from the LB to everywhere
-# See: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
+# See: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule
 
 # ToDo: Create the Load Balancer
 # See: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb

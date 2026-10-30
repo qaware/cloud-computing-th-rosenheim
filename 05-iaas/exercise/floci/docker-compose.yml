@@ -1,0 +1,32 @@
+services:
+  floci:
+    # https://github.com/floci-io/floci/releases
+    image: floci/floci:2.3.0
+    ports:
+      - "127.0.0.1:4566:4566"
+    environment:
+      # Use the service name in returned URLs (e.g. SQS queue URLs), so other containers can reach them.
+      # Floci also injects AWS_ENDPOINT_URL=http://floci:4566 into the Lambda containers it starts.
+      FLOCI_HOSTNAME: floci
+    volumes:
+      # Required for Lambda: Floci runs every function in its own Docker container
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      default:
+        aliases:
+          # Website endpoint of the S3 bucket "result-bucket", resolvable from the other containers
+          - result-bucket.s3-website-us-east-1.floci
+
+  iaas-container:
+    build: ../iaas-container/
+    environment:
+      # Point the AWS CLI to Floci instead of the real AWS Cloud
+      AWS_ENDPOINT_URL: http://floci:4566
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+    volumes:
+      - .:/root/terraform
+    working_dir: /root/terraform
+    depends_on:
+      - floci

@@ -1,31 +1,29 @@
 resource "aws_security_group" "lb" {
   name        = "${local.env}-lb"
-  description = "Allow TLS inbound traffic"
+  description = "Security Group for the Load Balancer"
   vpc_id      = module.vpc.vpc_id
 
   tags = local.standard_tags
 }
 
-resource "aws_security_group_rule" "lb_ingress_http_all" {
+resource "aws_vpc_security_group_ingress_rule" "lb_ingress_http_all" {
   #checkov:skip=CKV_AWS_260:Ensure no security groups allow ingress from 0.0.0.0:0 to port 80
 
   security_group_id = aws_security_group.lb.id
   description       = "Allows HTTP from everywhere"
-  type              = "ingress"
   from_port         = 80
   to_port           = 80
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  ip_protocol       = "tcp"
+  cidr_ipv4         = "0.0.0.0/0"
+  tags              = local.standard_tags
 }
 
-resource "aws_security_group_rule" "lb_egress_all" {
+resource "aws_vpc_security_group_egress_rule" "lb_egress_all" {
   security_group_id = aws_security_group.lb.id
-  description       = "Allows HTTP to App SG"
-  type              = "egress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "Allows all outgoing traffic"
+  ip_protocol       = "-1"
+  cidr_ipv4         = "0.0.0.0/0"
+  tags              = local.standard_tags
 }
 
 resource "aws_lb" "app" {

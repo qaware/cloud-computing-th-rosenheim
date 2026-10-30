@@ -1,3 +1,7 @@
+data "aws_ssm_parameter" "al2023_ami" {
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
+}
+
 resource "aws_security_group" "app" {
   name        = "${local.env}-app"
   description = "Security Group for the App-Instances"
@@ -5,43 +9,41 @@ resource "aws_security_group" "app" {
   tags        = local.standard_tags
 }
 
-resource "aws_security_group_rule" "app_ingress_ssh_all" {
+resource "aws_vpc_security_group_ingress_rule" "app_ingress_ssh_all" {
   #checkov:skip=CKV_AWS_24:Ensure no security groups allow ingress from 0.0.0.0:0 to port 22
 
   security_group_id = aws_security_group.app.id
   description       = "Allows SSH from everywhere"
-  type              = "ingress"
   from_port         = 22
   to_port           = 22
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  ip_protocol       = "tcp"
+  cidr_ipv4         = "0.0.0.0/0"
+  tags              = local.standard_tags
 }
 
-resource "aws_security_group_rule" "app_ingress_http_lb" {
-  security_group_id        = aws_security_group.app.id
-  description              = "Allows HTTP access from the load balancer"
-  type                     = "ingress"
-  from_port                = 8080
-  to_port                  = 8080
-  protocol                 = "tcp"
-  source_security_group_id = aws_security_group.lb.id
+resource "aws_vpc_security_group_ingress_rule" "app_ingress_http_lb" {
+  security_group_id            = aws_security_group.app.id
+  description                  = "Allows HTTP access from the load balancer"
+  from_port                    = 8080
+  to_port                      = 8080
+  ip_protocol                  = "tcp"
+  referenced_security_group_id = aws_security_group.lb.id
+  tags                         = local.standard_tags
 }
 
-resource "aws_security_group_rule" "app_egress_all" {
+resource "aws_vpc_security_group_egress_rule" "app_egress_all" {
   security_group_id = aws_security_group.app.id
   description       = "Allows all outgoing traffic"
-  type              = "egress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
+  ip_protocol       = "-1"
+  cidr_ipv4         = "0.0.0.0/0"
+  tags              = local.standard_tags
 }
 
 resource "aws_launch_template" "app" {
   #checkov:skip=CKV_AWS_88:EC2 instance should not have public IP
 
   name                                 = local.env
-  image_id                             = "ami-01e444924a2233b07"
+  image_id                             = data.aws_ssm_parameter.al2023_ami.value
   instance_initiated_shutdown_behavior = "terminate"
   update_default_version               = true
   instance_type                        = "t2.micro"
