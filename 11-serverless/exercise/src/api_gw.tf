@@ -1,6 +1,6 @@
 ### Creates a HTTP API in the API gateway
 resource "aws_apigatewayv2_api" "lambda" {
-  name          = "" ### TODO use unique name
+  name          = "${var.name}-api"
   protocol_type = "HTTP"
 }
 
@@ -39,6 +39,9 @@ resource "aws_apigatewayv2_integration" "hello_world" {
   integration_uri    = aws_lambda_function.hello_world.invoke_arn
   integration_type   = "AWS_PROXY"
   integration_method = "POST"
+
+  # Version of the event format the function receives (2.0 is also the default in the console)
+  payload_format_version = "2.0"
 }
 
 ### Adds a route GET /hello to the API

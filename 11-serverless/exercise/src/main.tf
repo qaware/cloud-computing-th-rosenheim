@@ -5,7 +5,7 @@ terraform {
     aws = {
       # https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md
       source  = "hashicorp/aws"
-      version = "5.50.0"
+      version = "6.73.0"
     }
   }
 }

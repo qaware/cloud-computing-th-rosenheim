@@ -1,8 +1,3 @@
-### Searches for an existing role named `BasicLambdaExecutionRole`
-data aws_iam_role iam_for_lambda {
-  name = "BasicLambdaExecutionRole"
-}
-
 ### Terraform's way of packaging files into an archive - in this case we are packaging the JS source code
 ### for the lambda function.
 data "archive_file" "lambda" {
@@ -14,15 +9,18 @@ data "archive_file" "lambda" {
 ### Creates the lambda function
 resource "aws_lambda_function" "hello_world" {
   filename      = "lambda_function_payload.zip"
-  function_name = "" ### TODO enter a unique name here
-  # references the role, that is queried above
-  role          = data.aws_iam_role.iam_for_lambda.arn
+  function_name = "${var.name}-hello"
+  # references the role, see `iam.tf`
+  role = local.hello_role_arn
   # reference into the js file, format is ${filename}.{export-name}
-  handler       = "hello.handler"
+  handler = "hello.handler"
 
   source_code_hash = data.archive_file.lambda.output_base64sha256
 
-  runtime = "nodejs20.x"
+  runtime = "nodejs24.x"
+
+  # Own account only: make sure the role can write logs before the function exists
+  depends_on = [aws_iam_role_policy_attachment.hello_logs]
 }
 
 ### Creates a cloudwatch log group for the lambda.

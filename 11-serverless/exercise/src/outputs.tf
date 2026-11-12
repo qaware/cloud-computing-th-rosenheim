@@ -9,3 +9,9 @@ output "gateway_domain" {
 
   value = aws_apigatewayv2_api.lambda.api_endpoint
 }
+
+output "links_table_name" {
+  description = "Name of the DynamoDB table storing the short links."
+
+  value = aws_dynamodb_table.links.name
+}
