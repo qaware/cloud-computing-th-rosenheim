@@ -1,0 +1,27 @@
+# Describes a set of clients by their mTLS identity.
+# In Linkerd, a workload's identity is derived from its Kubernetes ServiceAccount.
+apiVersion: policy.linkerd.io/v1alpha1
+kind: MeshTLSAuthentication
+metadata:
+  namespace: emojivoto
+  name: web-identity
+spec:
+  identityRefs:
+    - kind: ServiceAccount
+      name: web
+---
+# Allows the clients described above (only the web service) to access the voting-grpc Server.
+apiVersion: policy.linkerd.io/v1alpha1
+kind: AuthorizationPolicy
+metadata:
+  namespace: emojivoto
+  name: voting-grpc-allow-web
+spec:
+  targetRef:
+    group: policy.linkerd.io
+    kind: Server
+    name: voting-grpc
+  requiredAuthenticationRefs:
+    - group: policy.linkerd.io
+      kind: MeshTLSAuthentication
+      name: web-identity

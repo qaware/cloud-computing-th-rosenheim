@@ -1,16 +1,15 @@
-# three node (two workers) cluster config
+# single node cluster config (Kubernetes v1.37, the default of kind v0.33)
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
   - role: control-plane
-    kubeadmConfigPatches:
-      - |
-        kind: InitConfiguration
-        nodeRegistration:
-          kubeletExtraArgs:
-            node-labels: "ingress-ready=true"
+    # Pin the node image so everybody runs the same Kubernetes version.
+    # See https://github.com/kubernetes-sigs/kind/releases for the images built for your kind version.
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
     extraPortMappings:
-      - containerPort: 80
+      # The Traefik gateway is exposed as a NodePort service on port 30080 (see code/gateway/traefik-values.yaml).
+      # This mapping makes it reachable on your machine at http://localhost:9999
+      - containerPort: 30080
         hostPort: 9999
         protocol: TCP
   # if your machine has enough resources, enable additional workers

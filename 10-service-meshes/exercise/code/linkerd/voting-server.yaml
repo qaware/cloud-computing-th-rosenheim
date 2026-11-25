@@ -1,0 +1,17 @@
+# A Server describes a port of a set of pods.
+# Once a Server exists for a port, only traffic that is explicitly authorized is allowed on it
+# (accessPolicy: deny is the default).
+apiVersion: policy.linkerd.io/v1beta3
+kind: Server
+metadata:
+  namespace: emojivoto
+  name: voting-grpc
+  labels:
+    app: voting-svc
+spec:
+  podSelector:
+    matchLabels:
+      app: voting-svc
+  port: grpc
+  proxyProtocol: gRPC
+  accessPolicy: deny

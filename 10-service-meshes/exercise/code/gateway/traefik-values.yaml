@@ -1,0 +1,32 @@
+# Helm values for Traefik as Gateway API implementation in the kind cluster.
+providers:
+  # Use the Gateway API (Gateway, HTTPRoute, ...) instead of the old Ingress API
+  kubernetesGateway:
+    enabled: true
+  kubernetesIngress:
+    enabled: false
+
+# Create a GatewayClass "traefik" and a Gateway "traefik-gateway" in the traefik namespace.
+gatewayClass:
+  enabled: true
+gateway:
+  enabled: true
+  listeners:
+    web:
+      port: 8000
+      protocol: HTTP
+      # Allow HTTPRoutes from all namespaces to attach to this Gateway
+      namespacePolicy:
+        from: All
+
+# kind does not provide LoadBalancer services out of the box.
+# Expose the gateway as NodePort 30080, which is mapped to localhost:9999 in the kind cluster config.
+service:
+  spec:
+    type: NodePort
+ports:
+  web:
+    nodePort: 30080
+  websecure:
+    expose:
+      default: false
